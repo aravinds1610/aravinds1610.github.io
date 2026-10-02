@@ -4,13 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aravind Suresh — Robotics Engineer</title>
+  <meta name="description" content="Aravind Suresh — Mechatronics Engineer and M.Sc. Autonomy Technologies student at FAU Erlangen-Nürnberg. ROS2, navigation, SLAM, perception and real robot hardware." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2306080f'/%3E%3Cpath d='M9 26h14M16 24V17l6-6 2 5' stroke='%235fa898' stroke-width='2.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='17' r='2' fill='%237d96b8'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 
   <style>
     /* ── Reset & Base ─────────────────────────── */
@@ -23,10 +21,13 @@
       --surface:   #151b2e;
       --border:    rgba(255,255,255,0.07);
       --text:      #dde3f0;
+      --heading:   #eef1fb;
       --muted:     #5c6480;
+      --muted2:    #8a92ad;
       --accent:    #5fa898;
       --accent2:   #7d96b8;
       --accent-dim: rgba(95, 168, 152, 0.12);
+      --accent2-dim: rgba(125, 150, 184, 0.12);
       --font-sans: 'Space Grotesk', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
@@ -41,6 +42,8 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
+
+    a { color: inherit; }
 
     /* ── Noise overlay ───────────────────────── */
     body::before {
@@ -69,12 +72,13 @@
       font-size: 0.85rem;
       color: var(--accent);
       letter-spacing: 0.05em;
+      text-decoration: none;
     }
 
     .nav-logo span { color: var(--muted); }
 
     .nav-links {
-      display: flex; gap: 2.5rem;
+      display: flex; gap: 2.25rem;
       list-style: none;
     }
 
@@ -89,6 +93,45 @@
     }
 
     .nav-links a:hover { color: var(--accent); }
+
+    /* ── Buttons ─────────────────────────────── */
+    .btn-primary, .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.25s;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      font-weight: 500;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,255,255,0.15);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-outline:hover {
+      background: #ffffff;
+      border-color: #ffffff;
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
 
     /* ── Hero ────────────────────────────────── */
     #hero {
@@ -108,13 +151,14 @@
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
     }
 
     .hero-glow {
       position: absolute;
       width: 600px; height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(95,168,152,0.07) 0%, transparent 70%);
       top: 50%; left: 50%; transform: translate(-50%, -50%);
       pointer-events: none;
     }
@@ -142,102 +186,110 @@
       font-weight: 700;
       line-height: 1.05;
       letter-spacing: -0.03em;
-      color: #eef1fb;
+      color: var(--heading);
       margin-bottom: 1rem;
     }
 
-    h1.hero-name .line2 {
-      color: var(--accent);
-      display: block;
-    }
+    h1.hero-name .line2 { color: var(--accent); display: block; }
 
     .hero-role {
       font-size: 1.1rem;
+      color: var(--muted2);
+      font-weight: 400;
+      margin-bottom: 1.75rem;
+      max-width: 470px;
+    }
+
+    .hero-facts {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
       color: var(--muted);
-      font-weight: 400;
+      letter-spacing: 0.05em;
       margin-bottom: 2.5rem;
-      max-width: 400px;
     }
 
-    .hero-ctas {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-    }
+    .hero-facts span::before { content: '▸ '; color: var(--accent); }
 
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
-      background: var(--accent);
-      color: #06080f;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      border-radius: 3px;
-      transition: all 0.25s;
-      border: none; cursor: pointer;
-    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-    .btn-primary:hover {
-      background: #ffffff;
-      color: #06080f;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255,255,255,0.15);
-    }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
-      background: transparent;
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      border-radius: 3px;
-      border: 1px solid var(--border);
-      transition: all 0.25s;
-      cursor: pointer;
-    }
-
-    .btn-outline:hover {
-      background: #ffffff;
-      border-color: #ffffff;
-      color: #06080f;
-      transform: translateY(-2px);
-    }
-
-    /* ── Robot Arm SVG ───────────────────────── */
     .hero-right {
       position: relative; z-index: 2;
       display: flex; justify-content: center; align-items: center;
     }
 
-    .arm-container {
-      position: relative;
-      width: 380px; height: 380px;
-    }
+    .arm-container { position: relative; width: 380px; height: 380px; }
 
     .arm-rings {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
     }
 
-    .arm-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-    }
-
+    .arm-ring { position: absolute; border-radius: 50%; border: 1px solid var(--border); }
     .arm-ring:nth-child(1) { width: 340px; height: 340px; animation: rotate-slow 30s linear infinite; }
-    .arm-ring:nth-child(2) { width: 260px; height: 260px; animation: rotate-slow 20s linear infinite reverse; border-color: rgba(0,229,160,0.08); }
+    .arm-ring:nth-child(2) { width: 260px; height: 260px; animation: rotate-slow 20s linear infinite reverse; border-color: rgba(95,168,152,0.1); }
     .arm-ring:nth-child(3) { width: 180px; height: 180px; animation: rotate-slow 15s linear infinite; }
 
-    @keyframes rotate-slow {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+    /* ── Keyframes ───────────────────────────── */
+    @keyframes rotate-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    @keyframes arm1 {
+      0%   { transform: rotate(0deg); }
+      30%  { transform: rotate(-15deg); }
+      60%  { transform: rotate(10deg); }
+      100% { transform: rotate(0deg); }
     }
+    @keyframes arm2 {
+      0%   { transform: rotate(0deg); }
+      25%  { transform: rotate(20deg); }
+      75%  { transform: rotate(-15deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes arm3 {
+      0%   { transform: rotate(0deg); }
+      50%  { transform: rotate(25deg); }
+      100% { transform: rotate(0deg); }
+    }
+    @keyframes sweep {
+      from { transform: rotate(-28deg); }
+      to   { transform: rotate(28deg); }
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+    @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes hero-in { to { opacity: 1; transform: translateY(0); } }
+    @keyframes scan-sweep {
+      0%   { transform: translateY(-100%); opacity: 0; }
+      5%   { opacity: 1; }
+      90%  { opacity: 0.5; }
+      100% { transform: translateY(900px); opacity: 0; }
+    }
+    @keyframes data-stream {
+      0%   { transform: translateY(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.4; }
+      100% { transform: translateY(-280px); opacity: 0; }
+    }
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.25; }
+      50%      { opacity: 0.45; }
+    }
+    @keyframes wave {
+      0%   { opacity: 0; transform: scale(0.6); }
+      40%  { opacity: 0.8; }
+      100% { opacity: 0; transform: scale(1.3); }
+    }
+
+    /* ── Glyph strokes (themeable SVG parts) ─── */
+    .gl-casing { stroke: rgba(221,227,240,0.13); }
+    .gl-body   { fill: var(--bg3); stroke: rgba(221,227,240,0.18); }
+    .gl-acc    { stroke: var(--accent); }
+    .gl-acc2   { stroke: var(--accent2); }
+    .gl-fill   { fill: var(--accent); }
+    .gl-fill2  { fill: var(--accent2); }
+    .gl-dim    { stroke: rgba(221,227,240,0.12); }
+    .gl-label  { fill: var(--accent); font-family: var(--font-mono); font-size: 7px; opacity: 0.6; }
+    .gl-label2 { fill: var(--accent2); font-family: var(--font-mono); font-size: 7px; opacity: 0.6; }
+    .gl-text   { fill: var(--muted2); font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.05em; }
 
     /* ── Scroll reveal ───────────────────────── */
     .reveal {
@@ -245,22 +297,16 @@
       transform: translateY(40px);
       transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
     }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
-    .reveal-delay-5 { transition-delay: 0.5s; }
 
     /* ── Section shared ──────────────────────── */
-    section {
-      padding: 8rem 4rem;
-    }
+    section { padding: 8rem 4rem; position: relative; }
+
+    .container { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
 
     .section-label {
       font-family: var(--font-mono);
@@ -286,8 +332,35 @@
       font-weight: 700;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      color: #eef1fb;
+      color: var(--heading);
       margin-bottom: 1.5rem;
+    }
+
+    .section-head { margin-bottom: 4rem; }
+
+    .section-intro {
+      color: var(--muted2);
+      max-width: 640px;
+      font-size: 1rem;
+    }
+
+    /* ── Tags ────────────────────────────────── */
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 2px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(95,168,152,0.18);
+      white-space: nowrap;
+    }
+
+    .tag.blue {
+      background: var(--accent2-dim);
+      color: var(--accent2);
+      border-color: rgba(125,150,184,0.2);
     }
 
     /* ── About ───────────────────────────────── */
@@ -296,68 +369,86 @@
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1fr 380px;
       align-items: center;
-      gap: 0;
-      padding: 8rem 4rem;
-    }
-
-    .about-grid {
-      max-width: 100%;
-      padding-left: 0;
-    }
-
-    .about-stat-block { }
-
-    .about-stat-num {
-      font-size: clamp(4rem, 8vw, 7rem);
-      font-weight: 700;
-      letter-spacing: -0.05em;
-      color: var(--accent);
-      line-height: 1;
-      display: block;
-    }
-
-    .about-stat-label {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.5rem;
-    }
-
-    .about-stat-divider {
-      width: 40px; height: 2px;
-      background: var(--accent);
-      margin: 1.5rem 0;
-      opacity: 0.4;
+      gap: 2rem;
     }
 
     .about-text p {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       color: rgba(221,227,240,0.75);
       line-height: 1.8;
       margin-bottom: 1.5rem;
     }
 
-    .about-text p:last-child { margin-bottom: 0; }
-
     .about-text strong { color: var(--text); font-weight: 600; }
 
-    /* ── Projects ────────────────────────────── */
-    #projects { background: var(--bg); }
-
-    .projects-header {
-      max-width: 1100px; margin: 0 auto 4rem;
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 2.5rem;
     }
+
+    .stat {
+      background: var(--bg2);
+      padding: 1.25rem 1rem;
+    }
+
+    .stat-num {
+      display: block;
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    #ppCanvas { width: 100%; height: 100%; min-height: 420px; display: block; pointer-events: none; }
+
+    /* ── Projects ────────────────────────────── */
+    #projects { background: var(--bg); overflow: hidden; }
+
+    .projects-scanner {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      animation: scan-sweep 7s ease-in-out infinite;
+    }
+
+    .projects-stream {
+      position: absolute;
+      top: 100%;
+      width: 1px;
+      height: 280px;
+      background: linear-gradient(180deg, transparent, var(--accent), transparent);
+      pointer-events: none;
+      z-index: 0;
+      animation: data-stream 3.5s ease-in-out infinite;
+    }
+    .projects-stream.s1 { left: 8%;  animation-duration: 3.2s; }
+    .projects-stream.s2 { left: 30%; animation-delay: 0.8s; animation-duration: 4s; }
+    .projects-stream.s3 { left: 70%; animation-delay: 1.6s; animation-duration: 3.6s; }
+    .projects-stream.s4 { left: 92%; animation-delay: 0.4s; animation-duration: 4.2s; background: linear-gradient(180deg, transparent, var(--accent2), transparent); }
 
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5px;
-      max-width: 1100px;
-      margin: 0 auto;
       background: var(--border);
       border: 1px solid var(--border);
     }
@@ -367,8 +458,8 @@
       padding: 2.5rem;
       position: relative;
       overflow: hidden;
-      cursor: pointer;
       transition: background 0.3s;
+      display: flex; flex-direction: column;
     }
 
     .project-card:hover { background: var(--bg3); }
@@ -385,170 +476,196 @@
 
     .project-card:hover::before { transform: scaleX(1); }
 
+    .project-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .project-card.featured .project-visual { margin-bottom: 0; height: 240px; }
+
     .project-num {
       font-family: var(--font-mono);
       font-size: 0.65rem;
       color: var(--muted);
       letter-spacing: 0.1em;
       margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
     }
 
-    .project-placeholder {
-      width: 100%; height: 180px;
-      background: var(--surface);
+    .status-live {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--accent);
+      border: 1px solid rgba(95,168,152,0.3);
+      padding: 0.15rem 0.5rem;
+      border-radius: 2px;
+    }
+
+    .status-live::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 1.6s infinite;
+    }
+
+    .project-visual {
+      width: 100%; height: 190px;
+      background: var(--bg2);
       border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.75rem;
       position: relative;
       overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 20px 20px;
     }
 
-    .project-placeholder-stripes {
-      position: absolute; inset: 0;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 10px,
-        rgba(255,255,255,0.015) 10px,
-        rgba(255,255,255,0.015) 20px
-      );
-    }
-
-    .project-placeholder-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-align: center;
-      padding: 0.5rem;
-      position: relative; z-index: 1;
-    }
+    .project-visual svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
     .project-title {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 600;
-      color: #eef1fb;
+      color: var(--heading);
       line-height: 1.3;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.9rem;
     }
 
-    .project-desc {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.7;
+    .project-points {
+      list-style: none;
       margin-bottom: 1.5rem;
     }
 
-    .project-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
-
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      padding: 0.3rem 0.7rem;
-      border-radius: 2px;
-      background: var(--accent-dim);
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      border: 1px solid rgba(0,229,160,0.15);
-    }
-
-    .tag.blue {
-      background: rgba(61,158,255,0.1);
-      color: var(--accent2);
-      border-color: rgba(61,158,255,0.15);
-    }
-
-    /* ── Techniques & Methods (in Projects) ──── */
-    .methods-block {
-      max-width: 1100px;
-      margin: 5rem auto 0;
+    .project-points li {
+      font-size: 0.9rem;
+      color: var(--muted2);
+      line-height: 1.7;
+      padding-left: 1.1rem;
       position: relative;
-      z-index: 1;
+      margin-bottom: 0.5rem;
     }
 
-    .methods-header { margin-bottom: 2.5rem; }
-
-    .methods-title {
-      font-size: clamp(1.15rem, 2vw, 1.5rem);
-      font-weight: 600;
-      color: #eef1fb;
-      letter-spacing: -0.02em;
-      line-height: 1.4;
-      max-width: 780px;
-      margin-top: 0.75rem;
-    }
-
-    .methods-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .methods-col {
-      background: var(--bg);
-      padding: 1.75rem;
-      transition: background 0.3s;
-    }
-
-    .methods-col:hover { background: var(--bg3); }
-
-    .methods-col-title {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1.25rem;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-
-    .methods-col-title::before {
+    .project-points li::before {
       content: '';
-      display: block; width: 6px; height: 6px;
-      border-radius: 50%;
+      position: absolute; left: 0; top: 0.68em;
+      width: 6px; height: 1px;
       background: var(--accent);
     }
 
-    .methods-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    .project-points strong { color: var(--accent); font-weight: 600; }
+
+    .techniques-label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.6rem;
     }
 
-    @media (max-width: 900px) {
-      .methods-grid { grid-template-columns: 1fr; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    .project-footer { margin-top: auto; padding-top: 1.5rem; }
+
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid rgba(95,168,152,0.35);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    /* ── Skills ──────────────────────────────── */
-    #skills {
+    .project-link:hover { color: #fff; border-color: #fff; }
+    .project-link svg { width: 14px; height: 14px; fill: currentColor; }
+
+    /* ── Experience ──────────────────────────── */
+    #experience {
       background: var(--bg2);
       border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
-    .skills-header {
-      max-width: 1100px; margin: 0 auto 4rem;
+    .timeline { position: relative; padding-left: 2.25rem; }
+
+    .timeline::before {
+      content: '';
+      position: absolute; left: 6px; top: 6px; bottom: 6px;
+      width: 1px;
+      background: linear-gradient(180deg, var(--accent), var(--accent2), transparent);
     }
+
+    .job { position: relative; margin-bottom: 3.5rem; }
+    .job:last-child { margin-bottom: 0; }
+
+    .job::before {
+      content: '';
+      position: absolute; left: calc(-2.25rem + 1px); top: 0.4rem;
+      width: 11px; height: 11px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 2px solid var(--accent);
+    }
+
+    .job-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      flex-wrap: wrap; gap: 0.25rem 1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .job-company { font-size: 1.2rem; font-weight: 600; color: var(--heading); }
+
+    .job-meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .job-role {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent2);
+      margin-bottom: 1rem;
+    }
+
+    .job .project-points li { font-size: 0.95rem; }
+
+    /* ── Skills ──────────────────────────────── */
+    #skills { background: var(--bg); overflow: hidden; }
+
+    .skills-legend {
+      display: flex; flex-wrap: wrap; gap: 1rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-top: 1.5rem;
+    }
+
+    .skills-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
 
     .skills-groups {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
+      gap: 1.5rem;
     }
 
     .skill-group {
       background: var(--bg3);
       border: 1px solid var(--border);
-      padding: 2rem;
+      padding: 1.75rem;
       border-radius: 2px;
       transition: border-color 0.3s, transform 0.3s;
     }
 
     .skill-group:hover {
-      border-color: rgba(0,229,160,0.2);
+      border-color: rgba(95,168,152,0.25);
       transform: translateY(-4px);
     }
 
@@ -558,7 +675,7 @@
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
       display: flex; align-items: center; gap: 0.5rem;
     }
 
@@ -569,79 +686,118 @@
       background: var(--accent);
     }
 
-    .skill-item {
-      margin-bottom: 1.25rem;
-    }
+    .skill-list { list-style: none; }
 
-    .skill-item:last-child { margin-bottom: 0; }
-
-    .skill-name {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.88rem;
-      font-weight: 500;
+    .skill-list li {
+      display: flex; justify-content: space-between; align-items: center; gap: 0.75rem;
+      font-size: 0.9rem;
       color: var(--text);
-      margin-bottom: 0.5rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed var(--border);
     }
 
-    .skill-pct {
+    .skill-list li:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .skill-sub { display: block; font-size: 0.72rem; color: var(--muted); }
+
+    .lvl {
+      flex-shrink: 0;
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2px;
+      border: 1px solid;
+    }
+
+    .lvl-hands  { color: var(--accent);  border-color: rgba(95,168,152,0.4); background: var(--accent-dim); }
+    .lvl-basic  { color: var(--accent2); border-color: rgba(125,150,184,0.35); background: var(--accent2-dim); }
+    .lvl-theory { color: var(--muted2);  border-color: var(--border); }
+
+    .skills-deco-left, .skills-deco-right {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+    }
+
+    .skills-deco-left  { left: -20px; }
+    .skills-deco-right { right: -20px; transform: translateY(-50%) scaleX(-1); }
+
+    /* ── Education ───────────────────────────── */
+    #education {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .edu-card { background: var(--bg2); padding: 2.5rem; }
+
+    .edu-dates {
       font-family: var(--font-mono);
       font-size: 0.68rem;
       color: var(--muted);
+      letter-spacing: 0.08em;
+      margin-bottom: 1rem;
     }
 
-    .skill-bar-track {
-      height: 2px;
-      background: var(--border);
-      border-radius: 1px;
-      overflow: hidden;
+    .edu-degree { font-size: 1.25rem; font-weight: 600; color: var(--heading); line-height: 1.3; margin-bottom: 0.35rem; }
+    .edu-school { color: var(--accent2); font-size: 0.95rem; margin-bottom: 1.25rem; }
+    .edu-detail { color: var(--muted2); font-size: 0.92rem; line-height: 1.7; }
+
+    .edu-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      margin-top: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(95,168,152,0.35);
+      background: var(--accent-dim);
+      padding: 0.35rem 0.75rem;
+      border-radius: 2px;
     }
 
-    .skill-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: 1px;
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform 1.2s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .skill-bar-fill.animated { transform: scaleX(1); }
-
-    /* ── Resume ──────────────────────────────── */
-    #resume {
+    /* ── Contact ─────────────────────────────── */
+    #contact {
       background: var(--bg);
       border-top: 1px solid var(--border);
       text-align: center;
       padding: 10rem 4rem;
     }
 
-    .resume-inner {
-      max-width: 600px; margin: 0 auto;
-    }
+    .contact-inner { max-width: 640px; margin: 0 auto; }
+    .contact-inner .section-label { justify-content: center; }
+    .contact-inner .section-label::after { display: none; }
 
-    .resume-inner .section-label { justify-content: center; }
-    .resume-inner .section-label::after { display: none; }
-
-    .resume-tagline {
+    .contact-tagline {
       font-size: 1.05rem;
-      color: var(--muted);
+      color: var(--muted2);
       line-height: 1.7;
       margin-bottom: 3rem;
     }
+
+    .contact-ctas { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
     /* ── Footer ──────────────────────────────── */
     footer {
       background: var(--bg2);
       border-top: 1px solid var(--border);
       padding: 2rem 4rem;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
     }
 
-    .footer-mono {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-    }
+    .footer-mono { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); }
 
     .footer-dot {
       display: inline-block; width: 6px; height: 6px;
@@ -650,12 +806,6 @@
       animation: pulse-dot 2s infinite;
     }
 
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-
-    /* ── Terminal cursor ─────────────────────── */
     .cursor {
       display: inline-block;
       width: 2px; height: 1.1em;
@@ -665,193 +815,78 @@
       animation: blink 1s step-end infinite;
     }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
-
-    /* ── Hero anim ───────────────────────────── */
+    /* ── Hero entrance ───────────────────────── */
     .hero-left > * {
       opacity: 0;
       transform: translateY(30px);
       animation: hero-in 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
     }
-
     .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
     .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
     .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
-    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
-
-    @keyframes hero-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .hero-left > *:nth-child(4) { animation-delay: 0.5s; }
+    .hero-left > *:nth-child(5) { animation-delay: 0.6s; }
 
     .hero-right {
       opacity: 0;
+      transform: translateY(30px);
       animation: hero-in 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
     }
 
-    /* ── Section animations ──────────────────── */
-
-    /* Shared: sections need position relative */
-    #about, #projects, #skills { position: relative; }
-    #projects, #skills { overflow: hidden; }
-
-    /* Circuit trace — SVG paths that draw themselves */
-    @keyframes trace-draw {
-      0%   { stroke-dashoffset: 600; opacity: 0; }
-      5%   { opacity: 1; }
-      80%  { stroke-dashoffset: 0; opacity: 1; }
-      100% { stroke-dashoffset: 0; opacity: 0.15; }
+    /* ── Responsive ──────────────────────────── */
+    @media (max-width: 1480px) {
+      .skills-deco-left, .skills-deco-right { display: none; }
     }
 
-    @keyframes trace-loop {
-      0%   { stroke-dashoffset: 600; }
-      100% { stroke-dashoffset: -600; }
+    @media (max-width: 1000px) {
+      .skills-groups { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @keyframes node-pulse {
-      0%, 100% { r: 3; opacity: 0.6; }
-      50%       { r: 5; opacity: 1; }
-    }
-
-    @keyframes float-up {
-      0%   { transform: translateY(0px) scale(1); opacity: 0.6; }
-      50%  { transform: translateY(-12px) scale(1.05); opacity: 1; }
-      100% { transform: translateY(0px) scale(1); opacity: 0.6; }
-    }
-
-    @keyframes scan-sweep {
-      0%   { transform: translateY(-100%); opacity: 0; }
-      5%   { opacity: 1; }
-      90%  { opacity: 0.5; }
-      100% { transform: translateY(900px); opacity: 0; }
-    }
-
-    @keyframes data-stream {
-      0%   { transform: translateY(0); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 0.4; }
-      100% { transform: translateY(-280px); opacity: 0; }
-    }
-
-    @keyframes orbit {
-      from { transform: rotate(0deg) translateX(38px) rotate(0deg); }
-      to   { transform: rotate(360deg) translateX(38px) rotate(-360deg); }
-    }
-
-    @keyframes orbit-rev {
-      from { transform: rotate(0deg) translateX(24px) rotate(0deg); }
-      to   { transform: rotate(-360deg) translateX(24px) rotate(360deg); }
-    }
-
-    @keyframes glow-pulse {
-      0%, 100% { opacity: 0.25; filter: blur(20px); }
-      50%       { opacity: 0.45; filter: blur(28px); }
-    }
-
-    /* About — circuit decoration */
-    .about-deco {
-      position: absolute;
-      top: 0; right: 0;
-      width: 420px; height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .about-deco svg { width: 100%; height: 100%; }
-
-    /* About — left floating arm */
-    .about-deco-left {
-      position: absolute;
-      top: 50%; left: -20px;
-      transform: translateY(-50%);
-      pointer-events: none;
-      z-index: 0;
-      width: 200px; height: 300px;
-    }
-
-    /* Projects — scanner beam */
-    .projects-scanner {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-      animation: scan-sweep 6s ease-in-out infinite;
-    }
-
-    /* Projects — side data streams */
-    .projects-stream {
-      position: absolute;
-      top: 100%;
-      width: 1px;
-      height: 280px;
-      background: linear-gradient(180deg, transparent, var(--accent), transparent);
-      pointer-events: none;
-      z-index: 1;
-      animation: data-stream 3.5s ease-in-out infinite;
-    }
-
-    .projects-stream:nth-child(2) { left: 8%;  animation-delay: 0s;    animation-duration: 3.2s; }
-    .projects-stream:nth-child(3) { left: 25%; animation-delay: 0.8s;  animation-duration: 4s; }
-    .projects-stream:nth-child(4) { left: 50%; animation-delay: 1.6s;  animation-duration: 3.6s; }
-    .projects-stream:nth-child(5) { left: 75%; animation-delay: 0.4s;  animation-duration: 3s; }
-    .projects-stream:nth-child(6) { left: 92%; animation-delay: 2s;    animation-duration: 4.2s; background: linear-gradient(180deg, transparent, var(--accent2), transparent); }
-
-    /* Skills — side robot arm decorations */
-    .skills-deco-left, .skills-deco-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .skills-deco-left  { left: -10px; }
-    .skills-deco-right { right: -10px; }
-
-    /* Glow blob behind skills deco */
-    .skills-glow {
-      position: absolute;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      animation: glow-pulse 4s ease-in-out infinite;
-    }
-
-    .skills-glow-left  { left: -100px; top: 50%; transform: translateY(-50%); background: radial-gradient(circle, rgba(179,36,20,0.18) 0%, transparent 70%); }
-    .skills-glow-right { right: -100px; top: 50%; transform: translateY(-50%); background: radial-gradient(circle, rgba(255,174,61,0.15) 0%, transparent 70%); animation-delay: 2s; }
-
-    .skills-header, .skills-groups { position: relative; z-index: 1; }
-
-    .about-text p { font-size: 1.05rem; color: rgba(221,227,240,0.75); line-height: 1.8; margin-bottom: 1.5rem; }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-text strong { color: var(--text); font-weight: 600; }
     @media (max-width: 900px) {
       nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.5rem; }
+      .nav-links { gap: 1.25rem; }
       section { padding: 5rem 1.5rem; }
 
       #hero {
         grid-template-columns: 1fr;
         padding: 7rem 1.5rem 4rem;
-        text-align: center;
       }
 
       .hero-right { display: none; }
-      .hero-ctas { justify-content: center; }
 
       #about { grid-template-columns: 1fr; }
-      #about canvas { min-height: 300px; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .skills-groups { grid-template-columns: 1fr; }
+      #ppCanvas { min-height: 320px; }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
 
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card { padding: 1.75rem; }
+      .project-card.featured { grid-template-columns: 1fr; gap: 0; }
+      .project-card.featured .project-visual { margin-bottom: 1.75rem; height: 200px; }
+
+      .edu-grid { grid-template-columns: 1fr; }
+      .edu-card { padding: 1.75rem; }
+
+      #contact { padding: 6rem 1.5rem; }
+
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-logo { display: none; }
+      nav { justify-content: center; }
+      .nav-links { gap: 1rem; }
+      .nav-links a { font-size: 0.65rem; letter-spacing: 0.04em; }
+      .skills-groups { grid-template-columns: 1fr; }
+      .tag { white-space: normal; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
 </head>
@@ -859,12 +894,13 @@
 
   <!-- Nav -->
   <nav>
-    <div class="nav-logo">AS<span>.init()</span></div>
+    <a href="#hero" class="nav-logo">AS<span>.init()</span></a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#skills">Skills</a></li>
-      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
@@ -874,19 +910,25 @@
     <div class="hero-glow"></div>
 
     <div class="hero-left">
-      <div class="hero-tag">Robotics Engineer · Masters Student</div>
+      <div class="hero-tag">Robotics · Autonomy · Perception</div>
       <h1 class="hero-name">
         Aravind
         <span class="line2">Suresh<span class="cursor"></span></span>
       </h1>
-      <p class="hero-role">Mechatronics Engineer & M.Sc. student in Autonomy Technologies at FAU Erlangen-Nuremberg. Gold Medal graduate. 3.5 years in software.</p>
+      <p class="hero-role">Mechatronics Engineer and M.Sc. student in Autonomy Technologies at FAU Erlangen-Nürnberg, building ROS2-based robots on real hardware.</p>
+      <div class="hero-facts">
+        <span>B.Eng. Gold Medal · Rank 1</span>
+        <span>3.5 yrs industry software</span>
+        <span>Erlangen, Germany</span>
+      </div>
       <div class="hero-ctas">
         <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="#resume" class="btn-outline">Download CV</a>
+        <a href="https://github.com/aravinds1610" target="_blank" rel="noopener" class="btn-outline">GitHub</a>
+        <a href="#contact" class="btn-outline">Contact</a>
       </div>
     </div>
 
-    <div class="hero-right">
+    <div class="hero-right" aria-hidden="true">
       <div class="arm-container">
         <div class="arm-rings">
           <div class="arm-ring"></div>
@@ -916,7 +958,6 @@
 
           <!-- LINK 1 (upper arm) — pivots at A2 -->
           <g style="transform-origin:190px 300px; animation: arm1 7s ease-in-out infinite;">
-            <!-- casing -->
             <line x1="190" y1="300" x2="238" y2="208" stroke="rgba(220,227,240,0.14)" stroke-width="13" stroke-linecap="round"/>
             <line x1="190" y1="300" x2="238" y2="208" stroke="url(#lg1)" stroke-width="2.5" stroke-linecap="round"/>
 
@@ -982,7 +1023,6 @@
           <text id="th5" x="286" y="84" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.28)">A5:—°</text>
           <text id="th6" x="286" y="94" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.26)">A6:—°</text>
 
-          <!-- Gradients -->
           <defs>
             <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stop-color="#3d9eff" stop-opacity="0.7"/>
@@ -1002,184 +1042,354 @@
   <section id="about">
     <div class="about-text">
       <div class="section-label reveal">About</div>
-      <h2 class="section-title reveal reveal-delay-1">Precision engineer. Autonomous systems builder.</h2>
+      <h2 class="section-title reveal reveal-delay-1">From mechatronics to autonomous systems.</h2>
       <p class="reveal reveal-delay-2">
-        I'm <strong>Aravind Suresh</strong> — a Mechatronics Engineer turned robotics researcher, currently pursuing an M.Sc. in <strong>Autonomy Technologies</strong> at FAU Erlangen-Nürnberg. My focus sits at the intersection of perception, motion planning, and the kind of robot behaviour that holds up outside of simulation.
+        I'm <strong>Aravind Suresh</strong>, a Mechatronics Engineer and M.Sc. student in <strong>Autonomy Technologies</strong> at FAU Erlangen-Nürnberg. My focus is <strong>robotics, control, motion planning and perception</strong>, with coursework in robot dynamics and numerical optimisation.
       </p>
       <p class="reveal reveal-delay-3">
-        I came up through industrial automation — PLC programming, TIA Portal, process control — and that grounding in real hardware constraints shapes how I approach every problem. These days I'm most interested in how robots build and maintain a coherent understanding of the world around them, and how that understanding drives reliable action. I'm actively working toward research and engineering roles at organisations pushing that boundary: DLR, Fraunhofer IPA, KUKA.
+        I'm currently part of an FAU team bringing up a <strong>Clearpath Husky AGV</strong>: integrating radar, lidar and an RGB camera into a ROS2 pipeline, then tuning and validating navigation and SLAM on the real robot. Before my Master's I spent about 3.5 years in industry software. At Xebia I led a team of four developers on automation and system-integration work for Pharma and Insurance clients.
       </p>
-      <p class="reveal reveal-delay-4" style="margin-top:1rem;">
-        <span style="font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);">📍 Erlangen, Germany &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f0e3f0e7f8fff5a0a7a3a1a1a1d1f6fcf0f8fdbff2fefc">[email&#160;protected]</a></span>
+      <p class="reveal reveal-delay-4">
+        I graduated first in my B.Eng. class (Gold Medal) and I like work that runs on real hardware. I'm looking for robotics engineering and research roles in navigation, perception and manipulation.
       </p>
+
+      <div class="about-stats reveal reveal-delay-4">
+        <div class="stat"><span class="stat-num">Rank 1</span><span class="stat-label">B.Eng. Gold Medal</span></div>
+        <div class="stat"><span class="stat-num">1.3</span><span class="stat-label">German grade</span></div>
+        <div class="stat"><span class="stat-num">96%</span><span class="stat-label">CNN defect accuracy</span></div>
+        <div class="stat"><span class="stat-num">−40%</span><span class="stat-label">Dev cycle time</span></div>
+      </div>
     </div>
-    <canvas id="ppCanvas" style="width:100%;height:100%;min-height:420px;display:block;pointer-events:none;"></canvas>
+    <canvas id="ppCanvas" aria-hidden="true"></canvas>
   </section>
 
   <!-- Projects -->
   <section id="projects">
-    <!-- Scanning beam sweeps down through cards -->
     <div class="projects-scanner"></div>
-    <!-- Vertical data streams rising from bottom -->
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-header">
-      <div class="section-label reveal">Projects</div>
-      <h2 class="section-title reveal reveal-delay-1">What I've built</h2>
-    </div>
+    <div class="projects-stream s1"></div>
+    <div class="projects-stream s2"></div>
+    <div class="projects-stream s3"></div>
+    <div class="projects-stream s4"></div>
 
-    <div class="projects-grid">
-
-      <!-- Project 1 -->
-      <div class="project-card reveal">
-        <div class="project-num">01 / MACHINE VISION · 2022</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>3-DOF robot arm / vision pipeline</div>
-        </div>
-        <div class="project-title">Machine Vision Based 3-DOF Robot for Fruit Defect Identification &amp; Segregation</div>
-        <p class="project-desc">Sorting defective fruit by visual inspection is slow and inconsistent when done manually. Built a CNN classification pipeline in Python, interfaced it with a 3-DOF Arduino-driven arm via PyFirmata, and validated end-to-end actuation from camera trigger to bin selection. <strong style="color:var(--accent);">96% classification accuracy.</strong></p>
-        <div class="project-tags">
-          <span class="tag">CNN</span>
-          <span class="tag">Computer Vision</span>
-          <span class="tag">Robot Control</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">OpenCV</span>
-          <span class="tag blue">Arduino</span>
-        </div>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label reveal">Projects</div>
+        <h2 class="section-title reveal reveal-delay-1">Robots I've built and worked on</h2>
+        <p class="section-intro reveal reveal-delay-2">Each project lists the techniques it uses, from perception through to actuation.</p>
       </div>
 
-      <!-- Project 2 -->
-      <div class="project-card reveal reveal-delay-1">
-        <div class="project-num">02 / EMBEDDED CONTROL · 2021</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>PIR sensors / control circuit</div>
-        </div>
-        <div class="project-title">Intelligent Light Control System</div>
-        <p class="project-desc">Real-time automated lighting control using industrial PIR sensors. Selected under the college "Project Future" fund. Full system documentation and test records maintained throughout development.</p>
-        <div class="project-tags">
-          <span class="tag">PIR Sensing</span>
-          <span class="tag">Embedded Control</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">Microcontroller</span>
-        </div>
-      </div>
+      <div class="projects-grid">
 
-      <!-- Project 3 -->
-      <div class="project-card reveal reveal-delay-2">
-        <div class="project-num">03 / AUTONOMOUS ROBOT · 2020</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>autonomous robot / sensors</div>
-        </div>
-        <div class="project-title">Autonomous Garbage Collector Bot</div>
-        <p class="project-desc">Designed and built an autonomous robot integrating Python-based control, sensor feedback, and embedded actuation end-to-end — from hardware assembly to software control loop.</p>
-        <div class="project-tags">
-          <span class="tag">Autonomous Systems</span>
-          <span class="tag">Sensor Feedback</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">Embedded C</span>
-        </div>
-      </div>
-
-      <!-- Project 4 -->
-      <div class="project-card reveal reveal-delay-1">
-        <div class="project-num">04 / SECURITY SYSTEMS · 2020</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>camera / edge detection</div>
-        </div>
-        <div class="project-title">Burglar Alarm &amp; Security System</div>
-        <p class="project-desc">Semi-automated edge detection system combining PIR motion sensing with camera-based verification. Developed Python diagnostic scripts and maintained full system state documentation.</p>
-        <div class="project-tags">
-          <span class="tag">Edge Detection</span>
-          <span class="tag">PIR Sensing</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">OpenCV</span>
-        </div>
-      </div>
-
-
-
-    </div>
-
-    <!-- Techniques & methods applied across projects (for job applications) -->
-    <div class="methods-block">
-      <div class="methods-header reveal">
-        <div class="section-label">Techniques &amp; Methods in Practice</div>
-        <h3 class="methods-title">The tactics I apply on projects — and the stack I'm actively deepening for robotics engineering roles.</h3>
-      </div>
-
-      <div class="methods-grid">
-        <div class="methods-col reveal">
-          <div class="methods-col-title">Manipulation &amp; Motion Planning</div>
-          <div class="methods-tags">
-            <span class="tag">Forward / Inverse Kinematics</span>
-            <span class="tag">6-DOF Trajectory Planning</span>
-            <span class="tag">RRT / RRT*</span>
-            <span class="tag">A* Search</span>
-            <span class="tag">MoveIt 2</span>
-            <span class="tag">Collision-Free Planning</span>
-            <span class="tag">Workspace &amp; Joint-Limit Analysis</span>
-            <span class="tag">Pick-and-Place Pipelines</span>
+        <!-- 01 Husky AGV (featured) -->
+        <article class="project-card featured reveal">
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 400 240" fill="none" preserveAspectRatio="xMidYMid meet">
+              <!-- ground -->
+              <line x1="20" y1="196" x2="380" y2="196" class="gl-dim" stroke-width="1" stroke-dasharray="4 6"/>
+              <!-- point-cloud returns -->
+              <g class="gl-fill" opacity="0.55">
+                <circle cx="40" cy="120" r="1.4"/><circle cx="46" cy="104" r="1.4"/><circle cx="52" cy="90" r="1.4"/><circle cx="44" cy="136" r="1.4"/>
+                <circle cx="50" cy="150" r="1.4"/><circle cx="58" cy="78" r="1.4"/><circle cx="48" cy="166" r="1.4"/>
+              </g>
+              <g class="gl-fill2" opacity="0.55">
+                <circle cx="352" cy="96" r="1.4"/><circle cx="346" cy="110" r="1.4"/><circle cx="356" cy="124" r="1.4"/><circle cx="350" cy="140" r="1.4"/>
+                <circle cx="344" cy="82" r="1.4"/><circle cx="358" cy="156" r="1.4"/><circle cx="348" cy="170" r="1.4"/>
+              </g>
+              <!-- lidar sweep -->
+              <g style="transform-origin:200px 108px; animation: sweep 2.6s ease-in-out infinite alternate;">
+                <path d="M200 108 L360 60 A170 170 0 0 1 360 156 Z" class="gl-acc" stroke-width="0.8" fill="rgba(95,168,152,0.06)"/>
+              </g>
+              <g style="transform-origin:200px 108px; animation: sweep 2.6s ease-in-out infinite alternate-reverse;">
+                <path d="M200 108 L40 60 A170 170 0 0 0 40 156 Z" class="gl-acc2" stroke-width="0.8" fill="rgba(125,150,184,0.05)"/>
+              </g>
+              <!-- chassis -->
+              <rect x="128" y="128" width="144" height="40" rx="6" class="gl-body" stroke-width="1.2"/>
+              <rect x="140" y="120" width="120" height="10" rx="2" class="gl-body" stroke-width="1"/>
+              <line x1="136" y1="148" x2="264" y2="148" class="gl-acc" stroke-width="1" opacity="0.5"/>
+              <!-- wheels -->
+              <circle cx="158" cy="176" r="20" class="gl-body" stroke-width="1.4"/>
+              <circle cx="158" cy="176" r="8" class="gl-acc2" stroke-width="1.2"/>
+              <circle cx="242" cy="176" r="20" class="gl-body" stroke-width="1.4"/>
+              <circle cx="242" cy="176" r="8" class="gl-acc2" stroke-width="1.2"/>
+              <!-- sensor mast: lidar puck -->
+              <line x1="200" y1="120" x2="200" y2="112" class="gl-casing" stroke-width="4"/>
+              <rect x="188" y="98" width="24" height="14" rx="3" class="gl-body" stroke-width="1.2"/>
+              <circle cx="200" cy="105" r="3" class="gl-fill"/>
+              <!-- radar (front) + camera -->
+              <rect x="272" y="134" width="8" height="18" rx="1.5" class="gl-acc2" stroke-width="1.2"/>
+              <rect x="244" y="110" width="16" height="10" rx="2" class="gl-acc" stroke-width="1.1"/>
+              <circle cx="256" cy="115" r="2.2" class="gl-fill"/>
+              <!-- labels -->
+              <text x="214" y="96" class="gl-label">LIDAR</text>
+              <text x="284" y="146" class="gl-label2">RADAR</text>
+              <text x="236" y="106" class="gl-label">RGB</text>
+              <text x="24" y="226" class="gl-text">/scan → slam → nav2 → /cmd_vel</text>
+            </svg>
           </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-1">
-          <div class="methods-col-title">Perception &amp; State Estimation</div>
-          <div class="methods-tags">
-            <span class="tag blue">Computer Vision / OpenCV</span>
-            <span class="tag blue">CNN / Deep Learning</span>
-            <span class="tag blue">Sensor Fusion</span>
-            <span class="tag blue">SLAM</span>
-            <span class="tag blue">State Estimation &amp; Localisation</span>
-            <span class="tag blue">Occupancy Mapping</span>
+          <div>
+            <div class="project-num">01 / MOBILE ROBOTICS · FAU TEAM PROJECT <span class="status-live">ONGOING · SINCE APR 2026</span></div>
+            <h3 class="project-title">Autonomous Navigation with Husky AGV (ROS2)</h3>
+            <ul class="project-points">
+              <li>As part of the team, I set up and integrate the sensors (<strong>radar, lidar, RGB camera</strong>) on a Clearpath Robotics Husky in a ROS2 control pipeline.</li>
+              <li>I set up, tuned and validated the <strong>ROS2 navigation stack</strong> and <strong>SLAM-based mapping</strong> through structured tests on the real robot.</li>
+            </ul>
+            <div class="techniques-label">Techniques applied</div>
+            <div class="project-tags">
+              <span class="tag">ROS2</span>
+              <span class="tag">Navigation Stack</span>
+              <span class="tag">SLAM Mapping</span>
+              <span class="tag">Point Cloud Processing</span>
+              <span class="tag blue">Lidar</span>
+              <span class="tag blue">Radar</span>
+              <span class="tag blue">RGB Camera</span>
+              <span class="tag blue">Sensor Integration</span>
+              <span class="tag blue">Real-Hardware Testing</span>
+            </div>
           </div>
-        </div>
+        </article>
 
-        <div class="methods-col reveal reveal-delay-2">
-          <div class="methods-col-title">Control Systems</div>
-          <div class="methods-tags">
-            <span class="tag">PID Control</span>
-            <span class="tag">State-Space Control</span>
-            <span class="tag">Real-Time Control Loops</span>
-            <span class="tag">Feedback / Closed-Loop Tuning</span>
+        <!-- 02 Fruit defect 3-DOF robot -->
+        <article class="project-card reveal">
+          <div class="project-num">02 / MACHINE VISION · MANIPULATION</div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 320 190" fill="none" preserveAspectRatio="xMidYMid meet">
+              <!-- camera + FOV -->
+              <rect x="206" y="18" width="26" height="14" rx="2" class="gl-body" stroke-width="1.2"/>
+              <circle cx="219" cy="25" r="3" class="gl-fill2"/>
+              <path d="M210 32 L178 120 M228 32 L268 120" class="gl-acc2" stroke-width="0.8" stroke-dasharray="3 3"/>
+              <text x="238" y="28" class="gl-label2">DEPTH CAM</text>
+              <!-- conveyor -->
+              <line x1="160" y1="132" x2="304" y2="132" class="gl-casing" stroke-width="6" stroke-linecap="round"/>
+              <circle cx="168" cy="132" r="3" class="gl-dim" stroke-width="1"/><circle cx="296" cy="132" r="3" class="gl-dim" stroke-width="1"/>
+              <!-- fruit -->
+              <circle cx="200" cy="120" r="9" class="gl-acc" stroke-width="1.3"/>
+              <circle cx="246" cy="120" r="9" class="gl-acc2" stroke-width="1.3"/>
+              <circle cx="249" cy="117" r="2.2" class="gl-fill2"/>
+              <rect x="234" y="106" width="24" height="24" class="gl-acc2" stroke-width="0.8" stroke-dasharray="2 2"/>
+              <text x="230" y="102" class="gl-label2">DEFECT 0.96</text>
+              <!-- bins -->
+              <path d="M24 158 L28 180 L64 180 L68 158" class="gl-acc" stroke-width="1.2"/>
+              <path d="M96 158 L100 180 L136 180 L140 158" class="gl-acc2" stroke-width="1.2"/>
+              <text x="36" y="174" class="gl-label">GOOD</text>
+              <text x="102" y="174" class="gl-label2">DEFECT</text>
+              <!-- 3-DOF arm -->
+              <rect x="70" y="140" width="26" height="8" rx="1.5" class="gl-body" stroke-width="1"/>
+              <circle cx="83" cy="140" r="5" class="gl-acc" stroke-width="1.2"/>
+              <g style="transform-origin:83px 140px; animation: arm1 6s ease-in-out infinite;">
+                <line x1="83" y1="140" x2="96" y2="84" class="gl-casing" stroke-width="8" stroke-linecap="round"/>
+                <line x1="83" y1="140" x2="96" y2="84" class="gl-acc" stroke-width="1.6"/>
+                <circle cx="96" cy="84" r="4.5" class="gl-acc2" stroke-width="1.2"/>
+                <g style="transform-origin:96px 84px; animation: arm2 4.5s ease-in-out infinite;">
+                  <line x1="96" y1="84" x2="146" y2="70" class="gl-casing" stroke-width="6" stroke-linecap="round"/>
+                  <line x1="96" y1="84" x2="146" y2="70" class="gl-acc2" stroke-width="1.4"/>
+                  <circle cx="146" cy="70" r="3.5" class="gl-acc" stroke-width="1.2"/>
+                  <g style="transform-origin:146px 70px; animation: arm3 3.5s ease-in-out infinite;">
+                    <line x1="146" y1="70" x2="152" y2="92" class="gl-acc" stroke-width="1.4"/>
+                    <path d="M146 96 L152 92 L158 96 M146 96 L146 104 M158 96 L158 104" class="gl-acc" stroke-width="1.3"/>
+                  </g>
+                </g>
+              </g>
+              <text x="16" y="22" class="gl-text">3-DOF · CNN → PyFirmata → servo</text>
+            </svg>
           </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-1">
-          <div class="methods-col-title">Middleware &amp; Simulation</div>
-          <div class="methods-tags">
-            <span class="tag">ROS 2</span>
-            <span class="tag">Nav2</span>
-            <span class="tag">Gazebo</span>
-            <span class="tag">CARLA</span>
-            <span class="tag">tf2 / URDF</span>
-          </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-2">
-          <div class="methods-col-title">Programming</div>
-          <div class="methods-tags">
+          <h3 class="project-title">Machine Vision Based 3-DOF Robot for Fruit Defect Identification &amp; Segregation</h3>
+          <ul class="project-points">
+            <li>Designed and built a real <strong>3-DOF robotic manipulator</strong> with a gripper end-effector. A depth camera feeds a <strong>CNN defect classifier (96% accuracy)</strong> that drives real-time manipulation decisions.</li>
+            <li>Wrote the motion control in <strong>Embedded C</strong> and connected the arm to Python via <strong>PyFirmata</strong>, closing the loop from perception to decision to actuation on real hardware.</li>
+          </ul>
+          <div class="techniques-label">Techniques applied</div>
+          <div class="project-tags">
+            <span class="tag">CNN Classification</span>
+            <span class="tag">Computer Vision</span>
+            <span class="tag">Depth Camera</span>
+            <span class="tag">Manipulator Kinematics</span>
+            <span class="tag">Gripper End-Effector</span>
             <span class="tag blue">Python</span>
-            <span class="tag blue">C++</span>
+            <span class="tag blue">PyFirmata</span>
             <span class="tag blue">Embedded C</span>
-            <span class="tag blue">Git / Linux</span>
           </div>
+          <div class="project-footer">
+            <a class="project-link" href="https://github.com/aravinds1610/FruitSegreagtionRobotBasedOnMachineVision" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+              View source on GitHub →
+            </a>
+          </div>
+        </article>
+
+        <!-- 03 Garbage collector bot -->
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-num">03 / MOBILE MANIPULATION</div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 320 190" fill="none" preserveAspectRatio="xMidYMid meet">
+              <line x1="10" y1="160" x2="310" y2="160" class="gl-dim" stroke-width="1" stroke-dasharray="4 6"/>
+              <!-- obstacle + ultrasonic waves -->
+              <rect x="276" y="104" width="22" height="56" class="gl-dim" stroke-width="1.2"/>
+              <g class="gl-acc2" stroke-width="1">
+                <path d="M244 116 Q252 126 244 136" style="transform-origin:244px 126px; animation: wave 1.8s ease-out infinite;"/>
+                <path d="M252 110 Q264 126 252 142" style="transform-origin:252px 126px; animation: wave 1.8s ease-out infinite 0.6s;"/>
+              </g>
+              <!-- base -->
+              <rect x="110" y="112" width="128" height="30" rx="4" class="gl-body" stroke-width="1.2"/>
+              <rect x="236" y="120" width="8" height="12" rx="1" class="gl-acc2" stroke-width="1.1"/>
+              <circle cx="134" cy="148" r="12" class="gl-body" stroke-width="1.3"/><circle cx="134" cy="148" r="4" class="gl-acc" stroke-width="1"/>
+              <circle cx="214" cy="148" r="12" class="gl-body" stroke-width="1.3"/><circle cx="214" cy="148" r="4" class="gl-acc" stroke-width="1"/>
+              <!-- onboard container -->
+              <path d="M178 112 L182 84 L226 84 L230 112" class="gl-acc" stroke-width="1.2"/>
+              <text x="186" y="80" class="gl-label">BIN</text>
+              <!-- servo arm -->
+              <circle cx="124" cy="112" r="4.5" class="gl-acc" stroke-width="1.2"/>
+              <g style="transform-origin:124px 112px; animation: arm1 5s ease-in-out infinite;">
+                <line x1="124" y1="112" x2="102" y2="70" class="gl-casing" stroke-width="7" stroke-linecap="round"/>
+                <line x1="124" y1="112" x2="102" y2="70" class="gl-acc" stroke-width="1.5"/>
+                <circle cx="102" cy="70" r="3.5" class="gl-acc2" stroke-width="1.2"/>
+                <g style="transform-origin:102px 70px; animation: arm2 4s ease-in-out infinite;">
+                  <line x1="102" y1="70" x2="66" y2="112" class="gl-casing" stroke-width="5" stroke-linecap="round"/>
+                  <line x1="102" y1="70" x2="66" y2="112" class="gl-acc2" stroke-width="1.3"/>
+                  <path d="M60 120 L66 112 L72 120" class="gl-acc" stroke-width="1.3"/>
+                </g>
+              </g>
+              <!-- item on floor -->
+              <rect x="56" y="148" width="14" height="12" rx="2" class="gl-acc2" stroke-width="1.1"/>
+              <text x="16" y="22" class="gl-text">sense → avoid → pick → store</text>
+            </svg>
+          </div>
+          <h3 class="project-title">Autonomous Garbage Collector Bot</h3>
+          <ul class="project-points">
+            <li>Built a mobile, sensor-guided robot with a <strong>servo-controlled robotic arm</strong> that collects items into an onboard container.</li>
+            <li>Combined embedded control with <strong>real-time sensor feedback</strong> for autonomous navigation and obstacle avoidance.</li>
+          </ul>
+          <div class="techniques-label">Techniques applied</div>
+          <div class="project-tags">
+            <span class="tag">Mobile Manipulation</span>
+            <span class="tag">Autonomous Navigation</span>
+            <span class="tag">Obstacle Avoidance</span>
+            <span class="tag">Servo Arm Control</span>
+            <span class="tag blue">Embedded Control</span>
+            <span class="tag blue">Sensor Feedback</span>
+          </div>
+        </article>
+
+        <!-- 04 Intelligent light control -->
+        <article class="project-card reveal">
+          <div class="project-num">04 / SENSING · AUTOMATION</div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 320 190" fill="none" preserveAspectRatio="xMidYMid meet">
+              <line x1="10" y1="14" x2="310" y2="14" class="gl-dim" stroke-width="1"/>
+              <line x1="10" y1="170" x2="310" y2="170" class="gl-dim" stroke-width="1" stroke-dasharray="4 6"/>
+              <!-- lamp -->
+              <line x1="90" y1="14" x2="90" y2="40" class="gl-casing" stroke-width="2"/>
+              <path d="M70 58 Q70 40 90 40 Q110 40 110 58 Z" class="gl-body" stroke-width="1.2"/>
+              <path d="M74 64 L54 150 L126 150 L106 64 Z" fill="rgba(95,168,152,0.08)" style="animation: glow-pulse 3s ease-in-out infinite;"/>
+              <circle cx="90" cy="62" r="5" class="gl-fill"/>
+              <text x="116" y="52" class="gl-label">LIGHT: ON</text>
+              <!-- PIR + camera -->
+              <path d="M220 14 L220 26 Q220 36 230 36 Q240 36 240 26 L240 14" class="gl-acc2" stroke-width="1.2"/>
+              <path d="M230 36 L190 150 M230 36 L280 150" class="gl-acc2" stroke-width="0.8" stroke-dasharray="3 3"/>
+              <text x="246" y="28" class="gl-label2">PIR</text>
+              <rect x="256" y="16" width="20" height="11" rx="2" class="gl-acc" stroke-width="1"/>
+              <circle cx="266" cy="21.5" r="2" class="gl-fill"/>
+              <text x="280" y="25" class="gl-label">RGB</text>
+              <!-- occupant -->
+              <circle cx="232" cy="112" r="7" class="gl-acc" stroke-width="1.3"/>
+              <path d="M232 119 L232 146 M232 126 L220 136 M232 126 L244 136 M232 146 L222 168 M232 146 L242 168" class="gl-acc" stroke-width="1.3"/>
+              <rect x="216" y="100" width="32" height="70" class="gl-acc" stroke-width="0.8" stroke-dasharray="2 2"/>
+              <text x="16" y="186" class="gl-text">occupancy detected → lights on</text>
+            </svg>
+          </div>
+          <h3 class="project-title">Intelligent Light Control System</h3>
+          <ul class="project-points">
+            <li>Combined an <strong>industrial PIR sensor</strong> with an <strong>RGB camera</strong> to detect occupancy and switch classroom lighting automatically to save energy.</li>
+          </ul>
+          <div class="techniques-label">Techniques applied</div>
+          <div class="project-tags">
+            <span class="tag">Sensor Fusion (PIR + Vision)</span>
+            <span class="tag">Occupancy Detection</span>
+            <span class="tag blue">Industrial PIR</span>
+            <span class="tag blue">RGB Camera</span>
+            <span class="tag blue">Automation Logic</span>
+          </div>
+        </article>
+
+        <!-- 05 Burglar alarm -->
+        <article class="project-card reveal reveal-delay-1">
+          <div class="project-num">05 / EMBEDDED SYSTEMS</div>
+          <div class="project-visual" aria-hidden="true">
+            <svg viewBox="0 0 320 190" fill="none" preserveAspectRatio="xMidYMid meet">
+              <!-- Arduino Mega board -->
+              <rect x="34" y="50" width="140" height="84" rx="4" class="gl-body" stroke-width="1.3"/>
+              <rect x="88" y="78" width="34" height="28" rx="2" class="gl-acc" stroke-width="1.1"/>
+              <g class="gl-fill2" opacity="0.7">
+                <circle cx="46" cy="60" r="1.6"/><circle cx="54" cy="60" r="1.6"/><circle cx="62" cy="60" r="1.6"/><circle cx="70" cy="60" r="1.6"/><circle cx="78" cy="60" r="1.6"/><circle cx="86" cy="60" r="1.6"/><circle cx="94" cy="60" r="1.6"/><circle cx="102" cy="60" r="1.6"/><circle cx="110" cy="60" r="1.6"/><circle cx="118" cy="60" r="1.6"/><circle cx="126" cy="60" r="1.6"/><circle cx="134" cy="60" r="1.6"/><circle cx="142" cy="60" r="1.6"/><circle cx="150" cy="60" r="1.6"/><circle cx="158" cy="60" r="1.6"/>
+                <circle cx="46" cy="124" r="1.6"/><circle cx="54" cy="124" r="1.6"/><circle cx="62" cy="124" r="1.6"/><circle cx="70" cy="124" r="1.6"/><circle cx="78" cy="124" r="1.6"/><circle cx="86" cy="124" r="1.6"/><circle cx="94" cy="124" r="1.6"/><circle cx="102" cy="124" r="1.6"/><circle cx="110" cy="124" r="1.6"/><circle cx="118" cy="124" r="1.6"/>
+              </g>
+              <text x="44" y="148" class="gl-label">ARDUINO MEGA</text>
+              <!-- wires -->
+              <path d="M174 70 L210 70 L210 46 L236 46" class="gl-acc2" stroke-width="1" stroke-dasharray="3 3"/>
+              <path d="M174 112 L210 112 L210 136 L236 136" class="gl-acc" stroke-width="1" stroke-dasharray="3 3"/>
+              <!-- sensor -->
+              <path d="M236 36 L236 56 L252 56 Q262 46 252 36 Z" class="gl-acc2" stroke-width="1.2"/>
+              <text x="266" y="50" class="gl-label2">SENSOR</text>
+              <!-- siren + waves -->
+              <path d="M236 128 L246 128 L258 118 L258 154 L246 144 L236 144 Z" class="gl-acc" stroke-width="1.2"/>
+              <g class="gl-acc" stroke-width="1.1">
+                <path d="M266 126 Q272 136 266 146" style="transform-origin:266px 136px; animation: wave 1.2s ease-out infinite;"/>
+                <path d="M274 120 Q284 136 274 152" style="transform-origin:274px 136px; animation: wave 1.2s ease-out infinite 0.4s;"/>
+                <path d="M282 114 Q296 136 282 158" style="transform-origin:282px 136px; animation: wave 1.2s ease-out infinite 0.8s;"/>
+              </g>
+              <text x="16" y="22" class="gl-text">intrusion → MCU → real-time alert</text>
+            </svg>
+          </div>
+          <h3 class="project-title">Burglar Alarm &amp; Security System</h3>
+          <ul class="project-points">
+            <li>Designed and built an <strong>Arduino Mega</strong> intrusion detection system with integrated sensors and <strong>real-time alerting</strong> logic.</li>
+          </ul>
+          <div class="techniques-label">Techniques applied</div>
+          <div class="project-tags">
+            <span class="tag">Intrusion Detection</span>
+            <span class="tag">Real-Time Alerting</span>
+            <span class="tag blue">Arduino Mega</span>
+            <span class="tag blue">Sensor Integration</span>
+            <span class="tag blue">Embedded C</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label reveal">Experience</div>
+        <h2 class="section-title reveal reveal-delay-1">Industry experience</h2>
+        <p class="section-intro reveal reveal-delay-2">About 3.5 years of building, integrating and fault-finding production automation software before my Master's.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="job reveal">
+          <div class="job-head">
+            <div class="job-company">Xebia Technologies Pvt. Ltd.</div>
+            <div class="job-meta">MAR 2023 – MAR 2025 · JAIPUR, INDIA</div>
+          </div>
+          <div class="job-role">Technical Consultant / Software Developer</div>
+          <ul class="project-points">
+            <li>Led a <strong>team of 4 developers</strong> delivering production software and automation solutions using Agile.</li>
+            <li>Extended and maintained automation workflows and system-integration logic for Pharma and Insurance clients, coordinating across several software and hardware interfaces.</li>
+            <li>Reduced development and evaluation cycle time by <strong>40%</strong> through systematic fault diagnostics and workload estimation.</li>
+            <li>Recognised as <strong>Key Team Player</strong> for reliable, hands-on support across test campaigns and production rollouts.</li>
+          </ul>
         </div>
 
-        <div class="methods-col reveal reveal-delay-3">
-          <div class="methods-col-title">Industrial Automation</div>
-          <div class="methods-tags">
-            <span class="tag">PLC Programming</span>
-            <span class="tag">TIA Portal</span>
-            <span class="tag">Process Control</span>
-            <span class="tag">Industrial Manipulator Programming</span>
+        <div class="job reveal reveal-delay-1">
+          <div class="job-head">
+            <div class="job-company">Vuram Technology Solutions</div>
+            <div class="job-meta">OCT 2021 – MAR 2023 · CHENNAI, INDIA</div>
           </div>
+          <div class="job-role">Associate Technical Consultant / Intern</div>
+          <ul class="project-points">
+            <li>Developed Appian BPM proofs of concept, reporting and document-management solutions for Banking clients, working closely with stakeholders to keep them accurate and consistent.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -1187,231 +1397,220 @@
 
   <!-- Skills -->
   <section id="skills">
-    <!-- Glow blobs on sides -->
-    <div class="skills-glow skills-glow-left"></div>
-    <div class="skills-glow skills-glow-right"></div>
-
-    <!-- Left robot arm decoration -->
-    <div class="skills-deco-left">
-      <svg viewBox="0 0 160 400" fill="none" xmlns="http://www.w3.org/2000/svg" width="160" height="400">
-        <g style="transform-origin:80px 350px; animation: arm1 9s ease-in-out infinite 0.5s;">
-          <line x1="80" y1="350" x2="80" y2="260" stroke="rgba(179,36,20,0.18)" stroke-width="2"/>
-          <circle cx="80" cy="260" r="6" fill="rgba(179,36,20,0.1)" stroke="rgba(179,36,20,0.35)" stroke-width="1"/>
-          <circle cx="80" cy="260" r="2.5" fill="#b32414" opacity="0.75"/>
-          <g style="transform-origin:80px 260px; animation: arm2 6s ease-in-out infinite 0.2s;">
-            <line x1="80" y1="260" x2="50" y2="190" stroke="rgba(255,174,61,0.18)" stroke-width="2"/>
-            <circle cx="50" cy="190" r="5" fill="rgba(255,174,61,0.1)" stroke="rgba(255,174,61,0.35)" stroke-width="1"/>
-            <circle cx="50" cy="190" r="2" fill="#ffae3d" opacity="0.75"/>
-            <g style="transform-origin:50px 190px; animation: arm3 4s ease-in-out infinite 0.8s;">
-              <line x1="50" y1="190" x2="30" y2="140" stroke="rgba(179,36,20,0.15)" stroke-width="1.5"/>
-              <line x1="30" y1="140" x2="18" y2="124" stroke="rgba(179,36,20,0.4)" stroke-width="1.2"/>
-              <line x1="30" y1="140" x2="38" y2="124" stroke="rgba(179,36,20,0.4)" stroke-width="1.2"/>
-              <circle cx="30" cy="140" r="3.5" fill="rgba(179,36,20,0.08)" stroke="rgba(179,36,20,0.4)" stroke-width="1"/>
+    <!-- 5-DOF manipulator glyphs (left and mirrored right) -->
+    <div class="skills-deco-left" aria-hidden="true">
+      <svg viewBox="0 0 170 400" fill="none" width="170" height="400">
+        <rect x="52" y="356" width="56" height="10" rx="1.5" class="gl-body" stroke-width="1"/>
+        <g style="transform-origin:80px 350px; animation: rotate-slow 16s linear infinite;">
+          <ellipse cx="80" cy="350" rx="22" ry="6" class="gl-acc2" stroke-width="1" opacity="0.6"/>
+        </g>
+        <text x="40" y="353" class="gl-label2">A1</text>
+        <rect x="68" y="326" width="24" height="22" rx="3" class="gl-body" stroke-width="1"/>
+        <circle cx="80" cy="326" r="7" class="gl-acc" stroke-width="1.2"/>
+        <circle cx="80" cy="326" r="2.5" class="gl-fill"/>
+        <text x="90" y="330" class="gl-label">A2</text>
+        <g style="transform-origin:80px 326px; animation: arm1 9s ease-in-out infinite 0.5s;">
+          <line x1="80" y1="326" x2="70" y2="236" class="gl-casing" stroke-width="10" stroke-linecap="round"/>
+          <line x1="80" y1="326" x2="70" y2="236" class="gl-acc" stroke-width="1.8"/>
+          <circle cx="70" cy="236" r="6" class="gl-acc2" stroke-width="1.2"/>
+          <circle cx="70" cy="236" r="2" class="gl-fill2"/>
+          <text x="80" y="238" class="gl-label2">A3</text>
+          <g style="transform-origin:70px 236px; animation: arm2 6s ease-in-out infinite 0.2s;">
+            <line x1="70" y1="236" x2="118" y2="172" class="gl-casing" stroke-width="8" stroke-linecap="round"/>
+            <line x1="70" y1="236" x2="118" y2="172" class="gl-acc2" stroke-width="1.6"/>
+            <circle cx="118" cy="172" r="5" class="gl-acc" stroke-width="1.2"/>
+            <circle cx="118" cy="172" r="1.8" class="gl-fill"/>
+            <text x="126" y="174" class="gl-label">A4</text>
+            <g style="transform-origin:118px 172px; animation: arm3 4s ease-in-out infinite 0.8s;">
+              <line x1="118" y1="172" x2="130" y2="140" class="gl-casing" stroke-width="6" stroke-linecap="round"/>
+              <line x1="118" y1="172" x2="130" y2="140" class="gl-acc" stroke-width="1.4"/>
+              <g style="transform-origin:124px 156px; animation: rotate-slow 5s linear infinite;">
+                <ellipse cx="124" cy="156" rx="7" ry="2.6" class="gl-acc2" stroke-width="1"/>
+              </g>
+              <text x="134" y="158" class="gl-label2">A5</text>
+              <path d="M124 128 L130 140 L136 128 M124 128 L122 118 M136 128 L138 118" class="gl-acc" stroke-width="1.3"/>
             </g>
           </g>
         </g>
-        <rect x="64" y="350" width="32" height="10" rx="1" fill="rgba(179,36,20,0.08)" stroke="rgba(179,36,20,0.2)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="5" fill="rgba(179,36,20,0.15)" stroke="rgba(179,36,20,0.4)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="2" fill="#b32414" opacity="0.9"/>
-        <!-- circuit traces down the side -->
-        <path d="M10 380 L10 300 L30 300 L30 240 L50 240" stroke="rgba(179,36,20,0.2)" stroke-width="1" stroke-dasharray="200" style="animation: trace-loop 4s linear infinite;"/>
-        <circle cx="10" cy="300" r="2" fill="#b32414" opacity="0.4" style="animation: node-pulse 2s ease-in-out infinite;"/>
-        <circle cx="30" cy="240" r="2" fill="#ffae3d" opacity="0.4" style="animation: node-pulse 2.5s ease-in-out infinite 0.5s;"/>
+        <text x="58" y="384" class="gl-label">5-DOF</text>
       </svg>
     </div>
-
-    <!-- Right robot arm decoration -->
-    <div class="skills-deco-right">
-      <svg viewBox="0 0 160 400" fill="none" xmlns="http://www.w3.org/2000/svg" width="160" height="400">
-        <g style="transform-origin:80px 350px; animation: arm1 7s ease-in-out infinite 1s;">
-          <line x1="80" y1="350" x2="80" y2="255" stroke="rgba(255,174,61,0.18)" stroke-width="2"/>
-          <circle cx="80" cy="255" r="6" fill="rgba(255,174,61,0.1)" stroke="rgba(255,174,61,0.35)" stroke-width="1"/>
-          <circle cx="80" cy="255" r="2.5" fill="#ffae3d" opacity="0.75"/>
-          <g style="transform-origin:80px 255px; animation: arm2 5s ease-in-out infinite 1.2s;">
-            <line x1="80" y1="255" x2="110" y2="185" stroke="rgba(179,36,20,0.18)" stroke-width="2"/>
-            <circle cx="110" cy="185" r="5" fill="rgba(179,36,20,0.1)" stroke="rgba(179,36,20,0.35)" stroke-width="1"/>
-            <circle cx="110" cy="185" r="2" fill="#b32414" opacity="0.75"/>
-            <g style="transform-origin:110px 185px; animation: arm3 3.8s ease-in-out infinite 0.4s;">
-              <line x1="110" y1="185" x2="130" y2="135" stroke="rgba(255,174,61,0.15)" stroke-width="1.5"/>
-              <line x1="130" y1="135" x2="122" y2="119" stroke="rgba(255,174,61,0.4)" stroke-width="1.2"/>
-              <line x1="130" y1="135" x2="140" y2="119" stroke="rgba(255,174,61,0.4)" stroke-width="1.2"/>
-              <circle cx="130" cy="135" r="3.5" fill="rgba(255,174,61,0.08)" stroke="rgba(255,174,61,0.4)" stroke-width="1"/>
+    <div class="skills-deco-right" aria-hidden="true">
+      <svg viewBox="0 0 170 400" fill="none" width="170" height="400">
+        <rect x="52" y="356" width="56" height="10" rx="1.5" class="gl-body" stroke-width="1"/>
+        <g style="transform-origin:80px 350px; animation: rotate-slow 20s linear infinite reverse;">
+          <ellipse cx="80" cy="350" rx="22" ry="6" class="gl-acc" stroke-width="1" opacity="0.6"/>
+        </g>
+        <rect x="68" y="326" width="24" height="22" rx="3" class="gl-body" stroke-width="1"/>
+        <circle cx="80" cy="326" r="7" class="gl-acc2" stroke-width="1.2"/>
+        <circle cx="80" cy="326" r="2.5" class="gl-fill2"/>
+        <g style="transform-origin:80px 326px; animation: arm1 7s ease-in-out infinite 1s;">
+          <line x1="80" y1="326" x2="74" y2="230" class="gl-casing" stroke-width="10" stroke-linecap="round"/>
+          <line x1="80" y1="326" x2="74" y2="230" class="gl-acc2" stroke-width="1.8"/>
+          <circle cx="74" cy="230" r="6" class="gl-acc" stroke-width="1.2"/>
+          <circle cx="74" cy="230" r="2" class="gl-fill"/>
+          <g style="transform-origin:74px 230px; animation: arm2 5s ease-in-out infinite 1.2s;">
+            <line x1="74" y1="230" x2="124" y2="180" class="gl-casing" stroke-width="8" stroke-linecap="round"/>
+            <line x1="74" y1="230" x2="124" y2="180" class="gl-acc" stroke-width="1.6"/>
+            <circle cx="124" cy="180" r="5" class="gl-acc2" stroke-width="1.2"/>
+            <circle cx="124" cy="180" r="1.8" class="gl-fill2"/>
+            <g style="transform-origin:124px 180px; animation: arm3 3.8s ease-in-out infinite 0.4s;">
+              <line x1="124" y1="180" x2="138" y2="150" class="gl-casing" stroke-width="6" stroke-linecap="round"/>
+              <line x1="124" y1="180" x2="138" y2="150" class="gl-acc2" stroke-width="1.4"/>
+              <g style="transform-origin:131px 165px; animation: rotate-slow 4s linear infinite reverse;">
+                <ellipse cx="131" cy="165" rx="7" ry="2.6" class="gl-acc" stroke-width="1"/>
+              </g>
+              <path d="M132 138 L138 150 L144 138 M132 138 L130 128 M144 138 L146 128" class="gl-acc2" stroke-width="1.3"/>
             </g>
           </g>
         </g>
-        <rect x="64" y="350" width="32" height="10" rx="1" fill="rgba(255,174,61,0.08)" stroke="rgba(255,174,61,0.2)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="5" fill="rgba(255,174,61,0.15)" stroke="rgba(255,174,61,0.4)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="2" fill="#ffae3d" opacity="0.9"/>
-        <!-- circuit traces down the side -->
-        <path d="M150 380 L150 300 L130 300 L130 230 L110 230" stroke="rgba(255,174,61,0.2)" stroke-width="1" stroke-dasharray="200" style="animation: trace-loop 4.5s linear infinite 1s;"/>
-        <circle cx="150" cy="300" r="2" fill="#ffae3d" opacity="0.4" style="animation: node-pulse 2.2s ease-in-out infinite 0.3s;"/>
-        <circle cx="130" cy="230" r="2" fill="#b32414" opacity="0.4" style="animation: node-pulse 2.8s ease-in-out infinite 0.8s;"/>
       </svg>
     </div>
-    <div class="skills-header">
-      <div class="section-label reveal">Skills</div>
-      <h2 class="section-title reveal reveal-delay-1">Technical stack</h2>
-    </div>
 
-    <div class="skills-groups">
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Robotics &amp; Motion</div>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Used to derive workspace limits, plan collision-free trajectories, and debug joint-limit failures in simulation before touching hardware.</p>
-        <div class="skill-item">
-          <div class="skill-name">Robot Kinematics &amp; Dynamics <span class="skill-pct">85%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.85"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">ROS2 / Nav2 <span class="skill-pct">88%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.88"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Gazebo / CARLA <span class="skill-pct">65%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.65"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Motion Planning (RRT, A*) <span class="skill-pct">72%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.72"></div></div>
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label reveal">Skills</div>
+        <h2 class="section-title reveal reveal-delay-1">Technical stack</h2>
+        <div class="skills-legend reveal reveal-delay-2">
+          <span><span class="lvl lvl-hands">Hands-on</span> used on real projects</span>
+          <span><span class="lvl lvl-basic">Basic</span> coursework / early use</span>
+          <span><span class="lvl lvl-theory">Theory</span> studied, not yet applied</span>
         </div>
       </div>
 
-      <div class="skill-group reveal reveal-delay-1">
-        <div class="skill-group-title">Perception &amp; Control</div>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Applied in vision-guided manipulation, occupancy mapping from monocular feeds, and PID/state-space controller design for embedded platforms.</p>
-        <div class="skill-item">
-          <div class="skill-name">Computer Vision / OpenCV <span class="skill-pct">85%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.85"></div></div>
+      <div class="skills-groups">
+        <div class="skill-group reveal">
+          <div class="skill-group-title">Robotics &amp; Systems</div>
+          <ul class="skill-list">
+            <li>ROS2 <span class="lvl lvl-hands">Hands-on</span></li>
+            <li>Point cloud processing <span class="lvl lvl-hands">Hands-on</span></li>
+            <li><span>Robot navigation &amp; motion planning</span></li>
+            <li><span>Sensor integration &amp; troubleshooting<span class="skill-sub">Radar · Lidar · RGB camera</span></span></li>
+          </ul>
         </div>
-        <div class="skill-item">
-          <div class="skill-name">CNN / Deep Learning <span class="skill-pct">75%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.75"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Control Systems (PID, State-Space) <span class="skill-pct">80%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.8"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Sensor Fusion &amp; SLAM <span class="skill-pct">74%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.74"></div></div>
-        </div>
-      </div>
 
-      <div class="skill-group reveal reveal-delay-2">
-        <div class="skill-group-title">Languages &amp; Industrial</div>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Python for rapid prototyping and ROS nodes; Embedded C and TIA Portal for hardware-close control loops and PLC automation in industry.</p>
-        <div class="skill-item">
-          <div class="skill-name">Python <span class="skill-pct">90%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.9"></div></div>
+        <div class="skill-group reveal reveal-delay-1">
+          <div class="skill-group-title">Programming</div>
+          <ul class="skill-list">
+            <li>Python <span class="lvl lvl-hands">Hands-on</span></li>
+            <li>C++ <span class="lvl lvl-basic">Basic / coursework</span></li>
+            <li><span>Embedded C</span></li>
+          </ul>
         </div>
-        <div class="skill-item">
-          <div class="skill-name">Embedded C <span class="skill-pct">80%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.8"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">PLC / TIA Portal <span class="skill-pct">78%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.78"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">C++ <span class="skill-pct">60%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.6"></div></div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Certifications strip -->
-    <div style="max-width:1100px;margin:3rem auto 0;position:relative;z-index:1;">
-      <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.25rem;">Certifications</div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
-        <span class="tag">ROS 1 for Beginners — Udemy</span>
-        <span class="tag blue">Intro to Self-Driving Cars — Coursera</span>
-        <span class="tag blue">State Estimation &amp; Localisation — Coursera</span>
-        <span class="tag">Autodesk Fusion 360 — Internshala</span>
+        <div class="skill-group reveal reveal-delay-2">
+          <div class="skill-group-title">Industrial &amp; Middleware</div>
+          <ul class="skill-list">
+            <li>PLC / Siemens TIA Portal <span class="lvl lvl-hands">Hands-on</span></li>
+            <li>REST APIs <span class="lvl lvl-hands">Hands-on</span></li>
+            <li>CAN-Bus <span class="lvl lvl-theory">Theory</span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group reveal">
+          <div class="skill-group-title">AI &amp; Computer Vision</div>
+          <ul class="skill-list">
+            <li>CNN <span class="lvl lvl-hands">Hands-on</span></li>
+            <li><span>OpenCV</span></li>
+            <li>PyTorch / TensorFlow <span class="lvl lvl-basic">Basic</span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group reveal reveal-delay-1">
+          <div class="skill-group-title">Simulation</div>
+          <ul class="skill-list">
+            <li>Isaac Sim <span class="lvl lvl-hands">Hands-on</span></li>
+            <li><span>Gazebo</span></li>
+            <li><span>RViz</span></li>
+            <li>CARLA <span class="lvl lvl-basic">Basic</span></li>
+          </ul>
+        </div>
+
+        <div class="skill-group reveal reveal-delay-2">
+          <div class="skill-group-title">Languages</div>
+          <ul class="skill-list">
+            <li>English <span class="lvl lvl-hands">C1</span></li>
+            <li>German <span class="lvl lvl-basic">B1 · improving</span></li>
+            <li>Tamil <span class="lvl lvl-hands">Native</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Resume -->
-  <section id="resume">
-    <div class="resume-inner">
-      <div class="section-label reveal">Resume</div>
+  <!-- Education -->
+  <section id="education">
+    <div class="container">
+      <div class="section-head">
+        <div class="section-label reveal">Education</div>
+        <h2 class="section-title reveal reveal-delay-1">Academic background</h2>
+      </div>
+
+      <div class="edu-grid">
+        <div class="edu-card reveal">
+          <div class="edu-dates">APR 2025 – PRESENT · ERLANGEN, GERMANY</div>
+          <div class="edu-degree">M.Sc. Autonomy Technologies</div>
+          <div class="edu-school">Friedrich-Alexander-Universität Erlangen-Nürnberg (FAU)</div>
+          <p class="edu-detail">Focus: robotics, control, motion planning and perception. Coursework in motion planning, robot dynamics and numerical optimisation.</p>
+        </div>
+
+        <div class="edu-card reveal reveal-delay-1">
+          <div class="edu-dates">2018 – 2022 · CHENNAI, INDIA</div>
+          <div class="edu-degree">B.Eng. Mechatronics Engineering</div>
+          <div class="edu-school">Rajalakshmi Engineering College, Anna University</div>
+          <p class="edu-detail">CGPA 9.28 / 10 (German grade 1.3).</p>
+          <div class="edu-badge">★ Gold Medal · Rank 1</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label reveal">Contact</div>
       <h2 class="section-title reveal reveal-delay-1">Let's build something real.</h2>
-      <p class="resume-tagline reveal reveal-delay-2">
-        I'm interested in internship and research conversations — particularly in perception, manipulation, and autonomous systems. If you're working on a hard problem in robotics and want someone who thinks carefully and ships things, I'd like to hear about it.
+      <p class="contact-tagline reveal reveal-delay-2">
+        I'm open to robotics engineering, research and working-student roles in navigation, perception and manipulation. If your team is putting robots on real hardware, I'd like to hear about it.
       </p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;" class="reveal reveal-delay-3">
-        <a href="uploads/Aravind_Suresh_CV_AgileRobots.pdf" download class="btn-primary">Download CV</a>
-        <a href="/cdn-cgi/l/email-protection#88e9fae9fee1e6ecb9bebab8b8b8c8efe5e9e1e4a6ebe7e5" class="btn-outline"><span class="__cf_email__" data-cfemail="8cedfeedfae5e2e8bdbabebcbcbcccebe1ede5e0a2efe3e1">[email&#160;protected]</span></a>
-        <a href="https://linkedin.com/in/aravind-suresh-1610" target="_blank" class="btn-outline">LinkedIn</a>
+      <div class="contact-ctas reveal reveal-delay-3">
+        <a href="mailto:aravind162000@gmail.com" class="btn-primary">aravind162000@gmail.com</a>
+        <a href="https://www.linkedin.com/in/aravind-suresh-1610" target="_blank" rel="noopener" class="btn-outline">LinkedIn</a>
+        <a href="https://github.com/aravinds1610" target="_blank" rel="noopener" class="btn-outline">GitHub</a>
+        <a href="mailto:aravind162000@gmail.com?subject=CV%20request" class="btn-outline">Request CV</a>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <div class="footer-mono"><span class="footer-dot"></span>Aravind Suresh — M.Sc. Autonomy Technologies, FAU Erlangen-Nuremberg</div>
-    <div class="footer-mono"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c7d6e7d6a7572782d2a2e2c2c2c5c7b717d7570327f7371">[email&#160;protected]</a> · Erlangen, Germany · 2026</div>
+    <div class="footer-mono"><span class="footer-dot"></span>Aravind Suresh — M.Sc. Autonomy Technologies, FAU Erlangen-Nürnberg</div>
+    <div class="footer-mono">Erlangen, Germany · 2026</div>
   </footer>
 
-  <!-- Arm animations -->
-  <style>
-    @keyframes arm1 {
-      0%   { transform: rotate(0deg); }
-      30%  { transform: rotate(-15deg); }
-      60%  { transform: rotate(10deg); }
-      100% { transform: rotate(0deg); }
-    }
-    @keyframes arm2 {
-      0%   { transform: rotate(0deg); }
-      25%  { transform: rotate(20deg); }
-      75%  { transform: rotate(-15deg); }
-      100% { transform: rotate(0deg); }
-    }
-    @keyframes arm3 {
-      0%   { transform: rotate(0deg); }
-      50%  { transform: rotate(25deg); }
-      100% { transform: rotate(0deg); }
-    }
-  </style>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          observer.unobserve(e.target);
+          revealObserver.unobserve(e.target);
         }
       });
     }, { threshold: 0.12 });
-    revealEls.forEach(el => observer.observe(el));
-
-    // Skill bars on scroll
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const fills = e.target.querySelectorAll('.skill-bar-fill');
-          fills.forEach(f => {
-            const pct = parseFloat(f.dataset.pct);
-            f.style.width = (pct * 100) + '%';
-            f.classList.add('animated');
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.skill-group').forEach(g => barObserver.observe(g));
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     // Animated 6-axis joint angle readouts
     const AXIS_FREQ = [0.18, 1.04, 0.65, 0.9, 0.5, 1.6];
     const AXIS_AMP  = [180, 15, 20, 30, 25, 180];
+    const axisEls = [1, 2, 3, 4, 5, 6].map(i => document.getElementById('th' + i));
     function updateAngles() {
       const t = Date.now() / 1000;
-      for (let i = 0; i < 6; i++) {
-        const el = document.getElementById('th' + (i + 1));
-        if (!el) continue;
+      axisEls.forEach((el, i) => {
+        if (!el) return;
         const val = Math.round(Math.sin(t * AXIS_FREQ[i] + i) * AXIS_AMP[i]);
         el.textContent = `A${i + 1}:${val}°`;
-      }
+      });
     }
     setInterval(updateAngles, 100);
   </script>
@@ -1423,15 +1622,14 @@
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    const LABELS = ['PERCEPTION', 'ROS 2', 'SLAM', 'PYTHON', 'CONTROL', 'IK / FK'];
+    const LABELS = ['ROS 2', 'SLAM', 'LIDAR', 'CNN', 'PYTHON', 'TIA PORTAL'];
     const BLK_W = 96, BLK_H = 28;
 
-    // Read accent colors from CSS vars
     function getAccent() {
       const s = getComputedStyle(document.documentElement);
       return {
-        c1: s.getPropertyValue('--accent').trim() || '#2dc7e6',
-        c2: s.getPropertyValue('--accent2').trim() || '#4f7ebf',
+        c1: s.getPropertyValue('--accent').trim() || '#5fa898',
+        c2: s.getPropertyValue('--accent2').trim() || '#7d96b8',
       };
     }
 
@@ -1468,18 +1666,15 @@
       return { j1, ee };
     }
 
-    // Blocks
     let blocks, placedBlocks, gripperBlock;
     let gripOpen = 1;
     let eePos, eeStart, eeEnd;
     let state = 'INIT', stateT = 0, stateDur = 0.5;
     let currentIdx = -1, lastTs = null;
 
-    function stackPos(i) {
-      return { x: W * 0.07, y: H * 0.20 + i * (BLK_H + 10) };
-    }
+    function stackPos(i) { return { x: W * 0.07, y: H * 0.20 + i * (BLK_H + 10) }; }
     function shelfPos(i) {
-      const sx = W * 0.68, sy = H * 0.38;
+      const sx = W - (BLK_W * 2 + 12) - W * 0.04, sy = H * 0.38;
       return { x: sx + (i % 2) * (BLK_W + 12), y: sy + Math.floor(i / 2) * (BLK_H + 10) };
     }
     function home() { return { x: BASE.x, y: BASE.y - L1 * 0.88 }; }
@@ -1511,19 +1706,19 @@
         gripperBlock.x = eePos.x - BLK_W / 2;
         gripperBlock.y = eePos.y - BLK_H / 2;
       }
-      // gripper open/close animation
       if (state === 'DESCEND_PICK')  gripOpen = Math.max(0, 1 - stateT * 3);
       if (state === 'DESCEND_PLACE') gripOpen = Math.min(1, stateT * 3);
 
       if (stateT < 1) return;
 
       switch (state) {
-        case 'INIT': {
+        case 'INIT':
+        case 'RETURN': {
           const i = nextBlock();
           if (i < 0) { to('PAUSE', 2.5, home()); break; }
           currentIdx = i;
           const sp = stackPos(i);
-          to('APPROACH', 1.0, { x: sp.x + BLK_W/2, y: sp.y - 36 });
+          to('APPROACH', state === 'INIT' ? 1.0 : 0.9, { x: sp.x + BLK_W/2, y: sp.y - 36 });
           break;
         }
         case 'APPROACH': {
@@ -1563,14 +1758,6 @@
           to('RETURN', 0.9, home());
           break;
         }
-        case 'RETURN': {
-          const i = nextBlock();
-          if (i < 0) { to('PAUSE', 2.5, home()); break; }
-          currentIdx = i;
-          const sp = stackPos(i);
-          to('APPROACH', 0.9, { x: sp.x + BLK_W/2, y: sp.y - 36 });
-          break;
-        }
         case 'PAUSE': {
           initBlocks();
           to('INIT', 0.1, home());
@@ -1581,10 +1768,7 @@
 
     function drawBlock(b, glowing) {
       ctx.save();
-      if (glowing) {
-        ctx.shadowColor = b.color;
-        ctx.shadowBlur = 14;
-      }
+      if (glowing) { ctx.shadowColor = b.color; ctx.shadowBlur = 14; }
       ctx.fillStyle = b.color + (b.placed ? '28' : '1a');
       ctx.strokeStyle = b.color + (b.placed ? 'dd' : '88');
       ctx.lineWidth = 1.5;
@@ -1603,9 +1787,9 @@
 
     function drawArm() {
       const { j1, ee } = ikSolve(eePos);
+      const { c1, c2 } = getAccent();
       ctx.save();
 
-      // Base mount
       ctx.fillStyle = 'rgba(12,15,26,0.9)';
       ctx.strokeStyle = 'rgba(221,227,240,0.25)';
       ctx.lineWidth = 1;
@@ -1613,55 +1797,36 @@
       ctx.roundRect(BASE.x - 14, BASE.y - 6, 28, 14, 2);
       ctx.fill(); ctx.stroke();
 
-      // Link 1
-      ctx.strokeStyle = 'rgba(221,227,240,0.22)';
-      ctx.lineWidth = 9; ctx.lineCap = 'round';
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = 'rgba(221,227,240,0.22)'; ctx.lineWidth = 9;
       ctx.beginPath(); ctx.moveTo(BASE.x, BASE.y); ctx.lineTo(j1.x, j1.y); ctx.stroke();
-      const { c1, c2 } = getAccent();
-      ctx.strokeStyle = c1 + '55';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = c1 + '55'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(BASE.x, BASE.y); ctx.lineTo(j1.x, j1.y); ctx.stroke();
 
-      // Link 2
-      ctx.strokeStyle = 'rgba(221,227,240,0.18)';
-      ctx.lineWidth = 7; ctx.lineCap = 'round';
+      ctx.strokeStyle = 'rgba(221,227,240,0.18)'; ctx.lineWidth = 7;
       ctx.beginPath(); ctx.moveTo(j1.x, j1.y); ctx.lineTo(ee.x, ee.y); ctx.stroke();
-      ctx.strokeStyle = c2 + '55';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = c2 + '55'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(j1.x, j1.y); ctx.lineTo(ee.x, ee.y); ctx.stroke();
 
-      // Joint 1
-      ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c1; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(j1.x, j1.y, 6, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.arc(j1.x, j1.y, 2.5, 0, Math.PI*2); ctx.fill();
+      [[j1, 6, 2.5], [BASE, 8, 3]].forEach(([p, r, rr]) => {
+        ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c1; ctx.lineWidth = 1.5;
+        ctx.beginPath(); ctx.arc(p.x, p.y, r, 0, Math.PI*2); ctx.fill(); ctx.stroke();
+        ctx.fillStyle = c1;
+        ctx.beginPath(); ctx.arc(p.x, p.y, rr, 0, Math.PI*2); ctx.fill();
+      });
 
-      // Base joint
-      ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c1; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(BASE.x, BASE.y, 8, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.arc(BASE.x, BASE.y, 3, 0, Math.PI*2); ctx.fill();
-
-      // Gripper
       const ang = Math.atan2(ee.y - j1.y, ee.x - j1.x);
       const perp = ang + Math.PI/2;
       const sp = 11 * gripOpen;
       const fl = 20;
-      ctx.strokeStyle = c1;
-      ctx.lineWidth = 1.8; ctx.lineCap = 'round';
+      ctx.strokeStyle = c1; ctx.lineWidth = 1.8;
+      [-1, 1].forEach(s => {
+        ctx.beginPath();
+        ctx.moveTo(ee.x + s*Math.cos(perp)*sp*0.25, ee.y + s*Math.sin(perp)*sp*0.25);
+        ctx.lineTo(ee.x + Math.cos(ang)*fl + s*Math.cos(perp)*sp, ee.y + Math.sin(ang)*fl + s*Math.sin(perp)*sp);
+        ctx.stroke();
+      });
 
-      // Left finger
-      ctx.beginPath();
-      ctx.moveTo(ee.x - Math.cos(perp)*sp*0.25, ee.y - Math.sin(perp)*sp*0.25);
-      ctx.lineTo(ee.x + Math.cos(ang)*fl - Math.cos(perp)*sp, ee.y + Math.sin(ang)*fl - Math.sin(perp)*sp);
-      ctx.stroke();
-      // Right finger
-      ctx.beginPath();
-      ctx.moveTo(ee.x + Math.cos(perp)*sp*0.25, ee.y + Math.sin(perp)*sp*0.25);
-      ctx.lineTo(ee.x + Math.cos(ang)*fl + Math.cos(perp)*sp, ee.y + Math.sin(ang)*fl + Math.sin(perp)*sp);
-      ctx.stroke();
-
-      // EE joint
       ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c2; ctx.lineWidth = 1.5;
       ctx.beginPath(); ctx.arc(ee.x, ee.y, 5, 0, Math.PI*2); ctx.fill(); ctx.stroke();
       ctx.restore();
@@ -1670,23 +1835,18 @@
     function drawScene() {
       ctx.clearRect(0, 0, W, H);
 
-      const { c1, c2 } = getAccent();
-
-      // Stack zone dashed outline
       ctx.save();
       ctx.strokeStyle = 'rgba(221,227,240,0.06)';
       ctx.lineWidth = 1; ctx.setLineDash([4, 8]);
       const sz = stackPos(0);
       ctx.strokeRect(sz.x - 6, sz.y - 6, BLK_W + 12, LABELS.length * (BLK_H + 10) + 2);
       ctx.setLineDash([]);
-      // Stack label
       ctx.font = '7px JetBrains Mono, monospace';
       ctx.fillStyle = 'rgba(221,227,240,0.15)';
       ctx.textAlign = 'left';
       ctx.fillText('INPUT STACK', sz.x - 4, sz.y - 12);
       ctx.restore();
 
-      // Shelf
       ctx.save();
       const sl = shelfPos(0);
       const shelfW = BLK_W * 2 + 22;
@@ -1696,7 +1856,6 @@
       ctx.beginPath();
       ctx.moveTo(sl.x - 8, shelfY + 16); ctx.lineTo(sl.x + shelfW, shelfY + 16);
       ctx.stroke();
-      // shelf legs
       ctx.strokeStyle = 'rgba(221,227,240,0.08)';
       ctx.lineWidth = 1;
       ctx.beginPath();
@@ -1709,19 +1868,11 @@
       ctx.fillText('OUTPUT', sl.x - 4, shelfY + 28);
       ctx.restore();
 
-      // Draw unpicked stack blocks (bottom to top, so unpicked ones show)
       for (let i = LABELS.length - 1; i >= 0; i--) {
-        const b = blocks[i];
-        if (!b.picked) drawBlock(b, false);
+        if (!blocks[i].picked) drawBlock(blocks[i], false);
       }
-
-      // Draw placed blocks
       placedBlocks.forEach(b => drawBlock(b, false));
-
-      // Draw arm
       drawArm();
-
-      // Draw gripped block (on top of arm)
       if (gripperBlock) drawBlock(gripperBlock, true);
     }
 
@@ -1734,85 +1885,13 @@
       requestAnimationFrame(frame);
     }
 
-    resize();
-    initBlocks();
-    eePos = home();
-    to('INIT', 0.5, home());
-    window.addEventListener('resize', () => { resize(); initBlocks(); eePos = home(); to('INIT', 0.1, home()); });
+    function reset() { resize(); initBlocks(); eePos = home(); to('INIT', 0.1, home()); }
+
+    reset();
+    window.addEventListener('resize', reset);
     requestAnimationFrame(frame);
   })();
   </script>
-
-  <!-- Tweaks -->
-  <script type="text/babel" src="tweaks-panel.jsx"></script>
-  <script type="text/babel">
-    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-      "accentColor": "#2dc7e6",
-      "accentColor2": "#4f7ebf",
-      "backgroundDark": "#06080f",
-      "heroName": "Aravind Suresh",
-      "heroSubtitle": "Mechatronics Engineer & M.Sc. student in Autonomy Technologies at FAU Erlangen-Nuremberg. Gold Medal graduate. 3.5 years in software.",
-      "showSkillBars": true
-    }/*EDITMODE-END*/;
-
-    function PortfolioTweaks() {
-      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-
-      React.useEffect(() => {
-        document.documentElement.style.setProperty('--accent', tweaks.accentColor);
-        document.documentElement.style.setProperty('--accent2', tweaks.accentColor2);
-        document.documentElement.style.setProperty('--bg', tweaks.backgroundDark);
-        document.querySelector('h1.hero-name').childNodes[0].textContent = tweaks.heroName.split(' ')[0] + '\n';
-        const line2 = document.querySelector('h1.hero-name .line2');
-        if (line2) line2.childNodes[0].textContent = tweaks.heroName.split(' ').slice(1).join(' ');
-        const roleEl = document.querySelector('.hero-role');
-        if (roleEl) roleEl.textContent = tweaks.heroSubtitle;
-        document.querySelectorAll('.skill-bar-track').forEach(t => {
-          t.style.display = tweaks.showSkillBars ? '' : 'none';
-        });
-      }, [tweaks]);
-
-      return (
-        <TweaksPanel>
-          <TweakSection title="Colors">
-            <TweakColor label="Primary Accent" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
-            <TweakColor label="Secondary Accent" value={tweaks.accentColor2} onChange={v => setTweak('accentColor2', v)} />
-            <TweakColor label="Background" value={tweaks.backgroundDark} onChange={v => setTweak('backgroundDark', v)} />
-          </TweakSection>
-          <TweakSection title="Hero Copy">
-            <TweakText label="Name" value={tweaks.heroName} onChange={v => setTweak('heroName', v)} />
-            <TweakText label="Tagline" value={tweaks.heroSubtitle} onChange={v => setTweak('heroSubtitle', v)} />
-          </TweakSection>
-          <TweakSection title="Skills">
-            <TweakToggle label="Show Skill Bars" value={tweaks.showSkillBars} onChange={v => setTweak('showSkillBars', v)} />
-          </TweakSection>
-        </TweaksPanel>
-      );
-    }
-
-    const tweaksRoot = document.createElement('div');
-    document.body.appendChild(tweaksRoot);
-    ReactDOM.createRoot(tweaksRoot).render(<PortfolioTweaks />);
-  </script>
-
-  <template id="__bundler_thumbnail">
-    <svg viewBox="0 0 80 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="80" height="56" fill="#06080f"/>
-      <circle cx="40" cy="28" r="18" fill="none" stroke="rgba(0,229,160,0.15)" stroke-width="1"/>
-      <circle cx="40" cy="28" r="10" fill="none" stroke="rgba(0,229,160,0.1)" stroke-width="1"/>
-      <!-- 6-DOF arm silhouette -->
-      <rect x="35" y="44" width="10" height="4" rx="1" fill="rgba(220,227,240,0.15)"/>
-      <line x1="40" y1="44" x2="40" y2="34" stroke="rgba(220,227,240,0.2)" stroke-width="2.5"/>
-      <line x1="40" y1="34" x2="49" y2="24" stroke="rgba(61,158,255,0.5)" stroke-width="2"/>
-      <line x1="49" y1="24" x2="51" y2="14" stroke="rgba(0,229,160,0.55)" stroke-width="1.6"/>
-      <line x1="51" y1="14" x2="58" y2="11" stroke="rgba(0,229,160,0.5)" stroke-width="1.2"/>
-      <circle cx="40" cy="44" r="2.2" fill="#00e5a0"/>
-      <circle cx="40" cy="34" r="1.8" fill="#3d9eff"/>
-      <circle cx="49" cy="24" r="1.6" fill="#00e5a0"/>
-      <circle cx="51" cy="14" r="1.3" fill="#3d9eff"/>
-      <text x="6" y="52" font-family="monospace" font-size="4" fill="rgba(0,229,160,0.5)">6-DOF · ARAVIND SURESH</text>
-    </svg>
-  </template>
 
 </body>
 </html>
