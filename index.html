@@ -7,8 +7,8 @@
   <script>
     try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
-  <title>Aravind Suresh — Robotics Engineer</title>
-  <meta name="description" content="Aravind Suresh — robotics engineer and M.Sc. Autonomy Technologies student at FAU Erlangen-Nürnberg. ROS 2, manipulation, navigation and perception on real and simulated robots." />
+  <title>Aravind Suresh · Robotics Engineer</title>
+  <meta name="description" content="Aravind Suresh, robotics engineer and M.Sc. Autonomy Technologies student at FAU Erlangen-Nürnberg. ROS 2, manipulation, navigation and perception on real and simulated robots." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0b0c'/%3E%3Cpath d='M9 26h14M16 23l-4-9 9-4v6' stroke='%23ededef' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='14' r='2' fill='%23ff7a45'/%3E%3Ccircle cx='21' cy='10' r='2' fill='%23ff7a45'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,7 +32,10 @@
       --arm-line:    rgba(255, 255, 255, 0.18);
       --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-      --wrap: 1040px;
+      --wrap: 1320px;
+      --pad: clamp(1rem, 4vw, 3rem);
+      /* Left edge of the content column, used to line carousels up with it */
+      --edge: max(var(--pad), calc((100% - var(--wrap)) / 2 + var(--pad)));
     }
 
     /* Light theme: follows the system unless the visitor picked one */
@@ -74,7 +77,7 @@
       background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
-      font-size: 16px;
+      font-size: 17px;
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
@@ -85,18 +88,25 @@
 
     a { color: inherit; text-decoration: none; }
 
-    a:focus-visible {
+    a:focus-visible, button:focus-visible, .track:focus-visible {
       outline: 1px solid var(--accent);
       outline-offset: 3px;
-      border-radius: 2px;
+      border-radius: 4px;
     }
 
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: 2rem; }
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--pad); }
 
     .mono {
       font-family: var(--mono);
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       letter-spacing: 0.02em;
+    }
+
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-ring);
+      flex-shrink: 0;
     }
 
     /* ── Header ─────────────────────────────── */
@@ -110,29 +120,29 @@
 
     header .wrap {
       display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
+      height: 68px;
     }
 
-    .brand { font-weight: 600; font-size: 0.95rem; letter-spacing: -0.01em; }
+    .brand { font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; }
     .brand span { color: var(--accent); }
 
-    nav ul { display: flex; gap: 2rem; list-style: none; }
+    .header-right { display: flex; align-items: center; gap: 2rem; }
+
+    nav ul { display: flex; gap: 2.25rem; list-style: none; }
 
     nav a {
-      font-size: 0.875rem;
+      font-size: 1rem;
       color: var(--muted);
       transition: color 0.2s;
     }
 
     nav a:hover { color: var(--text); }
 
-    .header-right { display: flex; align-items: center; gap: 1.75rem; }
-
     .theme-toggle {
       display: inline-flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px;
+      width: 38px; height: 38px;
       border: 1px solid var(--line-2);
-      border-radius: 6px;
+      border-radius: 8px;
       background: transparent;
       color: var(--muted);
       cursor: pointer;
@@ -140,8 +150,7 @@
     }
 
     .theme-toggle:hover { color: var(--text); border-color: var(--text); }
-    .theme-toggle:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
-    .theme-toggle svg { width: 16px; height: 16px; }
+    .theme-toggle svg { width: 17px; height: 17px; }
 
     /* Show the icon for the theme you would switch to */
     .icon-moon { display: none; }
@@ -155,62 +164,55 @@
     /* ── Hero ───────────────────────────────── */
     .hero {
       display: grid;
-      grid-template-columns: 1.15fr 1fr;
+      grid-template-columns: 1.2fr 1fr;
       align-items: center;
-      gap: 3rem;
+      gap: 4rem;
       padding-top: 7rem; padding-bottom: 6rem;
     }
 
     .eyebrow {
-      color: var(--faint);
-      margin-bottom: 1.5rem;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-
-    .dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 3px var(--accent-ring);
-      flex-shrink: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 1.75rem;
+      display: flex; align-items: center; gap: 0.7rem;
     }
 
     h1 {
-      font-size: clamp(2.6rem, 6vw, 4.25rem);
+      font-size: clamp(3rem, 7vw, 6rem);
       font-weight: 600;
-      line-height: 1.04;
-      letter-spacing: -0.035em;
-      margin-bottom: 1.5rem;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      margin-bottom: 1.75rem;
     }
 
     .lede {
-      font-size: 1.125rem;
+      font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+      line-height: 1.6;
       color: var(--muted);
-      max-width: 34rem;
-      margin-bottom: 2rem;
+      max-width: 40rem;
+      margin-bottom: 2.5rem;
     }
 
     .lede strong { color: var(--text); font-weight: 500; }
 
-    .links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .links { display: flex; flex-wrap: wrap; gap: 0.85rem; }
 
     .btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      height: 40px; padding: 0 1rem;
-      font-size: 0.875rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      height: 48px; padding: 0 1.3rem;
+      font-size: 1rem; font-weight: 500;
       border: 1px solid var(--line-2);
-      border-radius: 6px;
+      border-radius: 8px;
       color: var(--text);
       transition: border-color 0.2s, background 0.2s, color 0.2s;
     }
 
     .btn:hover { border-color: var(--text); }
-
     .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
     .btn.primary:hover { background: transparent; color: var(--text); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-    .btn svg { width: 16px; height: 16px; fill: currentColor; }
-
-    .arm { width: 100%; max-width: 440px; justify-self: end; }
+    .arm { width: 100%; max-width: 540px; justify-self: end; }
     .arm svg { width: 100%; height: auto; display: block; }
 
     .arm .outline { stroke: var(--arm-line); }
@@ -232,44 +234,98 @@
     @keyframes grip-l { 0%, 40%, 100% { transform: translateX(0); } 55%, 85% { transform: translateX(-3px); } }
 
     /* ── Sections ───────────────────────────── */
-    section { border-top: 1px solid var(--line); padding: 5.5rem 0; }
+    section { border-top: 1px solid var(--line); padding: 5.5rem 0 5rem; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: 200px minmax(0, 1fr);
-      gap: 2rem;
+    .section-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 1.5rem 3rem;
+      margin-bottom: 2.25rem;
     }
 
-    .grid > * { min-width: 0; }
-
-    .label { color: var(--faint); padding-top: 0.3rem; }
+    .section-label { color: var(--faint); margin-bottom: 0.9rem; }
 
     h2 {
-      font-size: 1.5rem;
+      font-size: clamp(2rem, 3.6vw, 3rem);
       font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-    }
-
-    .intro { color: var(--muted); margin-bottom: 3rem; max-width: 40rem; }
-
-    /* ── Projects ───────────────────────────── */
-    .project {
-      padding: 2.25rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .project:first-of-type { padding-top: 0; }
-
-    .project-head {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 1.5rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
       margin-bottom: 0.75rem;
     }
 
-    .project-meta {
+    .intro { color: var(--muted); font-size: 1.15rem; max-width: 42rem; }
+
+    /* ── Carousel ───────────────────────────── */
+    .controls { display: flex; gap: 0.6rem; flex-shrink: 0; }
+    .controls[hidden] { display: none; }
+
+    .arrow {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 48px; height: 48px;
+      border: 1px solid var(--line-2);
+      border-radius: 50%;
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, opacity 0.2s;
+    }
+
+    .arrow svg { width: 20px; height: 20px; }
+    .arrow:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+    .arrow:disabled { opacity: 0.3; cursor: default; }
+
+    .track {
+      display: flex;
+      gap: 1.25rem;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--edge);
+      padding: 0.25rem var(--edge) 0.5rem;
+      scrollbar-width: none;
+    }
+
+    .track::-webkit-scrollbar { display: none; }
+
+    .progress {
+      height: 2px;
+      margin-top: 1.75rem;
+      background: var(--line);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block; height: 100%;
+      background: var(--accent);
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    .card {
+      flex: 0 0 auto;
+      width: min(600px, 86vw);
+      scroll-snap-align: start;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 2rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover { border-color: var(--line-2); }
+    .card.md { width: min(470px, 86vw); }
+    .card.sm { width: min(330px, 78vw); }
+
+    .card-top {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .meta {
       color: var(--faint);
-      margin-bottom: 0.5rem;
       display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem;
     }
 
@@ -277,157 +333,103 @@
     .status .dot { width: 6px; height: 6px; box-shadow: none; }
 
     h3 {
-      font-size: 1.25rem;
+      font-size: 1.4rem;
       font-weight: 600;
-      line-height: 1.35;
-      letter-spacing: -0.015em;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
     }
+
+    .card p { color: var(--muted); margin-bottom: 1.2rem; }
+    .card p strong { color: var(--text); font-weight: 500; }
+    .card code { font-family: var(--mono); font-size: 0.85em; color: var(--text); }
 
     .gh {
       flex-shrink: 0;
       display: inline-flex; align-items: center; gap: 0.45rem;
-      height: 32px; padding: 0 0.8rem;
+      height: 34px; padding: 0 0.85rem;
       border: 1px solid var(--line-2);
-      border-radius: 6px;
+      border-radius: 8px;
       font-family: var(--mono);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--text);
       transition: border-color 0.2s, color 0.2s;
       white-space: nowrap;
     }
 
-    .gh svg { width: 14px; height: 14px; fill: currentColor; }
+    .gh svg { width: 15px; height: 15px; fill: currentColor; }
     .gh:hover { border-color: var(--accent); color: var(--accent); }
 
-    .private { color: var(--faint); white-space: nowrap; padding-top: 0.4rem; }
+    .private { color: var(--faint); white-space: nowrap; padding-top: 0.45rem; }
 
-    .project p { color: var(--muted); max-width: 44rem; margin-bottom: 1.1rem; }
-    .project p strong { color: var(--text); font-weight: 500; }
-    .project code { font-family: var(--mono); font-size: 0.85em; color: var(--text); }
-
-    .facts {
-      display: flex; flex-wrap: wrap; gap: 0.5rem 2rem;
-      margin-bottom: 1.1rem;
-    }
-
+    .facts { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin-bottom: 1.2rem; }
     .fact { display: flex; flex-direction: column; }
-    .fact b { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
-    .fact span { color: var(--faint); font-family: var(--mono); font-size: 0.7rem; }
+    .fact b { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; }
+    .fact span { color: var(--faint); font-family: var(--mono); font-size: 0.72rem; }
 
     .pipeline {
       font-family: var(--mono);
-      font-size: 0.75rem;
+      font-size: 0.78rem;
+      line-height: 1.8;
       color: var(--muted);
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--line);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 0.7rem 0.9rem;
-      margin-bottom: 1.1rem;
-      overflow-x: auto;
-      white-space: nowrap;
+      margin-bottom: 1.2rem;
+      overflow-wrap: anywhere;
     }
 
-    .pipeline i { font-style: normal; color: var(--accent); padding: 0 0.35rem; }
+    .pipeline i { font-style: normal; color: var(--accent); padding: 0 0.3rem; }
 
     .stack { color: var(--faint); line-height: 1.8; }
     .stack span:not(:last-child)::after { content: ' · '; color: var(--line-2); }
 
-    .earlier { margin-top: 3rem; }
-    .earlier-title { color: var(--faint); margin-bottom: 0.75rem; }
+    .mini { padding: 1rem 0; border-bottom: 1px solid var(--line); }
+    .mini:first-of-type { padding-top: 0; }
+    .mini:last-child { border-bottom: none; padding-bottom: 0; }
+    .mini h4 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.2rem; }
+    .mini p { font-size: 0.95rem; margin-bottom: 0; }
 
-    .row {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 0.25rem 2rem;
-      padding: 1.1rem 0;
-      border-bottom: 1px solid var(--line);
-    }
+    .end-card { justify-content: space-between; }
+    .end-card h3 { margin-bottom: 0.5rem; }
 
-    .row:last-child { border-bottom: none; }
-    .row h4 { font-size: 1rem; font-weight: 500; }
-    .row p { color: var(--muted); font-size: 0.925rem; grid-column: 1 / -1; }
-    .row .mono { color: var(--faint); padding-top: 0.2rem; }
+    .card ul { list-style: none; }
 
-    .all-repos {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      margin-top: 2.5rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-      border-bottom: 1px solid var(--line-2);
-      padding-bottom: 2px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-
-    .all-repos:hover { color: var(--accent); border-color: var(--accent); }
-
-    /* ── Experience / Education ─────────────── */
-    .entry {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 0.25rem 2rem;
-      padding: 1.75rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .entry:first-of-type { padding-top: 0; }
-    .entry:last-child { border-bottom: none; padding-bottom: 0; }
-
-    .entry .when { color: var(--faint); padding-top: 0.2rem; }
-    .entry h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
-    .entry .where { color: var(--muted); margin-bottom: 0.75rem; }
-
-    .entry ul { list-style: none; }
-
-    .entry li {
+    .card li {
       color: var(--muted);
       padding-left: 1.1rem;
       position: relative;
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.45rem;
     }
 
-    .entry li::before {
+    .card li::before {
       content: '';
-      position: absolute; left: 0; top: 0.75em;
+      position: absolute; left: 0; top: 0.8em;
       width: 6px; height: 1px;
       background: var(--faint);
     }
 
-    .entry li strong { color: var(--text); font-weight: 500; }
+    .card li strong { color: var(--text); font-weight: 500; }
 
-    .badge {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      margin-top: 0.25rem;
-      color: var(--accent);
-    }
+    .where { color: var(--muted); margin-bottom: 1rem; }
 
-    /* ── Skills ─────────────────────────────── */
-    .skills { display: grid; gap: 0; }
+    .badge { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); margin-top: auto; padding-top: 1rem; }
 
-    .skill {
-      display: grid;
-      grid-template-columns: 160px 1fr;
-      gap: 0.25rem 2rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .skill:first-child { padding-top: 0; }
-    .skill:last-child { border-bottom: none; }
-
-    .skill dt { color: var(--faint); padding-top: 0.15rem; }
-    .skill dd { color: var(--text); }
-    .skill dd em { font-style: normal; color: var(--faint); font-size: 0.85em; }
+    .skill-list li { color: var(--text); }
+    .skill-list em { font-style: normal; color: var(--faint); font-size: 0.85em; }
 
     /* ── Contact ────────────────────────────── */
-    .contact h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.03em; margin-bottom: 1rem; }
-    .contact p { color: var(--muted); max-width: 36rem; margin-bottom: 2rem; }
-
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 2rem 0;
-      color: var(--faint);
+    .contact {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 2rem 4rem;
     }
 
+    .contact p { color: var(--muted); font-size: 1.15rem; max-width: 40rem; }
+
+    footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--faint); }
     footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
     /* ── Reveal ─────────────────────────────── */
@@ -435,24 +437,24 @@
     .reveal.in { opacity: 1; transform: none; }
 
     /* ── Responsive ─────────────────────────── */
-    @media (max-width: 860px) {
+    @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 4.5rem; padding-bottom: 4rem; gap: 2.5rem; }
-      .arm { justify-self: center; max-width: 340px; }
-      .grid { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
-      .label { padding-top: 0; }
+      .arm { justify-self: center; max-width: 380px; }
       section { padding: 4rem 0; }
+      .contact { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 600px) {
-      .wrap { padding-inline: 1rem; }
-      nav ul { gap: 1.1rem; }
+    @media (max-width: 640px) {
+      body { font-size: 16px; }
+      nav ul { gap: 1rem; }
+      nav a { font-size: 0.85rem; }
       .header-right { gap: 1rem; }
-      nav a { font-size: 0.8rem; }
       .brand { display: none; }
       header .wrap { justify-content: center; }
-      .project-head { flex-direction: column; gap: 0.75rem; }
-      .entry, .skill { grid-template-columns: 1fr; }
-      .row { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: flex-start; }
+      .card { padding: 1.4rem; }
+      .card-top { flex-direction: column; gap: 0.75rem; }
+      h3 { font-size: 1.25rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -466,19 +468,18 @@
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="i-github" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></symbol>
   </svg>
-
   <header>
     <div class="wrap">
       <a href="#top" class="brand">Aravind Suresh<span>.</span></a>
       <div class="header-right">
-      <nav aria-label="Primary">
-        <ul>
-          <li><a href="#work">Work</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#background">Background</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
         <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light / dark mode">
           <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -577,197 +578,289 @@
     </div>
 
     <!-- Work -->
-    <section id="work">
-      <div class="wrap grid">
-        <p class="label mono">01 — Work</p>
+    <section id="work" data-carousel>
+      <div class="wrap section-head reveal">
         <div>
-          <h2 class="reveal">Selected projects</h2>
-          <p class="intro reveal">Manipulation, mobile robotics and perception. Projects with public code link to GitHub.</p>
-
-          <article class="project reveal">
-            <div class="project-head">
-              <div>
-                <p class="project-meta mono"><span class="status"><span class="dot"></span>In progress</span><span>2026</span><span>Personal project</span></p>
-                <h3>Vision-guided AprilTag sorting with a UR5e in Isaac Sim</h3>
-              </div>
-              <a class="gh" href="https://github.com/aravinds1610/isaacsim_ros_ws" target="_blank" rel="noopener">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
-                isaacsim_ros_ws ↗
-              </a>
-            </div>
-            <p>
-              A simulated <strong>UR5e with a Robotiq 2F-85 gripper</strong> picks AprilTag-marked cubes off a conveyor, driven over ROS 2 Jazzy and planned with
-              <strong>MoveIt 2 and NVIDIA cuMotion</strong>. The camera estimates each cube's pose with OpenCV <code>solvePnP</code>, then corrects depth by intersecting the camera ray with the tag plane.
-              An orchestrator node solves IK seeded at the current pose and sends joint goals, which avoids elbow flips.
-              Fixed-position picks work; picking from the moving belt is next.
-            </p>
-            <div class="facts">
-              <div class="fact"><b>~0.3 mm</b><span>cube pose error</span></div>
-              <div class="fact"><b>~1 mm</b><span>fingertip error at grasp</span></div>
-              <div class="fact"><b>0.046 rad</b><span>worst joint tracking error</span></div>
-            </div>
-            <div class="pipeline">camera<i>→</i>AprilTag pose<i>→</i>/compute_ik<i>→</i>move_group + cuMotion<i>→</i>joint_trajectory_controller<i>→</i>Isaac Sim</div>
-            <p class="stack mono"><span>ROS 2 Jazzy</span><span>Isaac Sim 6</span><span>MoveIt 2</span><span>cuMotion</span><span>ros2_control</span><span>OpenCV</span><span>Docker</span><span>Python</span></p>
-          </article>
-
-          <article class="project reveal">
-            <div class="project-head">
-              <div>
-                <p class="project-meta mono"><span class="status"><span class="dot"></span>Ongoing</span><span>Since Apr 2026</span><span>FAU team project</span></p>
-                <h3>Autonomous navigation with a Husky AGV (ROS 2)</h3>
-              </div>
-              <span class="private mono">Team project · no public repo</span>
-            </div>
-            <p>
-              As part of the team, I set up and integrate the <strong>radar, lidar and RGB camera</strong> on a Clearpath Robotics Husky in a ROS 2 control pipeline.
-              I set up, tuned and validated the <strong>ROS 2 navigation stack</strong> and <strong>SLAM-based mapping</strong> through structured tests on the real robot.
-            </p>
-            <div class="pipeline">lidar · radar · RGB<i>→</i>SLAM map<i>→</i>navigation stack<i>→</i>/cmd_vel<i>→</i>Husky</div>
-            <p class="stack mono"><span>ROS 2</span><span>Navigation stack</span><span>SLAM</span><span>Point clouds</span><span>Sensor integration</span><span>Real hardware</span></p>
-          </article>
-
-          <article class="project reveal">
-            <div class="project-head">
-              <div>
-                <p class="project-meta mono"><span>B.Eng. project</span><span>Real hardware</span></p>
-                <h3>Machine-vision 3-DOF robot for fruit defect identification and segregation</h3>
-              </div>
-              <a class="gh" href="https://github.com/aravinds1610/FruitSegreagtionRobotBasedOnMachineVision" target="_blank" rel="noopener">
-                <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
-                FruitSegregation… ↗
-              </a>
-            </div>
-            <p>
-              I designed and built a <strong>3-DOF manipulator with a gripper</strong> that sorts fruit. A depth camera feeds a CNN defect classifier that reaches <strong>96% accuracy</strong>, and its result drives each pick in real time.
-              Motion control is written in Embedded C, and the arm talks to Python through PyFirmata, so perception, decision and actuation run in one closed loop.
-            </p>
-            <div class="pipeline">depth camera<i>→</i>CNN classifier<i>→</i>Python decision<i>→</i>PyFirmata<i>→</i>Embedded C servo control</div>
-            <p class="stack mono"><span>Python</span><span>CNN</span><span>OpenCV</span><span>PyFirmata</span><span>Arduino</span><span>Embedded C</span></p>
-          </article>
-
-          <div class="earlier reveal">
-            <p class="earlier-title mono">Earlier projects</p>
-            <div class="row">
-              <h4>Autonomous garbage collector bot</h4>
-              <span class="mono">Mobile manipulation</span>
-              <p>A mobile, sensor-guided robot with a servo-driven arm. Embedded control and real-time sensor feedback handle navigation and obstacle avoidance.</p>
-            </div>
-            <div class="row">
-              <h4>Intelligent light control system</h4>
-              <span class="mono">Sensing · automation</span>
-              <p>An industrial PIR sensor and an RGB camera detect occupancy and switch classroom lighting to save energy.</p>
-            </div>
-            <div class="row">
-              <h4>Burglar alarm and security system</h4>
-              <span class="mono">Embedded</span>
-              <p>An Arduino Mega intrusion-detection system with integrated sensors and real-time alerting.</p>
-            </div>
-          </div>
-
-          <a class="all-repos" href="https://github.com/aravinds1610?tab=repositories" target="_blank" rel="noopener">All repositories on GitHub ↗</a>
+          <p class="section-label mono">01 / Work</p>
+          <h2>Selected projects</h2>
+          <p class="intro">Manipulation, mobile robotics and perception. Projects with public code link to GitHub.</p>
+        </div>
+        <div class="controls">
+          <button class="arrow" type="button" data-prev aria-label="Previous project" aria-controls="track-work">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="arrow" type="button" data-next aria-label="Next project" aria-controls="track-work">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
         </div>
       </div>
+
+      <div class="track reveal" id="track-work" tabindex="0" role="region" aria-label="Projects, use the arrow keys to scroll">
+
+        <article class="card">
+          <div class="card-top">
+            <p class="meta mono"><span class="status"><span class="dot"></span>In progress</span><span>2026</span><span>Personal project</span></p>
+            <a class="gh" href="https://github.com/aravinds1610/isaacsim_ros_ws" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+              isaacsim_ros_ws ↗
+            </a>
+          </div>
+          <h3>Vision-guided AprilTag sorting with a UR5e in Isaac Sim</h3>
+          <p>
+            A simulated <strong>UR5e with a Robotiq 2F-85 gripper</strong> picks AprilTag-marked cubes off a conveyor over ROS 2 Jazzy, planned with <strong>MoveIt 2 and NVIDIA cuMotion</strong>.
+            OpenCV <code>solvePnP</code> gives each cube's pose, with depth corrected against the tag plane.
+            An orchestrator solves IK from the current pose and sends joint goals, which avoids elbow flips.
+            Fixed-position picks work; picking from the moving belt is next.
+          </p>
+          <div class="facts">
+            <div class="fact"><b>~0.3 mm</b><span>cube pose error</span></div>
+            <div class="fact"><b>~1 mm</b><span>fingertip error at grasp</span></div>
+            <div class="fact"><b>0.046 rad</b><span>worst joint tracking error</span></div>
+          </div>
+          <div class="pipeline">camera<i>→</i>AprilTag pose<i>→</i>/compute_ik<i>→</i>move_group + cuMotion<i>→</i>joint_trajectory_controller<i>→</i>Isaac Sim</div>
+          <p class="stack mono"><span>ROS 2 Jazzy</span><span>Isaac Sim 6</span><span>MoveIt 2</span><span>cuMotion</span><span>ros2_control</span><span>OpenCV</span><span>Docker</span><span>Python</span></p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <p class="meta mono"><span class="status"><span class="dot"></span>Ongoing</span><span>Since Apr 2026</span><span>FAU team project</span></p>
+            <span class="private mono">No public repo</span>
+          </div>
+          <h3>Autonomous navigation with a Husky AGV (ROS 2)</h3>
+          <p>
+            As part of the team, I set up and integrate the <strong>radar, lidar and RGB camera</strong> on a Clearpath Robotics Husky in a ROS 2 control pipeline.
+            I set up, tuned and validated the <strong>ROS 2 navigation stack</strong> and <strong>SLAM-based mapping</strong> through structured tests on the real robot.
+          </p>
+          <div class="pipeline">lidar · radar · RGB<i>→</i>SLAM map<i>→</i>navigation stack<i>→</i>/cmd_vel<i>→</i>Husky</div>
+          <p class="stack mono"><span>ROS 2</span><span>Navigation stack</span><span>SLAM</span><span>Point clouds</span><span>Sensor integration</span><span>Real hardware</span></p>
+        </article>
+
+        <article class="card">
+          <div class="card-top">
+            <p class="meta mono"><span>B.Eng. project</span><span>Real hardware</span></p>
+            <a class="gh" href="https://github.com/aravinds1610/FruitSegreagtionRobotBasedOnMachineVision" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+              FruitSegregation… ↗
+            </a>
+          </div>
+          <h3>Machine-vision 3-DOF robot for fruit defect identification and segregation</h3>
+          <p>
+            I designed and built a <strong>3-DOF manipulator with a gripper</strong> that sorts fruit. A depth camera feeds a CNN defect classifier that reaches <strong>96% accuracy</strong>, and its result drives each pick in real time.
+            Motion control is written in Embedded C, and the arm talks to Python through PyFirmata, so perception, decision and actuation run in one closed loop.
+          </p>
+          <div class="pipeline">depth camera<i>→</i>CNN classifier<i>→</i>Python decision<i>→</i>PyFirmata<i>→</i>Embedded C servo control</div>
+          <p class="stack mono"><span>Python</span><span>CNN</span><span>OpenCV</span><span>PyFirmata</span><span>Arduino</span><span>Embedded C</span></p>
+        </article>
+
+        <article class="card md">
+          <div class="card-top">
+            <p class="meta mono"><span>Earlier projects</span><span>Embedded &amp; sensing</span></p>
+          </div>
+          <div class="mini">
+            <h4>Autonomous garbage collector bot</h4>
+            <p>A mobile, sensor-guided robot with a servo-driven arm. Embedded control and real-time sensor feedback handle navigation and obstacle avoidance.</p>
+          </div>
+          <div class="mini">
+            <h4>Intelligent light control system</h4>
+            <p>An industrial PIR sensor and an RGB camera detect occupancy and switch classroom lighting to save energy.</p>
+          </div>
+          <div class="mini">
+            <h4>Burglar alarm and security system</h4>
+            <p>An Arduino Mega intrusion-detection system with integrated sensors and real-time alerting.</p>
+          </div>
+        </article>
+
+        <article class="card sm end-card">
+          <div>
+            <p class="meta mono" style="margin-bottom:1rem"><span>More</span></p>
+            <h3>All repositories on GitHub</h3>
+            <p>Code, simulation workspaces and project reports.</p>
+          </div>
+          <div>
+            <a class="btn" href="https://github.com/aravinds1610?tab=repositories" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+              github.com/aravinds1610 ↗
+            </a>
+          </div>
+        </article>
+
+      </div>
+      <div class="wrap"><div class="progress" aria-hidden="true"><span></span></div></div>
     </section>
 
-    <!-- Experience -->
-    <section id="experience">
-      <div class="wrap grid">
-        <p class="label mono">02 — Experience</p>
+    <!-- Background: experience + education -->
+    <section id="background" data-carousel>
+      <div class="wrap section-head reveal">
         <div>
-          <h2 class="reveal">Experience</h2>
-          <p class="intro reveal">About 3.5 years in industry software before my Master's.</p>
-
-          <div class="entry reveal">
-            <p class="when mono">2023 — 2025</p>
-            <div>
-              <h4>Technical Consultant / Software Developer</h4>
-              <p class="where">Xebia Technologies · Jaipur, India</p>
-              <ul>
-                <li>Led a <strong>team of 4 developers</strong> delivering production software and automation solutions with Agile.</li>
-                <li>Extended and maintained automation workflows and system-integration logic for Pharma and Insurance clients, across several software and hardware interfaces.</li>
-                <li>Cut development and evaluation cycle time by <strong>40%</strong> through systematic fault diagnostics and workload estimation.</li>
-                <li>Recognised as Key Team Player for hands-on support across test campaigns and production rollouts.</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="entry reveal">
-            <p class="when mono">2021 — 2023</p>
-            <div>
-              <h4>Associate Technical Consultant / Intern</h4>
-              <p class="where">Vuram Technology Solutions · Chennai, India</p>
-              <ul>
-                <li>Built Appian BPM proofs of concept, reporting and document-management solutions for Banking clients.</li>
-              </ul>
-            </div>
-          </div>
+          <p class="section-label mono">02 / Background</p>
+          <h2>Experience &amp; education</h2>
+          <p class="intro">About 3.5 years in industry software, then a Master's in autonomy at FAU.</p>
+        </div>
+        <div class="controls">
+          <button class="arrow" type="button" data-prev aria-label="Previous entry" aria-controls="track-background">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="arrow" type="button" data-next aria-label="Next entry" aria-controls="track-background">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
         </div>
       </div>
-    </section>
 
-    <!-- Education -->
-    <section id="education">
-      <div class="wrap grid">
-        <p class="label mono">03 — Education</p>
-        <div>
-          <div class="entry reveal">
-            <p class="when mono">2025 — now</p>
-            <div>
-              <h4>M.Sc. Autonomy Technologies</h4>
-              <p class="where">Friedrich-Alexander-Universität Erlangen-Nürnberg</p>
-              <ul>
-                <li>Focus on robotics, control, motion planning and perception; coursework in robot dynamics and numerical optimisation.</li>
-              </ul>
-            </div>
-          </div>
-          <div class="entry reveal">
-            <p class="when mono">2018 — 2022</p>
-            <div>
-              <h4>B.Eng. Mechatronics Engineering</h4>
-              <p class="where">Rajalakshmi Engineering College, Anna University</p>
-              <ul>
-                <li>CGPA 9.28 / 10 (German grade 1.3).</li>
-              </ul>
-              <p class="badge mono"><span class="dot"></span>Gold Medal · Rank 1</p>
-            </div>
-          </div>
-        </div>
+      <div class="track reveal" id="track-background" tabindex="0" role="region" aria-label="Experience and education, use the arrow keys to scroll">
+
+        <article class="card md">
+          <p class="meta mono" style="margin-bottom:1rem"><span class="status"><span class="dot"></span>Education</span><span>Since 2025</span><span>Erlangen</span></p>
+          <h3>M.Sc. Autonomy Technologies</h3>
+          <p class="where">Friedrich-Alexander-Universität Erlangen-Nürnberg</p>
+          <ul>
+            <li>Focus on robotics, control, motion planning and perception.</li>
+            <li>Coursework in robot dynamics and numerical optimisation.</li>
+            <li>Team member on the FAU Husky AGV navigation project.</li>
+          </ul>
+        </article>
+
+        <article class="card md">
+          <p class="meta mono" style="margin-bottom:1rem"><span>Work</span><span>2023-2025</span><span>Jaipur, India</span></p>
+          <h3>Technical Consultant / Software Developer</h3>
+          <p class="where">Xebia Technologies</p>
+          <ul>
+            <li>Led a <strong>team of 4 developers</strong> delivering production software and automation solutions with Agile.</li>
+            <li>Extended and maintained automation workflows and system-integration logic for Pharma and Insurance clients.</li>
+            <li>Cut development and evaluation cycle time by <strong>40%</strong> through systematic fault diagnostics.</li>
+            <li>Recognised as Key Team Player across test campaigns and production rollouts.</li>
+          </ul>
+        </article>
+
+        <article class="card md">
+          <p class="meta mono" style="margin-bottom:1rem"><span>Work</span><span>2021-2023</span><span>Chennai, India</span></p>
+          <h3>Associate Technical Consultant / Intern</h3>
+          <p class="where">Vuram Technology Solutions</p>
+          <ul>
+            <li>Built Appian BPM proofs of concept, reporting and document-management solutions for Banking clients.</li>
+            <li>Worked closely with stakeholders to keep deliverables accurate and consistent.</li>
+          </ul>
+        </article>
+
+        <article class="card md">
+          <p class="meta mono" style="margin-bottom:1rem"><span>Education</span><span>2018-2022</span><span>Chennai, India</span></p>
+          <h3>B.Eng. Mechatronics Engineering</h3>
+          <p class="where">Rajalakshmi Engineering College, Anna University</p>
+          <ul>
+            <li>CGPA 9.28 / 10 (German grade 1.3).</li>
+            <li>Final-year project: the machine-vision fruit sorting robot.</li>
+          </ul>
+          <p class="badge mono"><span class="dot"></span>Gold Medal · Rank 1</p>
+        </article>
+
       </div>
+      <div class="wrap"><div class="progress" aria-hidden="true"><span></span></div></div>
     </section>
 
     <!-- Skills -->
-    <section id="skills">
-      <div class="wrap grid">
-        <p class="label mono">04 — Skills</p>
+    <section id="skills" data-carousel>
+      <div class="wrap section-head reveal">
         <div>
-          <h2 class="reveal">Skills</h2>
-          <p class="intro reveal">Hands-on unless marked otherwise.</p>
-          <dl class="skills reveal">
-            <div class="skill"><dt class="mono">Robotics</dt><dd>ROS 2, MoveIt 2 + cuMotion, ros2_control, navigation &amp; SLAM, motion planning, sensor integration (radar, lidar, RGB camera), point cloud processing</dd></div>
-            <div class="skill"><dt class="mono">Perception</dt><dd>CNNs, OpenCV, AprilTag pose estimation, PyTorch / TensorFlow <em>(basic)</em></dd></div>
-            <div class="skill"><dt class="mono">Simulation</dt><dd>Isaac Sim, Gazebo, RViz, CARLA <em>(basic)</em></dd></div>
-            <div class="skill"><dt class="mono">Programming</dt><dd>Python, Embedded C, C++ <em>(basic / coursework)</em></dd></div>
-            <div class="skill"><dt class="mono">Tools</dt><dd>Docker, Git, Linux, REST APIs</dd></div>
-            <div class="skill"><dt class="mono">Industrial</dt><dd>PLC / Siemens TIA Portal, CAN-Bus <em>(theory)</em></dd></div>
-            <div class="skill"><dt class="mono">Languages</dt><dd>English C1, German B1 <em>(improving)</em>, Tamil native</dd></div>
-          </dl>
+          <p class="section-label mono">03 / Skills</p>
+          <h2>Skills</h2>
+          <p class="intro">Hands-on unless marked otherwise.</p>
+        </div>
+        <div class="controls">
+          <button class="arrow" type="button" data-prev aria-label="Previous skill group" aria-controls="track-skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          </button>
+          <button class="arrow" type="button" data-next aria-label="Next skill group" aria-controls="track-skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
         </div>
       </div>
+
+      <div class="track reveal" id="track-skills" tabindex="0" role="region" aria-label="Skills, use the arrow keys to scroll">
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>01</span></p>
+          <h3>Robotics</h3>
+          <ul class="skill-list">
+            <li>ROS 2</li>
+            <li>MoveIt 2 + cuMotion</li>
+            <li>ros2_control</li>
+            <li>Navigation &amp; SLAM</li>
+            <li>Motion planning</li>
+            <li>Point cloud processing</li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>02</span></p>
+          <h3>Perception</h3>
+          <ul class="skill-list">
+            <li>CNNs</li>
+            <li>OpenCV</li>
+            <li>AprilTag pose estimation</li>
+            <li>Sensor integration: radar, lidar, RGB</li>
+            <li>PyTorch / TensorFlow <em>(basic)</em></li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>03</span></p>
+          <h3>Simulation</h3>
+          <ul class="skill-list">
+            <li>Isaac Sim</li>
+            <li>Gazebo</li>
+            <li>RViz</li>
+            <li>CARLA <em>(basic)</em></li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>04</span></p>
+          <h3>Programming</h3>
+          <ul class="skill-list">
+            <li>Python</li>
+            <li>Embedded C</li>
+            <li>C++ <em>(basic / coursework)</em></li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>05</span></p>
+          <h3>Tools</h3>
+          <ul class="skill-list">
+            <li>Docker</li>
+            <li>Git</li>
+            <li>Linux</li>
+            <li>REST APIs</li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>06</span></p>
+          <h3>Industrial</h3>
+          <ul class="skill-list">
+            <li>PLC / Siemens TIA Portal</li>
+            <li>CAN-Bus <em>(theory)</em></li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>07</span></p>
+          <h3>Languages</h3>
+          <ul class="skill-list">
+            <li>English <em>C1</em></li>
+            <li>German <em>B1, improving</em></li>
+            <li>Tamil <em>native</em></li>
+          </ul>
+        </article>
+      </div>
+      <div class="wrap"><div class="progress" aria-hidden="true"><span></span></div></div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="contact">
-      <div class="wrap grid">
-        <p class="label mono">05 — Contact</p>
-        <div class="reveal">
+    <section id="contact">
+      <div class="wrap contact reveal">
+        <div>
+          <p class="section-label mono">04 / Contact</p>
           <h2>Let's talk robots.</h2>
           <p>I'm looking for robotics engineering, research and working-student roles in manipulation, navigation and perception. Email is the fastest way to reach me.</p>
-          <div class="links">
-            <a class="btn primary" href="mailto:aravind162000@gmail.com">aravind162000@gmail.com</a>
-            <a class="btn" href="https://www.linkedin.com/in/aravind-suresh-1610" target="_blank" rel="noopener">LinkedIn</a>
-            <a class="btn" href="https://github.com/aravinds1610" target="_blank" rel="noopener">GitHub</a>
-            <a class="btn" href="mailto:aravind162000@gmail.com?subject=CV%20request">Request CV</a>
-          </div>
+        </div>
+        <div class="links">
+          <a class="btn primary" href="mailto:aravind162000@gmail.com">aravind162000@gmail.com</a>
+          <a class="btn" href="https://www.linkedin.com/in/aravind-suresh-1610" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn" href="https://github.com/aravinds1610" target="_blank" rel="noopener">GitHub</a>
+          <a class="btn" href="mailto:aravind162000@gmail.com?subject=CV%20request">Request CV</a>
         </div>
       </div>
     </section>
@@ -796,6 +889,53 @@
     });
     lightQuery.addEventListener('change', syncLabel);
     syncLabel();
+
+    // Carousels: arrow buttons and arrow keys step one card at a time
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    document.querySelectorAll('[data-carousel]').forEach((section) => {
+      const track = section.querySelector('.track');
+      const controls = section.querySelector('.controls');
+      const prev = section.querySelector('[data-prev]');
+      const next = section.querySelector('[data-next]');
+      const bar = section.querySelector('.progress span');
+      const progress = section.querySelector('.progress');
+
+      // x position where a snapped card's left edge sits
+      const snapX = () => track.getBoundingClientRect().left + parseFloat(getComputedStyle(track).paddingLeft);
+
+      function step(dir) {
+        const x = snapX();
+        const cards = [...track.children];
+        const target = dir > 0
+          ? cards.find((c) => c.getBoundingClientRect().left > x + 2)
+          : cards.reverse().find((c) => c.getBoundingClientRect().left < x - 2);
+        if (!target) return;
+        track.scrollBy({ left: target.getBoundingClientRect().left - x, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+      }
+
+      function update() {
+        const max = track.scrollWidth - track.clientWidth;
+        const scrollable = max > 2;
+        controls.hidden = !scrollable;
+        progress.style.visibility = scrollable ? 'visible' : 'hidden';
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= max - 2;
+        // A disabled button drops keyboard focus; hand it to the other arrow
+        if (next.disabled && document.activeElement === next) prev.focus();
+        if (prev.disabled && document.activeElement === prev) next.focus();
+        bar.style.transform = `scaleX(${scrollable ? (track.scrollLeft + track.clientWidth) / track.scrollWidth : 1})`;
+      }
+
+      prev.addEventListener('click', () => step(-1));
+      next.addEventListener('click', () => step(1));
+      track.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); step(-1); }
+      });
+      track.addEventListener('scroll', update, { passive: true });
+      new ResizeObserver(update).observe(track);
+      update();
+    });
 
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
