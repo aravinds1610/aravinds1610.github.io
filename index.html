@@ -443,8 +443,31 @@
     footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
     /* ── Reveal ─────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    :root { --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1); }
+    @keyframes rise  { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
+    @keyframes slide { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: none; } }
+
+    main { overflow-x: clip; }
+
+    /* Hero plays once on load: copy rises line by line, arm slides in from the right */
+    .hero-copy > * { animation: rise 0.9s var(--ease-out) both; }
+    .hero-copy > :nth-child(2) { animation-delay: 0.1s; }
+    .hero-copy > :nth-child(3) { animation-delay: 0.2s; }
+    .hero-copy > :nth-child(4) { animation-delay: 0.3s; }
+    .hero .arm { animation: slide 1.1s var(--ease-out) 0.3s both; }
+
+    /* Section blocks rise from below as they scroll into view */
+    .reveal { opacity: 0; transform: translateY(56px); transition: opacity 0.8s ease, transform 0.9s var(--ease-out); }
     .reveal.in { opacity: 1; transform: none; }
+
+    /* Carousels: the row stays put, its cards slide in from the right one after another */
+    .track.reveal { opacity: 1; transform: none; transition: none; }
+    .track.reveal > * {
+      opacity: 0; transform: translateX(120px);
+      transition: opacity 0.7s ease, transform 0.9s var(--ease-out), border-color 0.2s, color 0.2s;
+      transition-delay: calc(var(--i, 0) * 90ms), calc(var(--i, 0) * 90ms), 0s, 0s;
+    }
+    .track.reveal.in > * { opacity: 1; transform: none; }
 
     /* ── Responsive ─────────────────────────── */
     @media (max-width: 900px) {
@@ -469,7 +492,7 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; }
       html { scroll-behavior: auto; }
-      .reveal { opacity: 1; transform: none; }
+      .reveal, .track.reveal > * { opacity: 1; transform: none; }
     }
   </style>
 </head>
@@ -501,7 +524,7 @@
 
     <!-- Hero -->
     <div class="wrap hero">
-      <div>
+      <div class="hero-copy">
         <p class="eyebrow mono"><span class="dot"></span>Robotics engineer · Erlangen, Germany</p>
         <h1>Aravind Suresh</h1>
         <p class="lede">
@@ -910,8 +933,8 @@
         const x = snapX();
         const cards = [...track.children];
         const target = dir > 0
-          ? cards.find((c) => c.getBoundingClientRect().left > x + 2)
-          : cards.reverse().find((c) => c.getBoundingClientRect().left < x - 2);
+          ? cards.find((c) => c.getBoundingClientRect().left > x + 12)
+          : cards.reverse().find((c) => c.getBoundingClientRect().left < x - 12);
         if (!target) return;
         track.scrollBy({ left: target.getBoundingClientRect().left - x, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
       }
@@ -970,7 +993,10 @@
       entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.track.reveal').forEach((t) => {
+      [...t.children].forEach((c, i) => c.style.setProperty('--i', Math.min(i, 5)));
+    });
     document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   </script>
 </body>
