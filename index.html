@@ -3,32 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark light" />
+  <script>
+    try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <title>Aravind Suresh — Robotics Engineer</title>
+  <meta name="description" content="Aravind Suresh — robotics engineer and M.Sc. Autonomy Technologies student at FAU Erlangen-Nürnberg. ROS 2, manipulation, navigation and perception on real and simulated robots." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0b0c'/%3E%3Cpath d='M9 26h14M16 23l-4-9 9-4v6' stroke='%23ededef' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='14' r='2' fill='%23ff7a45'/%3E%3Ccircle cx='21' cy='10' r='2' fill='%23ff7a45'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
-
-  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
-    /* ── Reset & Base ─────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:        #06080f;
-      --bg2:       #0c0f1a;
-      --bg3:       #111622;
-      --surface:   #151b2e;
-      --border:    rgba(255,255,255,0.07);
-      --text:      #dde3f0;
-      --muted:     #5c6480;
-      --accent:    #5fa898;
-      --accent2:   #7d96b8;
-      --accent-dim: rgba(95, 168, 152, 0.12);
-      --font-sans: 'Space Grotesk', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      color-scheme: dark;
+      --bg:      #0b0b0c;
+      --surface: #121214;
+      --line:    rgba(255, 255, 255, 0.08);
+      --line-2:  rgba(255, 255, 255, 0.16);
+      --text:    #ededef;
+      --muted:   #9a9aa2;
+      --faint:   #6e6e76;
+      --accent:  #ff7a45;
+      --accent-ring: rgba(255, 122, 69, 0.15);
+      --header-bg:   rgba(11, 11, 12, 0.82);
+      --arm-line:    rgba(255, 255, 255, 0.18);
+      --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+      --wrap: 1040px;
+    }
+
+    /* Light theme: follows the system unless the visitor picked one */
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) {
+        color-scheme: light;
+        --bg:      #f3ece0;
+        --surface: #ebe2d3;
+        --line:    rgba(70, 45, 20, 0.10);
+        --line-2:  rgba(70, 45, 20, 0.20);
+        --text:    #2b2520;
+        --muted:   #5c5348;
+        --faint:   #73685b;
+        --accent:  #b0461a;
+        --accent-ring: rgba(176, 70, 26, 0.15);
+        --header-bg:   rgba(243, 236, 224, 0.88);
+        --arm-line:    rgba(70, 45, 20, 0.34);
+      }
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg:      #f3ece0;
+      --surface: #ebe2d3;
+      --line:    rgba(70, 45, 20, 0.10);
+      --line-2:  rgba(70, 45, 20, 0.20);
+      --text:    #2b2520;
+      --muted:   #5c5348;
+      --faint:   #73685b;
+      --accent:  #b0461a;
+      --accent-ring: rgba(176, 70, 26, 0.15);
+      --header-bg:   rgba(243, 236, 224, 0.88);
+      --arm-line:    rgba(70, 45, 20, 0.34);
     }
 
     html { scroll-behavior: smooth; }
@@ -36,1783 +73,736 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--font-sans);
+      font-family: var(--sans);
       font-size: 16px;
-      line-height: 1.6;
-      overflow-x: hidden;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    /* ── Noise overlay ───────────────────────── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 999;
-      opacity: 0.6;
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    a { color: inherit; text-decoration: none; }
+
+    a:focus-visible {
+      outline: 1px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
     }
 
-    /* ── Nav ─────────────────────────────────── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      z-index: 100;
+    .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: 2rem; }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Header ─────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: var(--header-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    header .wrap {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1.25rem 4rem;
-      border-bottom: 1px solid var(--border);
-      background: rgba(6, 8, 15, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      height: 60px;
     }
 
-    .nav-logo {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--accent);
-      letter-spacing: 0.05em;
-    }
+    .brand { font-weight: 600; font-size: 0.95rem; letter-spacing: -0.01em; }
+    .brand span { color: var(--accent); }
 
-    .nav-logo span { color: var(--muted); }
+    nav ul { display: flex; gap: 2rem; list-style: none; }
 
-    .nav-links {
-      display: flex; gap: 2.5rem;
-      list-style: none;
-    }
-
-    .nav-links a {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
+    nav a {
+      font-size: 0.875rem;
       color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.25s;
+      transition: color 0.2s;
     }
 
-    .nav-links a:hover { color: var(--accent); }
+    nav a:hover { color: var(--text); }
 
-    /* ── Hero ────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      padding: 8rem 4rem 4rem;
-      position: relative;
-      overflow: hidden;
-    }
+    .header-right { display: flex; align-items: center; gap: 1.75rem; }
 
-    .hero-bg-grid {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 100%);
-    }
-
-    .hero-glow {
-      position: absolute;
-      width: 600px; height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,229,160,0.06) 0%, transparent 70%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-
-    .hero-left { position: relative; z-index: 2; }
-
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-tag::before {
-      content: '';
-      display: block; width: 20px; height: 1px;
-      background: var(--accent);
-    }
-
-    h1.hero-name {
-      font-size: clamp(3rem, 5vw, 5.5rem);
-      font-weight: 700;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      color: #eef1fb;
-      margin-bottom: 1rem;
-    }
-
-    h1.hero-name .line2 {
-      color: var(--accent);
-      display: block;
-    }
-
-    .hero-role {
-      font-size: 1.1rem;
-      color: var(--muted);
-      font-weight: 400;
-      margin-bottom: 2.5rem;
-      max-width: 400px;
-    }
-
-    .hero-ctas {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-    }
-
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
-      background: var(--accent);
-      color: #06080f;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      border-radius: 3px;
-      transition: all 0.25s;
-      border: none; cursor: pointer;
-    }
-
-    .btn-primary:hover {
-      background: #ffffff;
-      color: #06080f;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(255,255,255,0.15);
-    }
-
-    .btn-outline {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.8rem 1.8rem;
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      border: 1px solid var(--line-2);
+      border-radius: 6px;
       background: transparent;
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      border-radius: 3px;
-      border: 1px solid var(--border);
-      transition: all 0.25s;
+      color: var(--muted);
       cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    .btn-outline:hover {
-      background: #ffffff;
-      border-color: #ffffff;
-      color: #06080f;
-      transform: translateY(-2px);
+    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
+    .theme-toggle:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+    .theme-toggle svg { width: 16px; height: 16px; }
+
+    /* Show the icon for the theme you would switch to */
+    .icon-moon { display: none; }
+    :root[data-theme="light"] .icon-sun { display: none; }
+    :root[data-theme="light"] .icon-moon { display: block; }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme]) .icon-sun { display: none; }
+      :root:not([data-theme]) .icon-moon { display: block; }
     }
 
-    /* ── Robot Arm SVG ───────────────────────── */
-    .hero-right {
-      position: relative; z-index: 2;
-      display: flex; justify-content: center; align-items: center;
-    }
-
-    .arm-container {
-      position: relative;
-      width: 380px; height: 380px;
-    }
-
-    .arm-rings {
-      position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    .arm-ring {
-      position: absolute;
-      border-radius: 50%;
-      border: 1px solid var(--border);
-    }
-
-    .arm-ring:nth-child(1) { width: 340px; height: 340px; animation: rotate-slow 30s linear infinite; }
-    .arm-ring:nth-child(2) { width: 260px; height: 260px; animation: rotate-slow 20s linear infinite reverse; border-color: rgba(0,229,160,0.08); }
-    .arm-ring:nth-child(3) { width: 180px; height: 180px; animation: rotate-slow 15s linear infinite; }
-
-    @keyframes rotate-slow {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    /* ── Scroll reveal ───────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
-    .reveal-delay-5 { transition-delay: 0.5s; }
-
-    /* ── Section shared ──────────────────────── */
-    section {
-      padding: 8rem 4rem;
-    }
-
-    .section-label {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      display: flex; align-items: center; gap: 0.75rem;
-    }
-
-    .section-label::after {
-      content: '';
-      flex: 1;
-      max-width: 60px;
-      height: 1px;
-      background: var(--accent);
-      opacity: 0.5;
-    }
-
-    h2.section-title {
-      font-size: clamp(2rem, 3.5vw, 3.2rem);
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: #eef1fb;
-      margin-bottom: 1.5rem;
-    }
-
-    /* ── About ───────────────────────────────── */
-    #about {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    /* ── Hero ───────────────────────────────── */
+    .hero {
       display: grid;
-      grid-template-columns: 1fr 360px;
+      grid-template-columns: 1.15fr 1fr;
       align-items: center;
-      gap: 0;
-      padding: 8rem 4rem;
+      gap: 3rem;
+      padding-top: 7rem; padding-bottom: 6rem;
     }
 
-    .about-grid {
-      max-width: 100%;
-      padding-left: 0;
+    .eyebrow {
+      color: var(--faint);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.6rem;
     }
 
-    .about-stat-block { }
-
-    .about-stat-num {
-      font-size: clamp(4rem, 8vw, 7rem);
-      font-weight: 700;
-      letter-spacing: -0.05em;
-      color: var(--accent);
-      line-height: 1;
-      display: block;
-    }
-
-    .about-stat-label {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-top: 0.5rem;
-    }
-
-    .about-stat-divider {
-      width: 40px; height: 2px;
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent);
-      margin: 1.5rem 0;
-      opacity: 0.4;
+      box-shadow: 0 0 0 3px var(--accent-ring);
+      flex-shrink: 0;
     }
 
-    .about-text p {
-      font-size: 1.1rem;
-      color: rgba(221,227,240,0.75);
-      line-height: 1.8;
-      margin-bottom: 1.5rem;
-    }
-
-    .about-text p:last-child { margin-bottom: 0; }
-
-    .about-text strong { color: var(--text); font-weight: 600; }
-
-    /* ── Projects ────────────────────────────── */
-    #projects { background: var(--bg); }
-
-    .projects-header {
-      max-width: 1100px; margin: 0 auto 4rem;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5px;
-      max-width: 1100px;
-      margin: 0 auto;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .project-card {
-      background: var(--bg);
-      padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .project-card:hover { background: var(--bg3); }
-
-    .project-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      transform: scaleX(0);
-      transform-origin: left;
-      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    }
-
-    .project-card:hover::before { transform: scaleX(1); }
-
-    .project-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.1em;
-      margin-bottom: 1.5rem;
-    }
-
-    .project-placeholder {
-      width: 100%; height: 180px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
-      position: relative;
-      overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-    }
-
-    .project-placeholder-stripes {
-      position: absolute; inset: 0;
-      background-image: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 10px,
-        rgba(255,255,255,0.015) 10px,
-        rgba(255,255,255,0.015) 20px
-      );
-    }
-
-    .project-placeholder-label {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      letter-spacing: 0.08em;
-      text-align: center;
-      padding: 0.5rem;
-      position: relative; z-index: 1;
-    }
-
-    .project-title {
-      font-size: 1.15rem;
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 4.25rem);
       font-weight: 600;
-      color: #eef1fb;
-      line-height: 1.3;
-      margin-bottom: 0.75rem;
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+      margin-bottom: 1.5rem;
     }
 
-    .project-desc {
-      font-size: 0.9rem;
+    .lede {
+      font-size: 1.125rem;
       color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
+      max-width: 34rem;
+      margin-bottom: 2rem;
     }
 
-    .project-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
+    .lede strong { color: var(--text); font-weight: 500; }
 
-    .tag {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      padding: 0.3rem 0.7rem;
-      border-radius: 2px;
-      background: var(--accent-dim);
-      color: var(--accent);
-      letter-spacing: 0.05em;
-      border: 1px solid rgba(0,229,160,0.15);
-    }
+    .links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
-    .tag.blue {
-      background: rgba(61,158,255,0.1);
-      color: var(--accent2);
-      border-color: rgba(61,158,255,0.15);
-    }
-
-    /* ── Techniques & Methods (in Projects) ──── */
-    .methods-block {
-      max-width: 1100px;
-      margin: 5rem auto 0;
-      position: relative;
-      z-index: 1;
-    }
-
-    .methods-header { margin-bottom: 2.5rem; }
-
-    .methods-title {
-      font-size: clamp(1.15rem, 2vw, 1.5rem);
-      font-weight: 600;
-      color: #eef1fb;
-      letter-spacing: -0.02em;
-      line-height: 1.4;
-      max-width: 780px;
-      margin-top: 0.75rem;
-    }
-
-    .methods-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    .methods-col {
-      background: var(--bg);
-      padding: 1.75rem;
-      transition: background 0.3s;
-    }
-
-    .methods-col:hover { background: var(--bg3); }
-
-    .methods-col-title {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 1.25rem;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-
-    .methods-col-title::before {
-      content: '';
-      display: block; width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .methods-tags {
-      display: flex; flex-wrap: wrap; gap: 0.5rem;
-    }
-
-    @media (max-width: 900px) {
-      .methods-grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── Skills ──────────────────────────────── */
-    #skills {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-    }
-
-    .skills-header {
-      max-width: 1100px; margin: 0 auto 4rem;
-    }
-
-    .skills-groups {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .skill-group {
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      padding: 2rem;
-      border-radius: 2px;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .skill-group:hover {
-      border-color: rgba(0,229,160,0.2);
-      transform: translateY(-4px);
-    }
-
-    .skill-group-title {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 1.5rem;
-      display: flex; align-items: center; gap: 0.5rem;
-    }
-
-    .skill-group-title::before {
-      content: '';
-      display: block; width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--accent);
-    }
-
-    .skill-item {
-      margin-bottom: 1.25rem;
-    }
-
-    .skill-item:last-child { margin-bottom: 0; }
-
-    .skill-name {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.88rem;
-      font-weight: 500;
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      height: 40px; padding: 0 1rem;
+      font-size: 0.875rem; font-weight: 500;
+      border: 1px solid var(--line-2);
+      border-radius: 6px;
       color: var(--text);
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .btn:hover { border-color: var(--text); }
+
+    .btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+    .btn.primary:hover { background: transparent; color: var(--text); }
+
+    .btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .arm { width: 100%; max-width: 440px; justify-self: end; }
+    .arm svg { width: 100%; height: auto; display: block; }
+
+    .arm .outline { stroke: var(--arm-line); }
+    .arm .fill    { stroke: var(--bg); }
+    .arm .solid   { fill: var(--bg); }
+    .arm .joint   { fill: var(--bg); stroke: var(--muted); }
+    .arm .core    { fill: var(--accent); }
+    .arm .label   { fill: var(--faint); font-family: var(--mono); font-size: 10px; }
+    .arm .ground  { stroke: var(--arm-line); }
+    .arm .part    { fill: none; stroke: var(--muted); }
+    .arm .path    { stroke: var(--accent); opacity: 0.45; }
+
+    .caption { color: var(--faint); margin-top: 0.75rem; text-align: center; }
+
+    @keyframes q2 { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-5deg); } }
+    @keyframes q3 { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(7deg); } }
+    @keyframes q5 { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(-3deg); } }
+    @keyframes grip { 0%, 40%, 100% { transform: translateX(0); } 55%, 85% { transform: translateX(3px); } }
+    @keyframes grip-l { 0%, 40%, 100% { transform: translateX(0); } 55%, 85% { transform: translateX(-3px); } }
+
+    /* ── Sections ───────────────────────────── */
+    section { border-top: 1px solid var(--line); padding: 5.5rem 0; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 2rem;
+    }
+
+    .grid > * { min-width: 0; }
+
+    .label { color: var(--faint); padding-top: 0.3rem; }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
       margin-bottom: 0.5rem;
     }
 
-    .skill-pct {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
+    .intro { color: var(--muted); margin-bottom: 3rem; max-width: 40rem; }
+
+    /* ── Projects ───────────────────────────── */
+    .project {
+      padding: 2.25rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project:first-of-type { padding-top: 0; }
+
+    .project-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-meta {
+      color: var(--faint);
+      margin-bottom: 0.5rem;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.9rem;
+    }
+
+    .status { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--accent); }
+    .status .dot { width: 6px; height: 6px; box-shadow: none; }
+
+    h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.015em;
+    }
+
+    .gh {
+      flex-shrink: 0;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      height: 32px; padding: 0 0.8rem;
+      border: 1px solid var(--line-2);
+      border-radius: 6px;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--text);
+      transition: border-color 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+
+    .gh svg { width: 14px; height: 14px; fill: currentColor; }
+    .gh:hover { border-color: var(--accent); color: var(--accent); }
+
+    .private { color: var(--faint); white-space: nowrap; padding-top: 0.4rem; }
+
+    .project p { color: var(--muted); max-width: 44rem; margin-bottom: 1.1rem; }
+    .project p strong { color: var(--text); font-weight: 500; }
+    .project code { font-family: var(--mono); font-size: 0.85em; color: var(--text); }
+
+    .facts {
+      display: flex; flex-wrap: wrap; gap: 0.5rem 2rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .fact { display: flex; flex-direction: column; }
+    .fact b { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
+    .fact span { color: var(--faint); font-family: var(--mono); font-size: 0.7rem; }
+
+    .pipeline {
+      font-family: var(--mono);
+      font-size: 0.75rem;
       color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 0.7rem 0.9rem;
+      margin-bottom: 1.1rem;
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
-    .skill-bar-track {
-      height: 2px;
-      background: var(--border);
-      border-radius: 1px;
-      overflow: hidden;
+    .pipeline i { font-style: normal; color: var(--accent); padding: 0 0.35rem; }
+
+    .stack { color: var(--faint); line-height: 1.8; }
+    .stack span:not(:last-child)::after { content: ' · '; color: var(--line-2); }
+
+    .earlier { margin-top: 3rem; }
+    .earlier-title { color: var(--faint); margin-bottom: 0.75rem; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.25rem 2rem;
+      padding: 1.1rem 0;
+      border-bottom: 1px solid var(--line);
     }
 
-    .skill-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: 1px;
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform 1.2s cubic-bezier(0.16,1,0.3,1);
-    }
+    .row:last-child { border-bottom: none; }
+    .row h4 { font-size: 1rem; font-weight: 500; }
+    .row p { color: var(--muted); font-size: 0.925rem; grid-column: 1 / -1; }
+    .row .mono { color: var(--faint); padding-top: 0.2rem; }
 
-    .skill-bar-fill.animated { transform: scaleX(1); }
-
-    /* ── Resume ──────────────────────────────── */
-    #resume {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      text-align: center;
-      padding: 10rem 4rem;
-    }
-
-    .resume-inner {
-      max-width: 600px; margin: 0 auto;
-    }
-
-    .resume-inner .section-label { justify-content: center; }
-    .resume-inner .section-label::after { display: none; }
-
-    .resume-tagline {
-      font-size: 1.05rem;
+    .all-repos {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      margin-top: 2.5rem;
       color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 3rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid var(--line-2);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
     }
 
-    /* ── Footer ──────────────────────────────── */
+    .all-repos:hover { color: var(--accent); border-color: var(--accent); }
+
+    /* ── Experience / Education ─────────────── */
+    .entry {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 0.25rem 2rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .entry:first-of-type { padding-top: 0; }
+    .entry:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .entry .when { color: var(--faint); padding-top: 0.2rem; }
+    .entry h4 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+    .entry .where { color: var(--muted); margin-bottom: 0.75rem; }
+
+    .entry ul { list-style: none; }
+
+    .entry li {
+      color: var(--muted);
+      padding-left: 1.1rem;
+      position: relative;
+      margin-bottom: 0.35rem;
+    }
+
+    .entry li::before {
+      content: '';
+      position: absolute; left: 0; top: 0.75em;
+      width: 6px; height: 1px;
+      background: var(--faint);
+    }
+
+    .entry li strong { color: var(--text); font-weight: 500; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      margin-top: 0.25rem;
+      color: var(--accent);
+    }
+
+    /* ── Skills ─────────────────────────────── */
+    .skills { display: grid; gap: 0; }
+
+    .skill {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0.25rem 2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .skill:first-child { padding-top: 0; }
+    .skill:last-child { border-bottom: none; }
+
+    .skill dt { color: var(--faint); padding-top: 0.15rem; }
+    .skill dd { color: var(--text); }
+    .skill dd em { font-style: normal; color: var(--faint); font-size: 0.85em; }
+
+    /* ── Contact ────────────────────────────── */
+    .contact h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); letter-spacing: -0.03em; margin-bottom: 1rem; }
+    .contact p { color: var(--muted); max-width: 36rem; margin-bottom: 2rem; }
+
     footer {
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      padding: 2rem 4rem;
-      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--line);
+      padding: 2rem 0;
+      color: var(--faint);
     }
 
-    .footer-mono {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--muted);
+    footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── Reveal ─────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    /* ── Responsive ─────────────────────────── */
+    @media (max-width: 860px) {
+      .hero { grid-template-columns: 1fr; padding-top: 4.5rem; padding-bottom: 4rem; gap: 2.5rem; }
+      .arm { justify-self: center; max-width: 340px; }
+      .grid { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+      .label { padding-top: 0; }
+      section { padding: 4rem 0; }
     }
 
-    .footer-dot {
-      display: inline-block; width: 6px; height: 6px;
-      border-radius: 50%; background: var(--accent);
-      margin-right: 0.5rem;
-      animation: pulse-dot 2s infinite;
+    @media (max-width: 600px) {
+      .wrap { padding-inline: 1rem; }
+      nav ul { gap: 1.1rem; }
+      .header-right { gap: 1rem; }
+      nav a { font-size: 0.8rem; }
+      .brand { display: none; }
+      header .wrap { justify-content: center; }
+      .project-head { flex-direction: column; gap: 0.75rem; }
+      .entry, .skill { grid-template-columns: 1fr; }
+      .row { grid-template-columns: 1fr; }
     }
 
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.3; }
-    }
-
-    /* ── Terminal cursor ─────────────────────── */
-    .cursor {
-      display: inline-block;
-      width: 2px; height: 1.1em;
-      background: var(--accent);
-      margin-left: 4px;
-      vertical-align: middle;
-      animation: blink 1s step-end infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0; }
-    }
-
-    /* ── Hero anim ───────────────────────────── */
-    .hero-left > * {
-      opacity: 0;
-      transform: translateY(30px);
-      animation: hero-in 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
-    }
-
-    .hero-left > *:nth-child(1) { animation-delay: 0.1s; }
-    .hero-left > *:nth-child(2) { animation-delay: 0.25s; }
-    .hero-left > *:nth-child(3) { animation-delay: 0.4s; }
-    .hero-left > *:nth-child(4) { animation-delay: 0.55s; }
-
-    @keyframes hero-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-right {
-      opacity: 0;
-      animation: hero-in 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
-    }
-
-    /* ── Section animations ──────────────────── */
-
-    /* Shared: sections need position relative */
-    #about, #projects, #skills { position: relative; }
-    #projects, #skills { overflow: hidden; }
-
-    /* Circuit trace — SVG paths that draw themselves */
-    @keyframes trace-draw {
-      0%   { stroke-dashoffset: 600; opacity: 0; }
-      5%   { opacity: 1; }
-      80%  { stroke-dashoffset: 0; opacity: 1; }
-      100% { stroke-dashoffset: 0; opacity: 0.15; }
-    }
-
-    @keyframes trace-loop {
-      0%   { stroke-dashoffset: 600; }
-      100% { stroke-dashoffset: -600; }
-    }
-
-    @keyframes node-pulse {
-      0%, 100% { r: 3; opacity: 0.6; }
-      50%       { r: 5; opacity: 1; }
-    }
-
-    @keyframes float-up {
-      0%   { transform: translateY(0px) scale(1); opacity: 0.6; }
-      50%  { transform: translateY(-12px) scale(1.05); opacity: 1; }
-      100% { transform: translateY(0px) scale(1); opacity: 0.6; }
-    }
-
-    @keyframes scan-sweep {
-      0%   { transform: translateY(-100%); opacity: 0; }
-      5%   { opacity: 1; }
-      90%  { opacity: 0.5; }
-      100% { transform: translateY(900px); opacity: 0; }
-    }
-
-    @keyframes data-stream {
-      0%   { transform: translateY(0); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 0.4; }
-      100% { transform: translateY(-280px); opacity: 0; }
-    }
-
-    @keyframes orbit {
-      from { transform: rotate(0deg) translateX(38px) rotate(0deg); }
-      to   { transform: rotate(360deg) translateX(38px) rotate(-360deg); }
-    }
-
-    @keyframes orbit-rev {
-      from { transform: rotate(0deg) translateX(24px) rotate(0deg); }
-      to   { transform: rotate(-360deg) translateX(24px) rotate(360deg); }
-    }
-
-    @keyframes glow-pulse {
-      0%, 100% { opacity: 0.25; filter: blur(20px); }
-      50%       { opacity: 0.45; filter: blur(28px); }
-    }
-
-    /* About — circuit decoration */
-    .about-deco {
-      position: absolute;
-      top: 0; right: 0;
-      width: 420px; height: 100%;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 0;
-    }
-
-    .about-deco svg { width: 100%; height: 100%; }
-
-    /* About — left floating arm */
-    .about-deco-left {
-      position: absolute;
-      top: 50%; left: -20px;
-      transform: translateY(-50%);
-      pointer-events: none;
-      z-index: 0;
-      width: 200px; height: 300px;
-    }
-
-    /* Projects — scanner beam */
-    .projects-scanner {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), transparent);
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-      animation: scan-sweep 6s ease-in-out infinite;
-    }
-
-    /* Projects — side data streams */
-    .projects-stream {
-      position: absolute;
-      top: 100%;
-      width: 1px;
-      height: 280px;
-      background: linear-gradient(180deg, transparent, var(--accent), transparent);
-      pointer-events: none;
-      z-index: 1;
-      animation: data-stream 3.5s ease-in-out infinite;
-    }
-
-    .projects-stream:nth-child(2) { left: 8%;  animation-delay: 0s;    animation-duration: 3.2s; }
-    .projects-stream:nth-child(3) { left: 25%; animation-delay: 0.8s;  animation-duration: 4s; }
-    .projects-stream:nth-child(4) { left: 50%; animation-delay: 1.6s;  animation-duration: 3.6s; }
-    .projects-stream:nth-child(5) { left: 75%; animation-delay: 0.4s;  animation-duration: 3s; }
-    .projects-stream:nth-child(6) { left: 92%; animation-delay: 2s;    animation-duration: 4.2s; background: linear-gradient(180deg, transparent, var(--accent2), transparent); }
-
-    /* Skills — side robot arm decorations */
-    .skills-deco-left, .skills-deco-right {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .skills-deco-left  { left: -10px; }
-    .skills-deco-right { right: -10px; }
-
-    /* Glow blob behind skills deco */
-    .skills-glow {
-      position: absolute;
-      width: 300px; height: 300px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      animation: glow-pulse 4s ease-in-out infinite;
-    }
-
-    .skills-glow-left  { left: -100px; top: 50%; transform: translateY(-50%); background: radial-gradient(circle, rgba(179,36,20,0.18) 0%, transparent 70%); }
-    .skills-glow-right { right: -100px; top: 50%; transform: translateY(-50%); background: radial-gradient(circle, rgba(255,174,61,0.15) 0%, transparent 70%); animation-delay: 2s; }
-
-    .skills-header, .skills-groups { position: relative; z-index: 1; }
-
-    .about-text p { font-size: 1.05rem; color: rgba(221,227,240,0.75); line-height: 1.8; margin-bottom: 1.5rem; }
-    .about-text p:last-child { margin-bottom: 0; }
-    .about-text strong { color: var(--text); font-weight: 600; }
-    @media (max-width: 900px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { gap: 1.5rem; }
-      section { padding: 5rem 1.5rem; }
-
-      #hero {
-        grid-template-columns: 1fr;
-        padding: 7rem 1.5rem 4rem;
-        text-align: center;
-      }
-
-      .hero-right { display: none; }
-      .hero-ctas { justify-content: center; }
-
-      #about { grid-template-columns: 1fr; }
-      #about canvas { min-height: 300px; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .skills-groups { grid-template-columns: 1fr; }
-
-      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
 <body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-github" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></symbol>
+  </svg>
 
-  <!-- Nav -->
-  <nav>
-    <div class="nav-logo">AS<span>.init()</span></div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#resume">Resume</a></li>
-    </ul>
-  </nav>
-
-  <!-- Hero -->
-  <section id="hero">
-    <div class="hero-bg-grid"></div>
-    <div class="hero-glow"></div>
-
-    <div class="hero-left">
-      <div class="hero-tag">Robotics Engineer · Masters Student</div>
-      <h1 class="hero-name">
-        Aravind
-        <span class="line2">Suresh<span class="cursor"></span></span>
-      </h1>
-      <p class="hero-role">Mechatronics Engineer & M.Sc. student in Autonomy Technologies at FAU Erlangen-Nuremberg. Gold Medal graduate. 3.5 years in software.</p>
-      <div class="hero-ctas">
-        <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="#resume" class="btn-outline">Download CV</a>
+  <header>
+    <div class="wrap">
+      <a href="#top" class="brand">Aravind Suresh<span>.</span></a>
+      <div class="header-right">
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+        <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light / dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
       </div>
     </div>
+  </header>
 
-    <div class="hero-right">
-      <div class="arm-container">
-        <div class="arm-rings">
-          <div class="arm-ring"></div>
-          <div class="arm-ring"></div>
-          <div class="arm-ring"></div>
+  <main id="top">
+
+    <!-- Hero -->
+    <div class="wrap hero">
+      <div>
+        <p class="eyebrow mono"><span class="dot"></span>Robotics engineer · Erlangen, Germany</p>
+        <h1>Aravind Suresh</h1>
+        <p class="lede">
+          M.Sc. student in Autonomy Technologies at <strong>FAU Erlangen-Nürnberg</strong> and Gold Medal Mechatronics graduate.
+          I build ROS&nbsp;2 software for manipulators and mobile robots, in simulation and on real hardware.
+        </p>
+        <div class="links">
+          <a class="btn primary" href="#work">View work</a>
+          <a class="btn" href="https://github.com/aravinds1610" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+            GitHub
+          </a>
+          <a class="btn" href="https://www.linkedin.com/in/aravind-suresh-1610" target="_blank" rel="noopener">LinkedIn</a>
         </div>
-        <!-- Animated 6-DOF industrial manipulator SVG -->
-        <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg"
-             style="position:absolute;inset:0;width:100%;height:100%;">
+      </div>
 
-          <!-- Floor mount / pedestal -->
-          <rect x="148" y="336" width="84" height="14" rx="2" fill="#151b2e" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-          <line x1="150" y1="350" x2="230" y2="350" stroke="rgba(0,229,160,0.15)" stroke-width="1"/>
+      <!-- 6-DOF manipulator, line art -->
+      <figure class="arm" aria-hidden="true">
+        <svg viewBox="0 0 420 400" fill="none">
+          <!-- ground + conveyor + part -->
+          <line class="ground" x1="40" y1="372" x2="390" y2="372" stroke-width="1"/>
+          <rect class="part" x="262" y="318" width="120" height="8" rx="2" stroke-width="1"/>
+          <rect class="part" x="315" y="300" width="18" height="18" rx="1.5" stroke-width="1.2"/>
+          <!-- planned end-effector path -->
+          <path class="path" d="M324 236 C 324 270, 324 280, 324 294" stroke-width="1" stroke-dasharray="3 4"/>
 
-          <!-- A1 base turntable (base yaw axis) -->
-          <g style="transform-origin:190px 322px; animation: rotate-slow 24s linear infinite;">
-            <ellipse cx="190" cy="322" rx="34" ry="11" fill="#0d1117" stroke="rgba(61,158,255,0.25)" stroke-width="1"/>
-            <ellipse cx="190" cy="322" rx="20" ry="6" fill="none" stroke="rgba(61,158,255,0.18)" stroke-width="1"/>
-          </g>
-          <rect x="170" y="300" width="40" height="24" rx="4" fill="#131a2b" stroke="rgba(255,255,255,0.09)" stroke-width="1"/>
-          <text x="150" y="326" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(61,158,255,0.55)">A1</text>
+          <!-- A1 base -->
+          <rect class="outline solid" x="172" y="340" width="76" height="32" rx="4" stroke-width="1.2"/>
+          <line class="outline" x1="184" y1="352" x2="236" y2="352" stroke-width="1"/>
+          <text class="label" x="134" y="362">A1</text>
 
-          <!-- A2 shoulder joint pivot -->
-          <circle cx="190" cy="300" r="11" fill="rgba(0,229,160,0.06)" stroke="rgba(0,229,160,0.35)" stroke-width="1.2"/>
-          <circle cx="190" cy="300" r="4" fill="#00e5a0"/>
-          <text x="202" y="303" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.55)">A2</text>
+          <!-- A2 shoulder -->
+          <g style="transform-origin:210px 330px; animation: q2 9s ease-in-out infinite;">
+            <!-- upper arm -->
+            <line class="outline" x1="210" y1="330" x2="150" y2="205" stroke-width="22" stroke-linecap="round"/>
+            <line class="fill"    x1="210" y1="330" x2="150" y2="205" stroke-width="20" stroke-linecap="round"/>
 
-          <!-- LINK 1 (upper arm) — pivots at A2 -->
-          <g style="transform-origin:190px 300px; animation: arm1 7s ease-in-out infinite;">
-            <!-- casing -->
-            <line x1="190" y1="300" x2="238" y2="208" stroke="rgba(220,227,240,0.14)" stroke-width="13" stroke-linecap="round"/>
-            <line x1="190" y1="300" x2="238" y2="208" stroke="url(#lg1)" stroke-width="2.5" stroke-linecap="round"/>
+            <!-- A3 elbow -->
+            <g style="transform-origin:150px 205px; animation: q3 9s ease-in-out infinite;">
+              <!-- forearm -->
+              <line class="outline" x1="150" y1="205" x2="296" y2="170" stroke-width="18" stroke-linecap="round"/>
+              <line class="fill"    x1="150" y1="205" x2="296" y2="170" stroke-width="16" stroke-linecap="round"/>
 
-            <!-- A3 elbow joint pivot -->
-            <circle cx="238" cy="208" r="9" fill="rgba(61,158,255,0.08)" stroke="rgba(61,158,255,0.4)" stroke-width="1.2"/>
-            <circle cx="238" cy="208" r="3.2" fill="#3d9eff"/>
-            <text x="248" y="205" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(61,158,255,0.55)">A3</text>
+              <!-- A4/A5/A6 wrist -->
+              <g style="transform-origin:296px 170px; animation: q5 9s ease-in-out infinite;">
+                <line class="outline" x1="296" y1="170" x2="324" y2="170" stroke-width="14" stroke-linecap="round"/>
+                <line class="fill"    x1="296" y1="170" x2="324" y2="170" stroke-width="12" stroke-linecap="round"/>
+                <line class="outline" x1="324" y1="170" x2="324" y2="204" stroke-width="14" stroke-linecap="round"/>
+                <line class="fill"    x1="324" y1="170" x2="324" y2="204" stroke-width="12" stroke-linecap="round"/>
 
-            <!-- LINK 2 (forearm) — pivots at A3 -->
-            <g style="transform-origin:238px 208px; animation: arm2 5s ease-in-out infinite;">
-              <line x1="238" y1="208" x2="250" y2="126" stroke="rgba(220,227,240,0.13)" stroke-width="11" stroke-linecap="round"/>
-              <line x1="238" y1="208" x2="250" y2="126" stroke="url(#lg2)" stroke-width="2.2" stroke-linecap="round"/>
-
-              <!-- A4 wrist-roll ring (spins) -->
-              <g style="transform-origin:245px 168px; animation: rotate-slow 6s linear infinite reverse;">
-                <ellipse cx="245" cy="168" rx="9" ry="3.4" fill="none" stroke="rgba(0,229,160,0.3)" stroke-width="1.2"/>
-              </g>
-              <text x="255" y="170" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.5)">A4</text>
-
-              <!-- A5 wrist joint pivot -->
-              <circle cx="250" cy="126" r="8" fill="rgba(0,229,160,0.08)" stroke="rgba(0,229,160,0.4)" stroke-width="1.2"/>
-              <circle cx="250" cy="126" r="2.8" fill="#00e5a0"/>
-              <text x="259" y="123" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.55)">A5</text>
-
-              <!-- WRIST + A6 flange — pivots at A5 -->
-              <g style="transform-origin:250px 126px; animation: arm3 4s ease-in-out infinite;">
-                <line x1="250" y1="126" x2="284" y2="108" stroke="rgba(220,227,240,0.12)" stroke-width="8" stroke-linecap="round"/>
-                <line x1="250" y1="126" x2="284" y2="108" stroke="url(#lg1)" stroke-width="1.8" stroke-linecap="round"/>
-
-                <!-- A6 tool flange (spins) -->
-                <g style="transform-origin:284px 108px; animation: rotate-slow 4s linear infinite;">
-                  <rect x="279" y="103" width="10" height="10" rx="1.5" fill="rgba(0,229,160,0.1)" stroke="rgba(0,229,160,0.45)" stroke-width="1"/>
-                  <line x1="284" y1="103" x2="284" y2="113" stroke="rgba(0,229,160,0.4)" stroke-width="0.8"/>
+                <!-- tool flange + parallel gripper -->
+                <rect class="outline solid" x="310" y="208" width="28" height="7" rx="1.5" stroke-width="1.2"/>
+                <g style="animation: grip-l 9s ease-in-out infinite;">
+                  <rect class="outline solid" x="312" y="215" width="5" height="20" rx="1" stroke-width="1.2"/>
                 </g>
-                <text x="292" y="106" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.55)">A6</text>
+                <g style="animation: grip 9s ease-in-out infinite;">
+                  <rect class="outline solid" x="331" y="215" width="5" height="20" rx="1" stroke-width="1.2"/>
+                </g>
 
-                <!-- Tool: gripper -->
-                <line x1="284" y1="108" x2="298" y2="96" stroke="rgba(0,229,160,0.55)" stroke-width="1.5"/>
-                <line x1="284" y1="108" x2="300" y2="112" stroke="rgba(0,229,160,0.55)" stroke-width="1.5"/>
+                <circle class="joint" cx="296" cy="170" r="8" stroke-width="1.2"/>
+                <circle class="core"  cx="296" cy="170" r="2.5"/>
+                <circle class="joint" cx="324" cy="170" r="7" stroke-width="1.2"/>
+                <circle class="core"  cx="324" cy="170" r="2.2"/>
+                <circle class="joint" cx="324" cy="200" r="6" stroke-width="1.2"/>
+                <circle class="core"  cx="324" cy="200" r="2"/>
+                <text class="label" x="282" y="150">A4</text>
+                <text class="label" x="334" y="160">A5</text>
+                <text class="label" x="344" y="204">A6</text>
               </g>
+
+              <circle class="joint" cx="150" cy="205" r="10" stroke-width="1.2"/>
+              <circle class="core"  cx="150" cy="205" r="3"/>
+              <text class="label" x="112" y="200">A3</text>
             </g>
           </g>
 
-          <!-- Scan lines -->
-          <line x1="60" y1="200" x2="320" y2="200" stroke="rgba(0,229,160,0.04)" stroke-width="1"/>
-          <line x1="60" y1="240" x2="320" y2="240" stroke="rgba(0,229,160,0.04)" stroke-width="1"/>
-          <line x1="60" y1="280" x2="320" y2="280" stroke="rgba(0,229,160,0.04)" stroke-width="1"/>
-
-          <!-- Corner decorations -->
-          <path d="M50 50 L50 70 M50 50 L70 50" stroke="rgba(0,229,160,0.2)" stroke-width="1"/>
-          <path d="M330 50 L330 70 M330 50 L310 50" stroke="rgba(0,229,160,0.2)" stroke-width="1"/>
-          <path d="M50 330 L50 310 M50 330 L70 330" stroke="rgba(0,229,160,0.2)" stroke-width="1"/>
-          <path d="M330 330 L330 310 M330 330 L310 330" stroke="rgba(0,229,160,0.2)" stroke-width="1"/>
-
-          <!-- Data readout simulation -->
-          <text x="52" y="48" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.45)">6-AXIS ARTICULATED</text>
-          <text x="52" y="60" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.4)">DOF:6</text>
-          <text x="52" y="72" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.3)">STS:ACTIVE</text>
-          <text id="th1" x="286" y="44" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(61,158,255,0.4)">A1:—°</text>
-          <text id="th2" x="286" y="54" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(61,158,255,0.35)">A2:—°</text>
-          <text id="th3" x="286" y="64" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(61,158,255,0.3)">A3:—°</text>
-          <text id="th4" x="286" y="74" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.3)">A4:—°</text>
-          <text id="th5" x="286" y="84" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.28)">A5:—°</text>
-          <text id="th6" x="286" y="94" font-family="JetBrains Mono, monospace" font-size="7" fill="rgba(0,229,160,0.26)">A6:—°</text>
-
-          <!-- Gradients -->
-          <defs>
-            <linearGradient id="lg1" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#3d9eff" stop-opacity="0.7"/>
-              <stop offset="100%" stop-color="#00e5a0" stop-opacity="0.7"/>
-            </linearGradient>
-            <linearGradient id="lg2" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#00e5a0" stop-opacity="0.7"/>
-              <stop offset="100%" stop-color="#3d9eff" stop-opacity="0.5"/>
-            </linearGradient>
-          </defs>
+          <circle class="joint" cx="210" cy="330" r="12" stroke-width="1.2"/>
+          <circle class="core"  cx="210" cy="330" r="3.5"/>
+          <text class="label" x="230" y="326">A2</text>
         </svg>
-      </div>
-    </div>
-  </section>
-
-  <!-- About -->
-  <section id="about">
-    <div class="about-text">
-      <div class="section-label reveal">About</div>
-      <h2 class="section-title reveal reveal-delay-1">Precision engineer. Autonomous systems builder.</h2>
-      <p class="reveal reveal-delay-2">
-        I'm <strong>Aravind Suresh</strong> — a Mechatronics Engineer turned robotics researcher, currently pursuing an M.Sc. in <strong>Autonomy Technologies</strong> at FAU Erlangen-Nürnberg. My focus sits at the intersection of perception, motion planning, and the kind of robot behaviour that holds up outside of simulation.
-      </p>
-      <p class="reveal reveal-delay-3">
-        I came up through industrial automation — PLC programming, TIA Portal, process control — and that grounding in real hardware constraints shapes how I approach every problem. These days I'm most interested in how robots build and maintain a coherent understanding of the world around them, and how that understanding drives reliable action. I'm actively working toward research and engineering roles at organisations pushing that boundary: DLR, Fraunhofer IPA, KUKA.
-      </p>
-      <p class="reveal reveal-delay-4" style="margin-top:1rem;">
-        <span style="font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);">📍 Erlangen, Germany &nbsp;·&nbsp; <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f0e3f0e7f8fff5a0a7a3a1a1a1d1f6fcf0f8fdbff2fefc">[email&#160;protected]</a></span>
-      </p>
-    </div>
-    <canvas id="ppCanvas" style="width:100%;height:100%;min-height:420px;display:block;pointer-events:none;"></canvas>
-  </section>
-
-  <!-- Projects -->
-  <section id="projects">
-    <!-- Scanning beam sweeps down through cards -->
-    <div class="projects-scanner"></div>
-    <!-- Vertical data streams rising from bottom -->
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-stream"></div>
-    <div class="projects-header">
-      <div class="section-label reveal">Projects</div>
-      <h2 class="section-title reveal reveal-delay-1">What I've built</h2>
+        <figcaption class="caption mono">6-DOF manipulator · pick from conveyor</figcaption>
+      </figure>
     </div>
 
-    <div class="projects-grid">
+    <!-- Work -->
+    <section id="work">
+      <div class="wrap grid">
+        <p class="label mono">01 — Work</p>
+        <div>
+          <h2 class="reveal">Selected projects</h2>
+          <p class="intro reveal">Manipulation, mobile robotics and perception. Projects with public code link to GitHub.</p>
 
-      <!-- Project 1 -->
-      <div class="project-card reveal">
-        <div class="project-num">01 / MACHINE VISION · 2022</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>3-DOF robot arm / vision pipeline</div>
-        </div>
-        <div class="project-title">Machine Vision Based 3-DOF Robot for Fruit Defect Identification &amp; Segregation</div>
-        <p class="project-desc">Sorting defective fruit by visual inspection is slow and inconsistent when done manually. Built a CNN classification pipeline in Python, interfaced it with a 3-DOF Arduino-driven arm via PyFirmata, and validated end-to-end actuation from camera trigger to bin selection. <strong style="color:var(--accent);">96% classification accuracy.</strong></p>
-        <div class="project-tags">
-          <span class="tag">CNN</span>
-          <span class="tag">Computer Vision</span>
-          <span class="tag">Robot Control</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">OpenCV</span>
-          <span class="tag blue">Arduino</span>
+          <article class="project reveal">
+            <div class="project-head">
+              <div>
+                <p class="project-meta mono"><span class="status"><span class="dot"></span>In progress</span><span>2026</span><span>Personal project</span></p>
+                <h3>Vision-guided AprilTag sorting with a UR5e in Isaac Sim</h3>
+              </div>
+              <a class="gh" href="https://github.com/aravinds1610/isaacsim_ros_ws" target="_blank" rel="noopener">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+                isaacsim_ros_ws ↗
+              </a>
+            </div>
+            <p>
+              A simulated <strong>UR5e with a Robotiq 2F-85 gripper</strong> picks AprilTag-marked cubes off a conveyor, driven over ROS 2 Jazzy and planned with
+              <strong>MoveIt 2 and NVIDIA cuMotion</strong>. The camera estimates each cube's pose with OpenCV <code>solvePnP</code>, then corrects depth by intersecting the camera ray with the tag plane.
+              An orchestrator node solves IK seeded at the current pose and sends joint goals, which avoids elbow flips.
+              Fixed-position picks work; picking from the moving belt is next.
+            </p>
+            <div class="facts">
+              <div class="fact"><b>~0.3 mm</b><span>cube pose error</span></div>
+              <div class="fact"><b>~1 mm</b><span>fingertip error at grasp</span></div>
+              <div class="fact"><b>0.046 rad</b><span>worst joint tracking error</span></div>
+            </div>
+            <div class="pipeline">camera<i>→</i>AprilTag pose<i>→</i>/compute_ik<i>→</i>move_group + cuMotion<i>→</i>joint_trajectory_controller<i>→</i>Isaac Sim</div>
+            <p class="stack mono"><span>ROS 2 Jazzy</span><span>Isaac Sim 6</span><span>MoveIt 2</span><span>cuMotion</span><span>ros2_control</span><span>OpenCV</span><span>Docker</span><span>Python</span></p>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-head">
+              <div>
+                <p class="project-meta mono"><span class="status"><span class="dot"></span>Ongoing</span><span>Since Apr 2026</span><span>FAU team project</span></p>
+                <h3>Autonomous navigation with a Husky AGV (ROS 2)</h3>
+              </div>
+              <span class="private mono">Team project · no public repo</span>
+            </div>
+            <p>
+              As part of the team, I set up and integrate the <strong>radar, lidar and RGB camera</strong> on a Clearpath Robotics Husky in a ROS 2 control pipeline.
+              I set up, tuned and validated the <strong>ROS 2 navigation stack</strong> and <strong>SLAM-based mapping</strong> through structured tests on the real robot.
+            </p>
+            <div class="pipeline">lidar · radar · RGB<i>→</i>SLAM map<i>→</i>navigation stack<i>→</i>/cmd_vel<i>→</i>Husky</div>
+            <p class="stack mono"><span>ROS 2</span><span>Navigation stack</span><span>SLAM</span><span>Point clouds</span><span>Sensor integration</span><span>Real hardware</span></p>
+          </article>
+
+          <article class="project reveal">
+            <div class="project-head">
+              <div>
+                <p class="project-meta mono"><span>B.Eng. project</span><span>Real hardware</span></p>
+                <h3>Machine-vision 3-DOF robot for fruit defect identification and segregation</h3>
+              </div>
+              <a class="gh" href="https://github.com/aravinds1610/FruitSegreagtionRobotBasedOnMachineVision" target="_blank" rel="noopener">
+                <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+                FruitSegregation… ↗
+              </a>
+            </div>
+            <p>
+              I designed and built a <strong>3-DOF manipulator with a gripper</strong> that sorts fruit. A depth camera feeds a CNN defect classifier that reaches <strong>96% accuracy</strong>, and its result drives each pick in real time.
+              Motion control is written in Embedded C, and the arm talks to Python through PyFirmata, so perception, decision and actuation run in one closed loop.
+            </p>
+            <div class="pipeline">depth camera<i>→</i>CNN classifier<i>→</i>Python decision<i>→</i>PyFirmata<i>→</i>Embedded C servo control</div>
+            <p class="stack mono"><span>Python</span><span>CNN</span><span>OpenCV</span><span>PyFirmata</span><span>Arduino</span><span>Embedded C</span></p>
+          </article>
+
+          <div class="earlier reveal">
+            <p class="earlier-title mono">Earlier projects</p>
+            <div class="row">
+              <h4>Autonomous garbage collector bot</h4>
+              <span class="mono">Mobile manipulation</span>
+              <p>A mobile, sensor-guided robot with a servo-driven arm. Embedded control and real-time sensor feedback handle navigation and obstacle avoidance.</p>
+            </div>
+            <div class="row">
+              <h4>Intelligent light control system</h4>
+              <span class="mono">Sensing · automation</span>
+              <p>An industrial PIR sensor and an RGB camera detect occupancy and switch classroom lighting to save energy.</p>
+            </div>
+            <div class="row">
+              <h4>Burglar alarm and security system</h4>
+              <span class="mono">Embedded</span>
+              <p>An Arduino Mega intrusion-detection system with integrated sensors and real-time alerting.</p>
+            </div>
+          </div>
+
+          <a class="all-repos" href="https://github.com/aravinds1610?tab=repositories" target="_blank" rel="noopener">All repositories on GitHub ↗</a>
         </div>
       </div>
+    </section>
 
-      <!-- Project 2 -->
-      <div class="project-card reveal reveal-delay-1">
-        <div class="project-num">02 / EMBEDDED CONTROL · 2021</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>PIR sensors / control circuit</div>
-        </div>
-        <div class="project-title">Intelligent Light Control System</div>
-        <p class="project-desc">Real-time automated lighting control using industrial PIR sensors. Selected under the college "Project Future" fund. Full system documentation and test records maintained throughout development.</p>
-        <div class="project-tags">
-          <span class="tag">PIR Sensing</span>
-          <span class="tag">Embedded Control</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">Microcontroller</span>
-        </div>
-      </div>
+    <!-- Experience -->
+    <section id="experience">
+      <div class="wrap grid">
+        <p class="label mono">02 — Experience</p>
+        <div>
+          <h2 class="reveal">Experience</h2>
+          <p class="intro reveal">About 3.5 years in industry software before my Master's.</p>
 
-      <!-- Project 3 -->
-      <div class="project-card reveal reveal-delay-2">
-        <div class="project-num">03 / AUTONOMOUS ROBOT · 2020</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>autonomous robot / sensors</div>
-        </div>
-        <div class="project-title">Autonomous Garbage Collector Bot</div>
-        <p class="project-desc">Designed and built an autonomous robot integrating Python-based control, sensor feedback, and embedded actuation end-to-end — from hardware assembly to software control loop.</p>
-        <div class="project-tags">
-          <span class="tag">Autonomous Systems</span>
-          <span class="tag">Sensor Feedback</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">Embedded C</span>
-        </div>
-      </div>
-
-      <!-- Project 4 -->
-      <div class="project-card reveal reveal-delay-1">
-        <div class="project-num">04 / SECURITY SYSTEMS · 2020</div>
-        <div class="project-placeholder">
-          <div class="project-placeholder-stripes"></div>
-          <div class="project-placeholder-label">project image<br/>camera / edge detection</div>
-        </div>
-        <div class="project-title">Burglar Alarm &amp; Security System</div>
-        <p class="project-desc">Semi-automated edge detection system combining PIR motion sensing with camera-based verification. Developed Python diagnostic scripts and maintained full system state documentation.</p>
-        <div class="project-tags">
-          <span class="tag">Edge Detection</span>
-          <span class="tag">PIR Sensing</span>
-          <span class="tag blue">Python</span>
-          <span class="tag blue">OpenCV</span>
-        </div>
-      </div>
-
-
-
-    </div>
-
-    <!-- Techniques & methods applied across projects (for job applications) -->
-    <div class="methods-block">
-      <div class="methods-header reveal">
-        <div class="section-label">Techniques &amp; Methods in Practice</div>
-        <h3 class="methods-title">The tactics I apply on projects — and the stack I'm actively deepening for robotics engineering roles.</h3>
-      </div>
-
-      <div class="methods-grid">
-        <div class="methods-col reveal">
-          <div class="methods-col-title">Manipulation &amp; Motion Planning</div>
-          <div class="methods-tags">
-            <span class="tag">Forward / Inverse Kinematics</span>
-            <span class="tag">6-DOF Trajectory Planning</span>
-            <span class="tag">RRT / RRT*</span>
-            <span class="tag">A* Search</span>
-            <span class="tag">MoveIt 2</span>
-            <span class="tag">Collision-Free Planning</span>
-            <span class="tag">Workspace &amp; Joint-Limit Analysis</span>
-            <span class="tag">Pick-and-Place Pipelines</span>
+          <div class="entry reveal">
+            <p class="when mono">2023 — 2025</p>
+            <div>
+              <h4>Technical Consultant / Software Developer</h4>
+              <p class="where">Xebia Technologies · Jaipur, India</p>
+              <ul>
+                <li>Led a <strong>team of 4 developers</strong> delivering production software and automation solutions with Agile.</li>
+                <li>Extended and maintained automation workflows and system-integration logic for Pharma and Insurance clients, across several software and hardware interfaces.</li>
+                <li>Cut development and evaluation cycle time by <strong>40%</strong> through systematic fault diagnostics and workload estimation.</li>
+                <li>Recognised as Key Team Player for hands-on support across test campaigns and production rollouts.</li>
+              </ul>
+            </div>
           </div>
-        </div>
 
-        <div class="methods-col reveal reveal-delay-1">
-          <div class="methods-col-title">Perception &amp; State Estimation</div>
-          <div class="methods-tags">
-            <span class="tag blue">Computer Vision / OpenCV</span>
-            <span class="tag blue">CNN / Deep Learning</span>
-            <span class="tag blue">Sensor Fusion</span>
-            <span class="tag blue">SLAM</span>
-            <span class="tag blue">State Estimation &amp; Localisation</span>
-            <span class="tag blue">Occupancy Mapping</span>
-          </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-2">
-          <div class="methods-col-title">Control Systems</div>
-          <div class="methods-tags">
-            <span class="tag">PID Control</span>
-            <span class="tag">State-Space Control</span>
-            <span class="tag">Real-Time Control Loops</span>
-            <span class="tag">Feedback / Closed-Loop Tuning</span>
-          </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-1">
-          <div class="methods-col-title">Middleware &amp; Simulation</div>
-          <div class="methods-tags">
-            <span class="tag">ROS 2</span>
-            <span class="tag">Nav2</span>
-            <span class="tag">Gazebo</span>
-            <span class="tag">CARLA</span>
-            <span class="tag">tf2 / URDF</span>
-          </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-2">
-          <div class="methods-col-title">Programming</div>
-          <div class="methods-tags">
-            <span class="tag blue">Python</span>
-            <span class="tag blue">C++</span>
-            <span class="tag blue">Embedded C</span>
-            <span class="tag blue">Git / Linux</span>
-          </div>
-        </div>
-
-        <div class="methods-col reveal reveal-delay-3">
-          <div class="methods-col-title">Industrial Automation</div>
-          <div class="methods-tags">
-            <span class="tag">PLC Programming</span>
-            <span class="tag">TIA Portal</span>
-            <span class="tag">Process Control</span>
-            <span class="tag">Industrial Manipulator Programming</span>
+          <div class="entry reveal">
+            <p class="when mono">2021 — 2023</p>
+            <div>
+              <h4>Associate Technical Consultant / Intern</h4>
+              <p class="where">Vuram Technology Solutions · Chennai, India</p>
+              <ul>
+                <li>Built Appian BPM proofs of concept, reporting and document-management solutions for Banking clients.</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Skills -->
-  <section id="skills">
-    <!-- Glow blobs on sides -->
-    <div class="skills-glow skills-glow-left"></div>
-    <div class="skills-glow skills-glow-right"></div>
-
-    <!-- Left robot arm decoration -->
-    <div class="skills-deco-left">
-      <svg viewBox="0 0 160 400" fill="none" xmlns="http://www.w3.org/2000/svg" width="160" height="400">
-        <g style="transform-origin:80px 350px; animation: arm1 9s ease-in-out infinite 0.5s;">
-          <line x1="80" y1="350" x2="80" y2="260" stroke="rgba(179,36,20,0.18)" stroke-width="2"/>
-          <circle cx="80" cy="260" r="6" fill="rgba(179,36,20,0.1)" stroke="rgba(179,36,20,0.35)" stroke-width="1"/>
-          <circle cx="80" cy="260" r="2.5" fill="#b32414" opacity="0.75"/>
-          <g style="transform-origin:80px 260px; animation: arm2 6s ease-in-out infinite 0.2s;">
-            <line x1="80" y1="260" x2="50" y2="190" stroke="rgba(255,174,61,0.18)" stroke-width="2"/>
-            <circle cx="50" cy="190" r="5" fill="rgba(255,174,61,0.1)" stroke="rgba(255,174,61,0.35)" stroke-width="1"/>
-            <circle cx="50" cy="190" r="2" fill="#ffae3d" opacity="0.75"/>
-            <g style="transform-origin:50px 190px; animation: arm3 4s ease-in-out infinite 0.8s;">
-              <line x1="50" y1="190" x2="30" y2="140" stroke="rgba(179,36,20,0.15)" stroke-width="1.5"/>
-              <line x1="30" y1="140" x2="18" y2="124" stroke="rgba(179,36,20,0.4)" stroke-width="1.2"/>
-              <line x1="30" y1="140" x2="38" y2="124" stroke="rgba(179,36,20,0.4)" stroke-width="1.2"/>
-              <circle cx="30" cy="140" r="3.5" fill="rgba(179,36,20,0.08)" stroke="rgba(179,36,20,0.4)" stroke-width="1"/>
-            </g>
-          </g>
-        </g>
-        <rect x="64" y="350" width="32" height="10" rx="1" fill="rgba(179,36,20,0.08)" stroke="rgba(179,36,20,0.2)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="5" fill="rgba(179,36,20,0.15)" stroke="rgba(179,36,20,0.4)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="2" fill="#b32414" opacity="0.9"/>
-        <!-- circuit traces down the side -->
-        <path d="M10 380 L10 300 L30 300 L30 240 L50 240" stroke="rgba(179,36,20,0.2)" stroke-width="1" stroke-dasharray="200" style="animation: trace-loop 4s linear infinite;"/>
-        <circle cx="10" cy="300" r="2" fill="#b32414" opacity="0.4" style="animation: node-pulse 2s ease-in-out infinite;"/>
-        <circle cx="30" cy="240" r="2" fill="#ffae3d" opacity="0.4" style="animation: node-pulse 2.5s ease-in-out infinite 0.5s;"/>
-      </svg>
-    </div>
-
-    <!-- Right robot arm decoration -->
-    <div class="skills-deco-right">
-      <svg viewBox="0 0 160 400" fill="none" xmlns="http://www.w3.org/2000/svg" width="160" height="400">
-        <g style="transform-origin:80px 350px; animation: arm1 7s ease-in-out infinite 1s;">
-          <line x1="80" y1="350" x2="80" y2="255" stroke="rgba(255,174,61,0.18)" stroke-width="2"/>
-          <circle cx="80" cy="255" r="6" fill="rgba(255,174,61,0.1)" stroke="rgba(255,174,61,0.35)" stroke-width="1"/>
-          <circle cx="80" cy="255" r="2.5" fill="#ffae3d" opacity="0.75"/>
-          <g style="transform-origin:80px 255px; animation: arm2 5s ease-in-out infinite 1.2s;">
-            <line x1="80" y1="255" x2="110" y2="185" stroke="rgba(179,36,20,0.18)" stroke-width="2"/>
-            <circle cx="110" cy="185" r="5" fill="rgba(179,36,20,0.1)" stroke="rgba(179,36,20,0.35)" stroke-width="1"/>
-            <circle cx="110" cy="185" r="2" fill="#b32414" opacity="0.75"/>
-            <g style="transform-origin:110px 185px; animation: arm3 3.8s ease-in-out infinite 0.4s;">
-              <line x1="110" y1="185" x2="130" y2="135" stroke="rgba(255,174,61,0.15)" stroke-width="1.5"/>
-              <line x1="130" y1="135" x2="122" y2="119" stroke="rgba(255,174,61,0.4)" stroke-width="1.2"/>
-              <line x1="130" y1="135" x2="140" y2="119" stroke="rgba(255,174,61,0.4)" stroke-width="1.2"/>
-              <circle cx="130" cy="135" r="3.5" fill="rgba(255,174,61,0.08)" stroke="rgba(255,174,61,0.4)" stroke-width="1"/>
-            </g>
-          </g>
-        </g>
-        <rect x="64" y="350" width="32" height="10" rx="1" fill="rgba(255,174,61,0.08)" stroke="rgba(255,174,61,0.2)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="5" fill="rgba(255,174,61,0.15)" stroke="rgba(255,174,61,0.4)" stroke-width="1"/>
-        <circle cx="80" cy="350" r="2" fill="#ffae3d" opacity="0.9"/>
-        <!-- circuit traces down the side -->
-        <path d="M150 380 L150 300 L130 300 L130 230 L110 230" stroke="rgba(255,174,61,0.2)" stroke-width="1" stroke-dasharray="200" style="animation: trace-loop 4.5s linear infinite 1s;"/>
-        <circle cx="150" cy="300" r="2" fill="#ffae3d" opacity="0.4" style="animation: node-pulse 2.2s ease-in-out infinite 0.3s;"/>
-        <circle cx="130" cy="230" r="2" fill="#b32414" opacity="0.4" style="animation: node-pulse 2.8s ease-in-out infinite 0.8s;"/>
-      </svg>
-    </div>
-    <div class="skills-header">
-      <div class="section-label reveal">Skills</div>
-      <h2 class="section-title reveal reveal-delay-1">Technical stack</h2>
-    </div>
-
-    <div class="skills-groups">
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Robotics &amp; Motion</div>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Used to derive workspace limits, plan collision-free trajectories, and debug joint-limit failures in simulation before touching hardware.</p>
-        <div class="skill-item">
-          <div class="skill-name">Robot Kinematics &amp; Dynamics <span class="skill-pct">85%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.85"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">ROS2 / Nav2 <span class="skill-pct">88%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.88"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Gazebo / CARLA <span class="skill-pct">65%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.65"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Motion Planning (RRT, A*) <span class="skill-pct">72%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.72"></div></div>
+    <!-- Education -->
+    <section id="education">
+      <div class="wrap grid">
+        <p class="label mono">03 — Education</p>
+        <div>
+          <div class="entry reveal">
+            <p class="when mono">2025 — now</p>
+            <div>
+              <h4>M.Sc. Autonomy Technologies</h4>
+              <p class="where">Friedrich-Alexander-Universität Erlangen-Nürnberg</p>
+              <ul>
+                <li>Focus on robotics, control, motion planning and perception; coursework in robot dynamics and numerical optimisation.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="entry reveal">
+            <p class="when mono">2018 — 2022</p>
+            <div>
+              <h4>B.Eng. Mechatronics Engineering</h4>
+              <p class="where">Rajalakshmi Engineering College, Anna University</p>
+              <ul>
+                <li>CGPA 9.28 / 10 (German grade 1.3).</li>
+              </ul>
+              <p class="badge mono"><span class="dot"></span>Gold Medal · Rank 1</p>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="skill-group reveal reveal-delay-1">
-        <div class="skill-group-title">Perception &amp; Control</div>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Applied in vision-guided manipulation, occupancy mapping from monocular feeds, and PID/state-space controller design for embedded platforms.</p>
-        <div class="skill-item">
-          <div class="skill-name">Computer Vision / OpenCV <span class="skill-pct">85%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.85"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">CNN / Deep Learning <span class="skill-pct">75%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.75"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Control Systems (PID, State-Space) <span class="skill-pct">80%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.8"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Sensor Fusion &amp; SLAM <span class="skill-pct">74%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.74"></div></div>
+    <!-- Skills -->
+    <section id="skills">
+      <div class="wrap grid">
+        <p class="label mono">04 — Skills</p>
+        <div>
+          <h2 class="reveal">Skills</h2>
+          <p class="intro reveal">Hands-on unless marked otherwise.</p>
+          <dl class="skills reveal">
+            <div class="skill"><dt class="mono">Robotics</dt><dd>ROS 2, MoveIt 2 + cuMotion, ros2_control, navigation &amp; SLAM, motion planning, sensor integration (radar, lidar, RGB camera), point cloud processing</dd></div>
+            <div class="skill"><dt class="mono">Perception</dt><dd>CNNs, OpenCV, AprilTag pose estimation, PyTorch / TensorFlow <em>(basic)</em></dd></div>
+            <div class="skill"><dt class="mono">Simulation</dt><dd>Isaac Sim, Gazebo, RViz, CARLA <em>(basic)</em></dd></div>
+            <div class="skill"><dt class="mono">Programming</dt><dd>Python, Embedded C, C++ <em>(basic / coursework)</em></dd></div>
+            <div class="skill"><dt class="mono">Tools</dt><dd>Docker, Git, Linux, REST APIs</dd></div>
+            <div class="skill"><dt class="mono">Industrial</dt><dd>PLC / Siemens TIA Portal, CAN-Bus <em>(theory)</em></dd></div>
+            <div class="skill"><dt class="mono">Languages</dt><dd>English C1, German B1 <em>(improving)</em>, Tamil native</dd></div>
+          </dl>
         </div>
       </div>
+    </section>
 
-      <div class="skill-group reveal reveal-delay-2">
-        <div class="skill-group-title">Languages &amp; Industrial</div>
-        <p style="font-size:0.78rem;color:var(--muted);margin-bottom:1.25rem;line-height:1.6;">Python for rapid prototyping and ROS nodes; Embedded C and TIA Portal for hardware-close control loops and PLC automation in industry.</p>
-        <div class="skill-item">
-          <div class="skill-name">Python <span class="skill-pct">90%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.9"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">Embedded C <span class="skill-pct">80%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.8"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">PLC / TIA Portal <span class="skill-pct">78%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.78"></div></div>
-        </div>
-        <div class="skill-item">
-          <div class="skill-name">C++ <span class="skill-pct">60%</span></div>
-          <div class="skill-bar-track"><div class="skill-bar-fill" data-pct="0.6"></div></div>
+    <!-- Contact -->
+    <section id="contact" class="contact">
+      <div class="wrap grid">
+        <p class="label mono">05 — Contact</p>
+        <div class="reveal">
+          <h2>Let's talk robots.</h2>
+          <p>I'm looking for robotics engineering, research and working-student roles in manipulation, navigation and perception. Email is the fastest way to reach me.</p>
+          <div class="links">
+            <a class="btn primary" href="mailto:aravind162000@gmail.com">aravind162000@gmail.com</a>
+            <a class="btn" href="https://www.linkedin.com/in/aravind-suresh-1610" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="btn" href="https://github.com/aravinds1610" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn" href="mailto:aravind162000@gmail.com?subject=CV%20request">Request CV</a>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Certifications strip -->
-    <div style="max-width:1100px;margin:3rem auto 0;position:relative;z-index:1;">
-      <div style="font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:1.25rem;">Certifications</div>
-      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;">
-        <span class="tag">ROS 1 for Beginners — Udemy</span>
-        <span class="tag blue">Intro to Self-Driving Cars — Coursera</span>
-        <span class="tag blue">State Estimation &amp; Localisation — Coursera</span>
-        <span class="tag">Autodesk Fusion 360 — Internshala</span>
-      </div>
-    </div>
-  </section>
+  </main>
 
-  <!-- Resume -->
-  <section id="resume">
-    <div class="resume-inner">
-      <div class="section-label reveal">Resume</div>
-      <h2 class="section-title reveal reveal-delay-1">Let's build something real.</h2>
-      <p class="resume-tagline reveal reveal-delay-2">
-        I'm interested in internship and research conversations — particularly in perception, manipulation, and autonomous systems. If you're working on a hard problem in robotics and want someone who thinks carefully and ships things, I'd like to hear about it.
-      </p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;" class="reveal reveal-delay-3">
-        <a href="uploads/Aravind_Suresh_CV_AgileRobots.pdf" download class="btn-primary">Download CV</a>
-        <a href="/cdn-cgi/l/email-protection#88e9fae9fee1e6ecb9bebab8b8b8c8efe5e9e1e4a6ebe7e5" class="btn-outline"><span class="__cf_email__" data-cfemail="8cedfeedfae5e2e8bdbabebcbcbcccebe1ede5e0a2efe3e1">[email&#160;protected]</span></a>
-        <a href="https://linkedin.com/in/aravind-suresh-1610" target="_blank" class="btn-outline">LinkedIn</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
   <footer>
-    <div class="footer-mono"><span class="footer-dot"></span>Aravind Suresh — M.Sc. Autonomy Technologies, FAU Erlangen-Nuremberg</div>
-    <div class="footer-mono"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c7d6e7d6a7572782d2a2e2c2c2c5c7b717d7570327f7371">[email&#160;protected]</a> · Erlangen, Germany · 2026</div>
+    <div class="wrap mono">
+      <span>© 2026 Aravind Suresh</span>
+      <span>Erlangen, Germany</span>
+    </div>
   </footer>
 
-  <!-- Arm animations -->
-  <style>
-    @keyframes arm1 {
-      0%   { transform: rotate(0deg); }
-      30%  { transform: rotate(-15deg); }
-      60%  { transform: rotate(10deg); }
-      100% { transform: rotate(0deg); }
-    }
-    @keyframes arm2 {
-      0%   { transform: rotate(0deg); }
-      25%  { transform: rotate(20deg); }
-      75%  { transform: rotate(-15deg); }
-      100% { transform: rotate(0deg); }
-    }
-    @keyframes arm3 {
-      0%   { transform: rotate(0deg); }
-      50%  { transform: rotate(25deg); }
-      100% { transform: rotate(0deg); }
-    }
-  </style>
-
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Scroll reveal
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => observer.observe(el));
-
-    // Skill bars on scroll
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const fills = e.target.querySelectorAll('.skill-bar-fill');
-          fills.forEach(f => {
-            const pct = parseFloat(f.dataset.pct);
-            f.style.width = (pct * 100) + '%';
-            f.classList.add('animated');
-          });
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.skill-group').forEach(g => barObserver.observe(g));
-
-    // Animated 6-axis joint angle readouts
-    const AXIS_FREQ = [0.18, 1.04, 0.65, 0.9, 0.5, 1.6];
-    const AXIS_AMP  = [180, 15, 20, 30, 25, 180];
-    function updateAngles() {
-      const t = Date.now() / 1000;
-      for (let i = 0; i < 6; i++) {
-        const el = document.getElementById('th' + (i + 1));
-        if (!el) continue;
-        const val = Math.round(Math.sin(t * AXIS_FREQ[i] + i) * AXIS_AMP[i]);
-        el.textContent = `A${i + 1}:${val}°`;
-      }
-    }
-    setInterval(updateAngles, 100);
-  </script>
-
-  <!-- Pick & Place Robot Animation -->
   <script>
-  (function() {
-    const canvas = document.getElementById('ppCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+    // Theme toggle: flip the effective theme and remember the choice
+    const root = document.documentElement;
+    const lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const currentTheme = () => root.dataset.theme || (lightQuery.matches ? 'light' : 'dark');
+    const toggle = document.querySelector('.theme-toggle');
+    const syncLabel = () => toggle.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    toggle.addEventListener('click', () => {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      syncLabel();
+    });
+    lightQuery.addEventListener('change', syncLabel);
+    syncLabel();
 
-    const LABELS = ['PERCEPTION', 'ROS 2', 'SLAM', 'PYTHON', 'CONTROL', 'IK / FK'];
-    const BLK_W = 96, BLK_H = 28;
-
-    // Read accent colors from CSS vars
-    function getAccent() {
-      const s = getComputedStyle(document.documentElement);
-      return {
-        c1: s.getPropertyValue('--accent').trim() || '#2dc7e6',
-        c2: s.getPropertyValue('--accent2').trim() || '#4f7ebf',
-      };
-    }
-
-    let W, H, BASE, L1, L2;
-
-    function resize() {
-      W = canvas.offsetWidth;
-      H = canvas.offsetHeight;
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = W * dpr;
-      canvas.height = H * dpr;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      BASE = { x: W * 0.48, y: H * 0.90 };
-      L1 = H * 0.33;
-      L2 = H * 0.25;
-    }
-
-    function eio(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function lerp(a, b, t) { return a + (b - a) * t; }
-    function lerpPt(a, b, t) { return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t) }; }
-
-    function ikSolve(target) {
-      const dx = target.x - BASE.x;
-      const dy = target.y - BASE.y;
-      const dist = Math.hypot(dx, dy) || 1;
-      const d = Math.min(dist, L1 + L2 - 2);
-      const sdx = dx / dist * d, sdy = dy / dist * d;
-      const c2 = Math.max(-1, Math.min(1, (d*d - L1*L1 - L2*L2) / (2*L1*L2)));
-      const s2 = -Math.sqrt(1 - c2 * c2); // elbow-up
-      const q2 = Math.atan2(s2, c2);
-      const q1 = Math.atan2(sdy, sdx) - Math.atan2(L2 * s2, L1 + L2 * c2);
-      const j1 = { x: BASE.x + L1*Math.cos(q1), y: BASE.y + L1*Math.sin(q1) };
-      const ee = { x: j1.x + L2*Math.cos(q1+q2), y: j1.y + L2*Math.sin(q1+q2) };
-      return { j1, ee };
-    }
-
-    // Blocks
-    let blocks, placedBlocks, gripperBlock;
-    let gripOpen = 1;
-    let eePos, eeStart, eeEnd;
-    let state = 'INIT', stateT = 0, stateDur = 0.5;
-    let currentIdx = -1, lastTs = null;
-
-    function stackPos(i) {
-      return { x: W * 0.07, y: H * 0.20 + i * (BLK_H + 10) };
-    }
-    function shelfPos(i) {
-      const sx = W * 0.68, sy = H * 0.38;
-      return { x: sx + (i % 2) * (BLK_W + 12), y: sy + Math.floor(i / 2) * (BLK_H + 10) };
-    }
-    function home() { return { x: BASE.x, y: BASE.y - L1 * 0.88 }; }
-
-    function initBlocks() {
-      const { c1, c2 } = getAccent();
-      blocks = LABELS.map((label, i) => ({
-        label, color: i % 2 === 0 ? c1 : c2,
-        x: stackPos(i).x, y: stackPos(i).y,
-        picked: false, placed: false,
-      }));
-      placedBlocks = [];
-      gripperBlock = null;
-      gripOpen = 1;
-    }
-
-    function nextBlock() { return blocks.findIndex(b => !b.picked && !b.placed); }
-
-    function to(ns, dur, end) {
-      state = ns; stateT = 0; stateDur = dur;
-      eeStart = { ...eePos }; eeEnd = end;
-    }
-
-    function tick(dt) {
-      stateT = Math.min(1, stateT + dt / stateDur);
-      const et = eio(stateT);
-      if (eeStart && eeEnd) eePos = lerpPt(eeStart, eeEnd, et);
-      if (gripperBlock) {
-        gripperBlock.x = eePos.x - BLK_W / 2;
-        gripperBlock.y = eePos.y - BLK_H / 2;
-      }
-      // gripper open/close animation
-      if (state === 'DESCEND_PICK')  gripOpen = Math.max(0, 1 - stateT * 3);
-      if (state === 'DESCEND_PLACE') gripOpen = Math.min(1, stateT * 3);
-
-      if (stateT < 1) return;
-
-      switch (state) {
-        case 'INIT': {
-          const i = nextBlock();
-          if (i < 0) { to('PAUSE', 2.5, home()); break; }
-          currentIdx = i;
-          const sp = stackPos(i);
-          to('APPROACH', 1.0, { x: sp.x + BLK_W/2, y: sp.y - 36 });
-          break;
-        }
-        case 'APPROACH': {
-          const sp = stackPos(currentIdx);
-          to('DESCEND_PICK', 0.45, { x: sp.x + BLK_W/2, y: sp.y + BLK_H/2 });
-          break;
-        }
-        case 'DESCEND_PICK': {
-          gripOpen = 0;
-          const b = blocks[currentIdx];
-          b.picked = true; gripperBlock = b;
-          to('LIFT', 0.45, { x: eePos.x, y: eePos.y - 48 });
-          break;
-        }
-        case 'LIFT': {
-          const pp = shelfPos(placedBlocks.length);
-          to('CARRY', 1.3, { x: pp.x + BLK_W/2, y: pp.y - 40 });
-          break;
-        }
-        case 'CARRY': {
-          const pp = shelfPos(placedBlocks.length);
-          to('DESCEND_PLACE', 0.45, { x: pp.x + BLK_W/2, y: pp.y + BLK_H/2 });
-          break;
-        }
-        case 'DESCEND_PLACE': {
-          if (gripperBlock) {
-            gripperBlock.placed = true;
-            gripperBlock.x = eePos.x - BLK_W/2;
-            gripperBlock.y = eePos.y - BLK_H/2;
-            placedBlocks.push(gripperBlock);
-            gripperBlock = null;
-          }
-          to('RETRACT', 0.4, { x: eePos.x, y: eePos.y - 48 });
-          break;
-        }
-        case 'RETRACT': {
-          to('RETURN', 0.9, home());
-          break;
-        }
-        case 'RETURN': {
-          const i = nextBlock();
-          if (i < 0) { to('PAUSE', 2.5, home()); break; }
-          currentIdx = i;
-          const sp = stackPos(i);
-          to('APPROACH', 0.9, { x: sp.x + BLK_W/2, y: sp.y - 36 });
-          break;
-        }
-        case 'PAUSE': {
-          initBlocks();
-          to('INIT', 0.1, home());
-          break;
-        }
-      }
-    }
-
-    function drawBlock(b, glowing) {
-      ctx.save();
-      if (glowing) {
-        ctx.shadowColor = b.color;
-        ctx.shadowBlur = 14;
-      }
-      ctx.fillStyle = b.color + (b.placed ? '28' : '1a');
-      ctx.strokeStyle = b.color + (b.placed ? 'dd' : '88');
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.roundRect(b.x, b.y, BLK_W, BLK_H, 3);
-      ctx.fill();
-      ctx.stroke();
-      ctx.shadowBlur = 0;
-      ctx.fillStyle = glowing ? '#fff' : (b.placed ? b.color : b.color + 'bb');
-      ctx.font = `600 8px 'JetBrains Mono', monospace`;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(b.label, b.x + BLK_W/2, b.y + BLK_H/2);
-      ctx.restore();
-    }
-
-    function drawArm() {
-      const { j1, ee } = ikSolve(eePos);
-      ctx.save();
-
-      // Base mount
-      ctx.fillStyle = 'rgba(12,15,26,0.9)';
-      ctx.strokeStyle = 'rgba(221,227,240,0.25)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.roundRect(BASE.x - 14, BASE.y - 6, 28, 14, 2);
-      ctx.fill(); ctx.stroke();
-
-      // Link 1
-      ctx.strokeStyle = 'rgba(221,227,240,0.22)';
-      ctx.lineWidth = 9; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(BASE.x, BASE.y); ctx.lineTo(j1.x, j1.y); ctx.stroke();
-      const { c1, c2 } = getAccent();
-      ctx.strokeStyle = c1 + '55';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(BASE.x, BASE.y); ctx.lineTo(j1.x, j1.y); ctx.stroke();
-
-      // Link 2
-      ctx.strokeStyle = 'rgba(221,227,240,0.18)';
-      ctx.lineWidth = 7; ctx.lineCap = 'round';
-      ctx.beginPath(); ctx.moveTo(j1.x, j1.y); ctx.lineTo(ee.x, ee.y); ctx.stroke();
-      ctx.strokeStyle = c2 + '55';
-      ctx.lineWidth = 2;
-      ctx.beginPath(); ctx.moveTo(j1.x, j1.y); ctx.lineTo(ee.x, ee.y); ctx.stroke();
-
-      // Joint 1
-      ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c1; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(j1.x, j1.y, 6, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.arc(j1.x, j1.y, 2.5, 0, Math.PI*2); ctx.fill();
-
-      // Base joint
-      ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c1; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(BASE.x, BASE.y, 8, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = c1;
-      ctx.beginPath(); ctx.arc(BASE.x, BASE.y, 3, 0, Math.PI*2); ctx.fill();
-
-      // Gripper
-      const ang = Math.atan2(ee.y - j1.y, ee.x - j1.x);
-      const perp = ang + Math.PI/2;
-      const sp = 11 * gripOpen;
-      const fl = 20;
-      ctx.strokeStyle = c1;
-      ctx.lineWidth = 1.8; ctx.lineCap = 'round';
-
-      // Left finger
-      ctx.beginPath();
-      ctx.moveTo(ee.x - Math.cos(perp)*sp*0.25, ee.y - Math.sin(perp)*sp*0.25);
-      ctx.lineTo(ee.x + Math.cos(ang)*fl - Math.cos(perp)*sp, ee.y + Math.sin(ang)*fl - Math.sin(perp)*sp);
-      ctx.stroke();
-      // Right finger
-      ctx.beginPath();
-      ctx.moveTo(ee.x + Math.cos(perp)*sp*0.25, ee.y + Math.sin(perp)*sp*0.25);
-      ctx.lineTo(ee.x + Math.cos(ang)*fl + Math.cos(perp)*sp, ee.y + Math.sin(ang)*fl + Math.sin(perp)*sp);
-      ctx.stroke();
-
-      // EE joint
-      ctx.fillStyle = '#0c0f1a'; ctx.strokeStyle = c2; ctx.lineWidth = 1.5;
-      ctx.beginPath(); ctx.arc(ee.x, ee.y, 5, 0, Math.PI*2); ctx.fill(); ctx.stroke();
-      ctx.restore();
-    }
-
-    function drawScene() {
-      ctx.clearRect(0, 0, W, H);
-
-      const { c1, c2 } = getAccent();
-
-      // Stack zone dashed outline
-      ctx.save();
-      ctx.strokeStyle = 'rgba(221,227,240,0.06)';
-      ctx.lineWidth = 1; ctx.setLineDash([4, 8]);
-      const sz = stackPos(0);
-      ctx.strokeRect(sz.x - 6, sz.y - 6, BLK_W + 12, LABELS.length * (BLK_H + 10) + 2);
-      ctx.setLineDash([]);
-      // Stack label
-      ctx.font = '7px JetBrains Mono, monospace';
-      ctx.fillStyle = 'rgba(221,227,240,0.15)';
-      ctx.textAlign = 'left';
-      ctx.fillText('INPUT STACK', sz.x - 4, sz.y - 12);
-      ctx.restore();
-
-      // Shelf
-      ctx.save();
-      const sl = shelfPos(0);
-      const shelfW = BLK_W * 2 + 22;
-      const shelfY = sl.y + BLK_H + 4;
-      ctx.strokeStyle = 'rgba(221,227,240,0.15)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(sl.x - 8, shelfY + 16); ctx.lineTo(sl.x + shelfW, shelfY + 16);
-      ctx.stroke();
-      // shelf legs
-      ctx.strokeStyle = 'rgba(221,227,240,0.08)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(sl.x - 2, shelfY + 16); ctx.lineTo(sl.x - 2, shelfY + 30);
-      ctx.moveTo(sl.x + shelfW - 6, shelfY + 16); ctx.lineTo(sl.x + shelfW - 6, shelfY + 30);
-      ctx.stroke();
-      ctx.font = '7px JetBrains Mono, monospace';
-      ctx.fillStyle = 'rgba(221,227,240,0.15)';
-      ctx.textAlign = 'left';
-      ctx.fillText('OUTPUT', sl.x - 4, shelfY + 28);
-      ctx.restore();
-
-      // Draw unpicked stack blocks (bottom to top, so unpicked ones show)
-      for (let i = LABELS.length - 1; i >= 0; i--) {
-        const b = blocks[i];
-        if (!b.picked) drawBlock(b, false);
-      }
-
-      // Draw placed blocks
-      placedBlocks.forEach(b => drawBlock(b, false));
-
-      // Draw arm
-      drawArm();
-
-      // Draw gripped block (on top of arm)
-      if (gripperBlock) drawBlock(gripperBlock, true);
-    }
-
-    function frame(ts) {
-      if (lastTs === null) lastTs = ts;
-      const dt = Math.min((ts - lastTs) / 1000, 0.05);
-      lastTs = ts;
-      tick(dt);
-      drawScene();
-      requestAnimationFrame(frame);
-    }
-
-    resize();
-    initBlocks();
-    eePos = home();
-    to('INIT', 0.5, home());
-    window.addEventListener('resize', () => { resize(); initBlocks(); eePos = home(); to('INIT', 0.1, home()); });
-    requestAnimationFrame(frame);
-  })();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
   </script>
-
-  <!-- Tweaks -->
-  <script type="text/babel" src="tweaks-panel.jsx"></script>
-  <script type="text/babel">
-    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-      "accentColor": "#2dc7e6",
-      "accentColor2": "#4f7ebf",
-      "backgroundDark": "#06080f",
-      "heroName": "Aravind Suresh",
-      "heroSubtitle": "Mechatronics Engineer & M.Sc. student in Autonomy Technologies at FAU Erlangen-Nuremberg. Gold Medal graduate. 3.5 years in software.",
-      "showSkillBars": true
-    }/*EDITMODE-END*/;
-
-    function PortfolioTweaks() {
-      const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
-
-      React.useEffect(() => {
-        document.documentElement.style.setProperty('--accent', tweaks.accentColor);
-        document.documentElement.style.setProperty('--accent2', tweaks.accentColor2);
-        document.documentElement.style.setProperty('--bg', tweaks.backgroundDark);
-        document.querySelector('h1.hero-name').childNodes[0].textContent = tweaks.heroName.split(' ')[0] + '\n';
-        const line2 = document.querySelector('h1.hero-name .line2');
-        if (line2) line2.childNodes[0].textContent = tweaks.heroName.split(' ').slice(1).join(' ');
-        const roleEl = document.querySelector('.hero-role');
-        if (roleEl) roleEl.textContent = tweaks.heroSubtitle;
-        document.querySelectorAll('.skill-bar-track').forEach(t => {
-          t.style.display = tweaks.showSkillBars ? '' : 'none';
-        });
-      }, [tweaks]);
-
-      return (
-        <TweaksPanel>
-          <TweakSection title="Colors">
-            <TweakColor label="Primary Accent" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
-            <TweakColor label="Secondary Accent" value={tweaks.accentColor2} onChange={v => setTweak('accentColor2', v)} />
-            <TweakColor label="Background" value={tweaks.backgroundDark} onChange={v => setTweak('backgroundDark', v)} />
-          </TweakSection>
-          <TweakSection title="Hero Copy">
-            <TweakText label="Name" value={tweaks.heroName} onChange={v => setTweak('heroName', v)} />
-            <TweakText label="Tagline" value={tweaks.heroSubtitle} onChange={v => setTweak('heroSubtitle', v)} />
-          </TweakSection>
-          <TweakSection title="Skills">
-            <TweakToggle label="Show Skill Bars" value={tweaks.showSkillBars} onChange={v => setTweak('showSkillBars', v)} />
-          </TweakSection>
-        </TweaksPanel>
-      );
-    }
-
-    const tweaksRoot = document.createElement('div');
-    document.body.appendChild(tweaksRoot);
-    ReactDOM.createRoot(tweaksRoot).render(<PortfolioTweaks />);
-  </script>
-
-  <template id="__bundler_thumbnail">
-    <svg viewBox="0 0 80 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="80" height="56" fill="#06080f"/>
-      <circle cx="40" cy="28" r="18" fill="none" stroke="rgba(0,229,160,0.15)" stroke-width="1"/>
-      <circle cx="40" cy="28" r="10" fill="none" stroke="rgba(0,229,160,0.1)" stroke-width="1"/>
-      <!-- 6-DOF arm silhouette -->
-      <rect x="35" y="44" width="10" height="4" rx="1" fill="rgba(220,227,240,0.15)"/>
-      <line x1="40" y1="44" x2="40" y2="34" stroke="rgba(220,227,240,0.2)" stroke-width="2.5"/>
-      <line x1="40" y1="34" x2="49" y2="24" stroke="rgba(61,158,255,0.5)" stroke-width="2"/>
-      <line x1="49" y1="24" x2="51" y2="14" stroke="rgba(0,229,160,0.55)" stroke-width="1.6"/>
-      <line x1="51" y1="14" x2="58" y2="11" stroke="rgba(0,229,160,0.5)" stroke-width="1.2"/>
-      <circle cx="40" cy="44" r="2.2" fill="#00e5a0"/>
-      <circle cx="40" cy="34" r="1.8" fill="#3d9eff"/>
-      <circle cx="49" cy="24" r="1.6" fill="#00e5a0"/>
-      <circle cx="51" cy="14" r="1.3" fill="#3d9eff"/>
-      <text x="6" y="52" font-family="monospace" font-size="4" fill="rgba(0,229,160,0.5)">6-DOF · ARAVIND SURESH</text>
-    </svg>
-  </template>
-
 </body>
 </html>
