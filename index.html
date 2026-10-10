@@ -447,6 +447,8 @@
     @keyframes rise  { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: none; } }
     @keyframes slide { from { opacity: 0; transform: translateX(80px); } to { opacity: 1; transform: none; } }
 
+    main { overflow-x: clip; }
+
     /* Hero plays once on load: copy rises line by line, arm slides in from the right */
     .hero-copy > * { animation: rise 0.9s var(--ease-out) both; }
     .hero-copy > :nth-child(2) { animation-delay: 0.1s; }
@@ -931,8 +933,8 @@
         const x = snapX();
         const cards = [...track.children];
         const target = dir > 0
-          ? cards.find((c) => c.getBoundingClientRect().left > x + 2)
-          : cards.reverse().find((c) => c.getBoundingClientRect().left < x - 2);
+          ? cards.find((c) => c.getBoundingClientRect().left > x + 12)
+          : cards.reverse().find((c) => c.getBoundingClientRect().left < x - 12);
         if (!target) return;
         track.scrollBy({ left: target.getBoundingClientRect().left - x, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
       }
