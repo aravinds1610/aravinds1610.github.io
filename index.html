@@ -32,10 +32,8 @@
       --arm-line:    rgba(255, 255, 255, 0.18);
       --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-      --wrap: 1320px;
-      --pad: clamp(1rem, 4vw, 3rem);
-      /* Left edge of the content column, used to line carousels up with it */
-      --edge: max(var(--pad), calc((100% - var(--wrap)) / 2 + var(--pad)));
+      /* Page gutter: content is left-aligned and starts here on every screen */
+      --pad: clamp(1rem, 3vw, 2.5rem);
     }
 
     /* Light theme: follows the system unless the visitor picked one */
@@ -94,7 +92,7 @@
       border-radius: 4px;
     }
 
-    .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--pad); }
+    .wrap { padding-inline: var(--pad); }
 
     .mono {
       font-family: var(--mono);
@@ -279,8 +277,8 @@
       overflow-x: auto;
       overscroll-behavior-x: contain;
       scroll-snap-type: x mandatory;
-      scroll-padding-inline: var(--edge);
-      padding: 0.25rem var(--edge) 0.5rem;
+      scroll-padding-inline: var(--pad);
+      padding: 0.25rem var(--pad) 0.5rem;
       scrollbar-width: none;
     }
 
@@ -420,14 +418,9 @@
     .skill-list em { font-style: normal; color: var(--faint); font-size: 0.85em; }
 
     /* ── Contact ────────────────────────────── */
-    .contact {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 2rem 4rem;
-    }
+    .contact { display: grid; gap: 2rem; justify-items: start; }
 
-    .contact p { color: var(--muted); font-size: 1.15rem; max-width: 40rem; }
+    .contact p:not(.section-label) { color: var(--muted); font-size: 1.15rem; max-width: 40rem; }
 
     footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--faint); }
     footer .wrap { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
@@ -441,7 +434,6 @@
       .hero { grid-template-columns: 1fr; padding-top: 4.5rem; padding-bottom: 4rem; gap: 2.5rem; }
       .arm { justify-self: center; max-width: 380px; }
       section { padding: 4rem 0; }
-      .contact { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 640px) {
@@ -890,7 +882,7 @@
     lightQuery.addEventListener('change', syncLabel);
     syncLabel();
 
-    // Carousels: arrow buttons and arrow keys step one card at a time
+    // Carousels: arrow buttons, arrow keys and the mouse wheel step one card at a time
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     document.querySelectorAll('[data-carousel]').forEach((section) => {
       const track = section.querySelector('.track');
@@ -932,6 +924,32 @@
         if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
         if (e.key === 'ArrowLeft')  { e.preventDefault(); step(-1); }
       });
+      // Vertical mouse wheel steps the carousel one card per notch. Horizontal
+      // trackpad swipes and shift+wheel are left to the browser. At either end
+      // the event is not consumed, so the page keeps scrolling.
+      let wheelLock = 0;
+      let wheelSum = 0;
+      track.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaX) >= Math.abs(e.deltaY)) return;
+        const dy = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaMode === 2 ? e.deltaY * track.clientHeight : e.deltaY;
+        const dir = Math.sign(dy);
+        const max = track.scrollWidth - track.clientWidth;
+        const canMove = dir > 0 ? track.scrollLeft < max - 2 : track.scrollLeft > 2;
+        if (!canMove) return;
+        e.preventDefault();
+        const now = performance.now();
+        if (now < wheelLock) {
+          // Small deltas are trackpad momentum: keep absorbing until it settles
+          if (Math.abs(dy) < 50) wheelLock = Math.max(wheelLock, now + 120);
+          return;
+        }
+        if (Math.sign(wheelSum) !== dir) wheelSum = 0;
+        wheelSum += dy;
+        if (Math.abs(wheelSum) < 30) return;
+        wheelSum = 0;
+        wheelLock = now + 350;
+        step(dir);
+      }, { passive: false });
       track.addEventListener('scroll', update, { passive: true });
       new ResizeObserver(update).observe(track);
       update();
