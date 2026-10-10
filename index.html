@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="color-scheme" content="dark" />
+  <meta name="color-scheme" content="dark light" />
+  <script>
+    try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <title>Aravind Suresh — Robotics Engineer</title>
   <meta name="description" content="Aravind Suresh — robotics engineer and M.Sc. Autonomy Technologies student at FAU Erlangen-Nürnberg. ROS 2, manipulation, navigation and perception on real and simulated robots." />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0b0c'/%3E%3Cpath d='M9 26h14M16 23l-4-9 9-4v6' stroke='%23ededef' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='12' cy='14' r='2' fill='%23ff7a45'/%3E%3Ccircle cx='21' cy='10' r='2' fill='%23ff7a45'/%3E%3C/svg%3E" />
@@ -15,17 +18,54 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      color-scheme: dark;
       --bg:      #0b0b0c;
       --surface: #121214;
       --line:    rgba(255, 255, 255, 0.08);
       --line-2:  rgba(255, 255, 255, 0.16);
       --text:    #ededef;
       --muted:   #9a9aa2;
-      --faint:   #63636b;
+      --faint:   #6e6e76;
       --accent:  #ff7a45;
+      --accent-ring: rgba(255, 122, 69, 0.15);
+      --header-bg:   rgba(11, 11, 12, 0.82);
+      --arm-line:    rgba(255, 255, 255, 0.18);
       --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
       --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
       --wrap: 1040px;
+    }
+
+    /* Light theme: follows the system unless the visitor picked one */
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) {
+        color-scheme: light;
+        --bg:      #fafaf9;
+        --surface: #f1f1ef;
+        --line:    rgba(0, 0, 0, 0.08);
+        --line-2:  rgba(0, 0, 0, 0.18);
+        --text:    #141416;
+        --muted:   #52525a;
+        --faint:   #74747c;
+        --accent:  #c84f1b;
+        --accent-ring: rgba(200, 79, 27, 0.15);
+        --header-bg:   rgba(250, 250, 249, 0.85);
+        --arm-line:    rgba(0, 0, 0, 0.32);
+      }
+    }
+
+    :root[data-theme="light"] {
+      color-scheme: light;
+      --bg:      #fafaf9;
+      --surface: #f1f1ef;
+      --line:    rgba(0, 0, 0, 0.08);
+      --line-2:  rgba(0, 0, 0, 0.18);
+      --text:    #141416;
+      --muted:   #52525a;
+      --faint:   #74747c;
+      --accent:  #c84f1b;
+      --accent-ring: rgba(200, 79, 27, 0.15);
+      --header-bg:   rgba(250, 250, 249, 0.85);
+      --arm-line:    rgba(0, 0, 0, 0.32);
     }
 
     html { scroll-behavior: smooth; }
@@ -38,6 +78,7 @@
       line-height: 1.65;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
     ::selection { background: var(--accent); color: var(--bg); }
@@ -61,7 +102,7 @@
     /* ── Header ─────────────────────────────── */
     header {
       position: sticky; top: 0; z-index: 10;
-      background: rgba(11, 11, 12, 0.82);
+      background: var(--header-bg);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
@@ -85,6 +126,32 @@
 
     nav a:hover { color: var(--text); }
 
+    .header-right { display: flex; align-items: center; gap: 1.75rem; }
+
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      border: 1px solid var(--line-2);
+      border-radius: 6px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .theme-toggle:hover { color: var(--text); border-color: var(--text); }
+    .theme-toggle:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+    .theme-toggle svg { width: 16px; height: 16px; }
+
+    /* Show the icon for the theme you would switch to */
+    .icon-moon { display: none; }
+    :root[data-theme="light"] .icon-sun { display: none; }
+    :root[data-theme="light"] .icon-moon { display: block; }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme]) .icon-sun { display: none; }
+      :root:not([data-theme]) .icon-moon { display: block; }
+    }
+
     /* ── Hero ───────────────────────────────── */
     .hero {
       display: grid;
@@ -103,7 +170,7 @@
     .dot {
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 3px rgba(255, 122, 69, 0.15);
+      box-shadow: 0 0 0 3px var(--accent-ring);
       flex-shrink: 0;
     }
 
@@ -146,12 +213,13 @@
     .arm { width: 100%; max-width: 440px; justify-self: end; }
     .arm svg { width: 100%; height: auto; display: block; }
 
-    .arm .outline { stroke: var(--line-2); }
+    .arm .outline { stroke: var(--arm-line); }
     .arm .fill    { stroke: var(--bg); }
+    .arm .solid   { fill: var(--bg); }
     .arm .joint   { fill: var(--bg); stroke: var(--muted); }
     .arm .core    { fill: var(--accent); }
     .arm .label   { fill: var(--faint); font-family: var(--mono); font-size: 10px; }
-    .arm .ground  { stroke: var(--line-2); }
+    .arm .ground  { stroke: var(--arm-line); }
     .arm .part    { fill: none; stroke: var(--muted); }
     .arm .path    { stroke: var(--accent); opacity: 0.45; }
 
@@ -378,6 +446,7 @@
     @media (max-width: 600px) {
       .wrap { padding-inline: 1rem; }
       nav ul { gap: 1.1rem; }
+      .header-right { gap: 1rem; }
       nav a { font-size: 0.8rem; }
       .brand { display: none; }
       header .wrap { justify-content: center; }
@@ -401,6 +470,7 @@
   <header>
     <div class="wrap">
       <a href="#top" class="brand">Aravind Suresh<span>.</span></a>
+      <div class="header-right">
       <nav aria-label="Primary">
         <ul>
           <li><a href="#work">Work</a></li>
@@ -409,6 +479,11 @@
           <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
+        <button class="theme-toggle" type="button" aria-label="Toggle light and dark mode" title="Toggle light / dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -444,7 +519,7 @@
           <path class="path" d="M324 236 C 324 270, 324 280, 324 294" stroke-width="1" stroke-dasharray="3 4"/>
 
           <!-- A1 base -->
-          <rect class="outline" x="172" y="340" width="76" height="32" rx="4" stroke-width="1.2" fill="var(--bg)"/>
+          <rect class="outline solid" x="172" y="340" width="76" height="32" rx="4" stroke-width="1.2"/>
           <line class="outline" x1="184" y1="352" x2="236" y2="352" stroke-width="1"/>
           <text class="label" x="134" y="362">A1</text>
 
@@ -468,12 +543,12 @@
                 <line class="fill"    x1="324" y1="170" x2="324" y2="204" stroke-width="12" stroke-linecap="round"/>
 
                 <!-- tool flange + parallel gripper -->
-                <rect class="outline" x="310" y="208" width="28" height="7" rx="1.5" stroke-width="1.2" fill="var(--bg)"/>
+                <rect class="outline solid" x="310" y="208" width="28" height="7" rx="1.5" stroke-width="1.2"/>
                 <g style="animation: grip-l 9s ease-in-out infinite;">
-                  <rect class="outline" x="312" y="215" width="5" height="20" rx="1" stroke-width="1.2" fill="var(--bg)"/>
+                  <rect class="outline solid" x="312" y="215" width="5" height="20" rx="1" stroke-width="1.2"/>
                 </g>
                 <g style="animation: grip 9s ease-in-out infinite;">
-                  <rect class="outline" x="331" y="215" width="5" height="20" rx="1" stroke-width="1.2" fill="var(--bg)"/>
+                  <rect class="outline solid" x="331" y="215" width="5" height="20" rx="1" stroke-width="1.2"/>
                 </g>
 
                 <circle class="joint" cx="296" cy="170" r="8" stroke-width="1.2"/>
@@ -707,6 +782,21 @@
   </footer>
 
   <script>
+    // Theme toggle: flip the effective theme and remember the choice
+    const root = document.documentElement;
+    const lightQuery = window.matchMedia('(prefers-color-scheme: light)');
+    const currentTheme = () => root.dataset.theme || (lightQuery.matches ? 'light' : 'dark');
+    const toggle = document.querySelector('.theme-toggle');
+    const syncLabel = () => toggle.setAttribute('aria-label', currentTheme() === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+    toggle.addEventListener('click', () => {
+      const next = currentTheme() === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      syncLabel();
+    });
+    lightQuery.addEventListener('change', syncLabel);
+    syncLabel();
+
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
