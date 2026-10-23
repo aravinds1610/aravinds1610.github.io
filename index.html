@@ -654,15 +654,15 @@
               mujoco_cathlab_vla ↗
             </a>
           </div>
-          <h3>Surgical instrument handover with a two-arm robot and a VLA model</h3>
+          <h3>Synthetic dataset generation and SmolVLA fine-tuning for surgical instrument handover on a dual-arm Franka FR3 system</h3>
           <figure class="shot">
             <img src="assets/vla-frames.jpg" width="896" height="224" loading="lazy" alt="Four simulated frames of two Franka arms above an operating table with surgical instruments and a tray, from near-target and drop-recovery start states">
             <figcaption>What the model sees: near-target and drop-recovery starts</figcaption>
           </figure>
           <p>
-            On <em>"hand me the trocar"</em>, a <strong>bimanual Franka FR3</strong> picks the named instrument with the nearer arm and places it on the tray.
-            My simulation pipeline generates the demonstrations, publishes them as <strong>LeRobot datasets</strong> and fine-tunes <strong>SmolVLA</strong> on a laptop GPU.
-            v1 stalled 6 to 8 cm from the object, so v2 adds near-target and drop-recovery starts; training on v2 is next.
+            Given a spoken request such as <em>"hand me the trocar"</em>, a <strong>bimanual Franka FR3</strong> picks the named instrument with the nearer arm and places it on the tray.
+            I built a simulation pipeline that generates expert demonstrations, publishes them as versioned <strong>LeRobot datasets</strong> and fine-tunes the <strong>SmolVLA</strong> vision-language-action model on a laptop GPU.
+            Closed-loop evaluation of v1 guided the v2 dataset, which adds near-target and drop-recovery start states for more robust grasping; v2 fine-tuning is the current stage.
           </p>
           <div class="facts">
             <div class="fact"><b>1,024</b><span>episodes published</span></div>
