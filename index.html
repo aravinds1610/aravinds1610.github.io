@@ -317,8 +317,9 @@
     .card.sm { width: min(330px, 78vw); }
 
     .card-top {
-      display: flex; align-items: flex-start; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       gap: 1rem;
+      min-height: 34px;
       margin-bottom: 1rem;
     }
 
@@ -339,6 +340,7 @@
     }
 
     .card p { color: var(--muted); margin-bottom: 1.2rem; }
+    .card .card-top .meta { margin-bottom: 0; }
     .card p strong { color: var(--text); font-weight: 500; }
     .card code { font-family: var(--mono); font-size: 0.85em; color: var(--text); }
 
@@ -358,7 +360,7 @@
     .gh svg { width: 15px; height: 15px; fill: currentColor; }
     .gh:hover { border-color: var(--accent); color: var(--accent); }
 
-    .private { color: var(--faint); white-space: nowrap; padding-top: 0.45rem; }
+    .private { color: var(--faint); white-space: nowrap; }
 
     .shot { margin: 0 0 1.2rem; }
     .shot img {
@@ -648,7 +650,7 @@
 
         <article class="card">
           <div class="card-top">
-            <p class="meta mono"><span>2026</span><span>Self-directed project</span></p>
+            <p class="meta mono"><span>2026</span><span>Personal project</span></p>
             <a class="gh" href="https://github.com/aravinds1610/mujoco_cathlab_vla" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
               mujoco_cathlab_vla ↗
@@ -719,7 +721,7 @@
 
         <article class="card">
           <div class="card-top">
-            <p class="meta mono"><span>B.Eng. project</span><span>Real hardware</span></p>
+            <p class="meta mono"><span>B.Eng. project</span></p>
             <a class="gh" href="https://github.com/aravinds1610/FruitSegreagtionRobotBasedOnMachineVision" target="_blank" rel="noopener">
               <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
               FruitSegregation… ↗
@@ -736,7 +738,7 @@
 
         <article class="card md">
           <div class="card-top">
-            <p class="meta mono"><span>Earlier projects</span><span>Embedded &amp; sensing</span></p>
+            <p class="meta mono"><span>Earlier projects</span></p>
           </div>
           <div class="mini">
             <h4>Autonomous garbage collector bot</h4>
