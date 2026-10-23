@@ -360,6 +360,23 @@
 
     .private { color: var(--faint); white-space: nowrap; padding-top: 0.45rem; }
 
+    .shot { margin: 0 0 1.2rem; }
+    .shot img {
+      display: block; width: 100%; height: auto; aspect-ratio: 4 / 1;
+      border-radius: 8px; border: 1px solid var(--line);
+      background: var(--bg);
+    }
+    .shot figcaption { margin-top: 0.45rem; color: var(--faint); font-family: var(--mono); font-size: 0.72rem; }
+
+    .card-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.2rem; }
+    .card-links a {
+      display: inline-flex; align-items: center; height: 30px; padding: 0 0.7rem;
+      border: 1px solid var(--line); border-radius: 7px;
+      font-family: var(--mono); font-size: 0.74rem; color: var(--muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .card-links a:hover { border-color: var(--accent); color: var(--accent); }
+
     .facts { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin-bottom: 1.2rem; }
     .fact { display: flex; flex-direction: column; }
     .fact b { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; }
@@ -615,7 +632,7 @@
         <div>
           <p class="section-label mono">01 / Work</p>
           <h2>Selected projects</h2>
-          <p class="intro">Manipulation, mobile robotics and perception. Projects with public code link to GitHub.</p>
+          <p class="intro">Manipulation, robot learning, mobile robotics and perception. Projects with public code link to GitHub.</p>
         </div>
         <div class="controls">
           <button class="arrow" type="button" data-prev aria-label="Previous project" aria-controls="track-work">
@@ -628,6 +645,39 @@
       </div>
 
       <div class="track reveal" id="track-work" tabindex="0" role="region" aria-label="Projects, use the arrow keys to scroll">
+
+        <article class="card">
+          <div class="card-top">
+            <p class="meta mono"><span class="status"><span class="dot"></span>In progress</span><span>2026</span><span>Self-directed</span></p>
+            <a class="gh" href="https://github.com/aravinds1610/mujoco_cathlab_vla" target="_blank" rel="noopener">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><use href="#i-github"/></svg>
+              mujoco_cathlab_vla ↗
+            </a>
+          </div>
+          <h3>Surgical instrument handover with a two-arm robot and a VLA model</h3>
+          <figure class="shot">
+            <img src="assets/vla-frames.jpg" width="896" height="224" loading="lazy" alt="Four simulated frames of two Franka arms above an operating table with surgical instruments and a tray, from near-target and drop-recovery start states">
+            <figcaption>What the model sees: near-target and drop-recovery starts</figcaption>
+          </figure>
+          <p>
+            On <em>"hand me the trocar"</em>, a <strong>bimanual Franka FR3</strong> picks the named instrument with the nearer arm and places it on the tray.
+            My simulation pipeline generates the demonstrations, publishes them as <strong>LeRobot datasets</strong> and fine-tunes <strong>SmolVLA</strong> on a laptop GPU.
+            v1 stalled 6 to 8 cm from the object, so v2 adds near-target and drop-recovery starts; training on v2 is next.
+          </p>
+          <div class="facts">
+            <div class="fact"><b>1,024</b><span>episodes published</span></div>
+            <div class="fact"><b>100%</b><span>scripted expert success</span></div>
+            <div class="fact"><b>60 / 60</b><span>CPU vs GPU physics parity</span></div>
+          </div>
+          <div class="pipeline">IK expert<i>→</i>Newton GPU worlds<i>→</i>LeRobot dataset<i>→</i>SmolVLA<i>→</i>held-out eval</div>
+          <div class="card-links">
+            <a href="https://claude.ai/artifact/T5nVVDQNVYTYDtq3doN8aE" target="_blank" rel="noopener">Write-up ↗</a>
+            <a href="https://huggingface.co/datasets/aravindsuresh16/cathlab_fr3_instruments_v1" target="_blank" rel="noopener">Dataset v2 ↗</a>
+            <a href="https://huggingface.co/datasets/aravindsuresh16/cathlab_fr3_newton_v1" target="_blank" rel="noopener">Dataset v1 ↗</a>
+            <a href="https://huggingface.co/aravindsuresh16/smolvla_cathlab_fr3_newton_v1" target="_blank" rel="noopener">Model ↗</a>
+          </div>
+          <p class="stack mono"><span>MuJoCo</span><span>NVIDIA Newton</span><span>LeRobot</span><span>SmolVLA</span><span>PyTorch</span><span>Hugging Face</span></p>
+        </article>
 
         <article class="card">
           <div class="card-top">
@@ -826,16 +876,28 @@
         </article>
         <article class="card sm">
           <p class="meta mono" style="margin-bottom:0.75rem"><span>03</span></p>
+          <h3>Robot learning</h3>
+          <ul class="skill-list">
+            <li>Vision-language-action models (SmolVLA)</li>
+            <li>Behaviour cloning</li>
+            <li>LeRobot datasets</li>
+            <li>Synthetic data generation</li>
+            <li>Hugging Face Hub</li>
+          </ul>
+        </article>
+        <article class="card sm">
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>04</span></p>
           <h3>Simulation</h3>
           <ul class="skill-list">
             <li>Isaac Sim</li>
+            <li>MuJoCo / NVIDIA Newton</li>
             <li>Gazebo</li>
             <li>RViz</li>
             <li>CARLA <em>(basic)</em></li>
           </ul>
         </article>
         <article class="card sm">
-          <p class="meta mono" style="margin-bottom:0.75rem"><span>04</span></p>
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>05</span></p>
           <h3>Programming</h3>
           <ul class="skill-list">
             <li>Python</li>
@@ -844,7 +906,7 @@
           </ul>
         </article>
         <article class="card sm">
-          <p class="meta mono" style="margin-bottom:0.75rem"><span>05</span></p>
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>06</span></p>
           <h3>Tools</h3>
           <ul class="skill-list">
             <li>Docker</li>
@@ -854,7 +916,7 @@
           </ul>
         </article>
         <article class="card sm">
-          <p class="meta mono" style="margin-bottom:0.75rem"><span>06</span></p>
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>07</span></p>
           <h3>Industrial</h3>
           <ul class="skill-list">
             <li>PLC / Siemens TIA Portal</li>
@@ -862,7 +924,7 @@
           </ul>
         </article>
         <article class="card sm">
-          <p class="meta mono" style="margin-bottom:0.75rem"><span>07</span></p>
+          <p class="meta mono" style="margin-bottom:0.75rem"><span>08</span></p>
           <h3>Languages</h3>
           <ul class="skill-list">
             <li>English <em>C1</em></li>
