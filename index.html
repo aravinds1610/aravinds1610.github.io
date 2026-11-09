@@ -281,9 +281,9 @@
     .gh:hover { border-color: var(--accent); color: var(--accent); }
     .private { font-family: var(--mono); font-size: 13px; color: var(--faint); }
     .panel h3 { font-size: clamp(1.2rem, min(1.8vw, 2.9vh), 1.6rem); line-height: 1.2; font-weight: 600; letter-spacing: -0.02em; max-width: 52rem; }
-    .shot img { display: block; width: 100%; height: clamp(64px, 11vh, 110px); object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); }
+    .shot img { display: block; width: 100%; height: clamp(60px, 9.5vh, 88px); object-fit: cover; border-radius: 10px; border: 1px solid var(--line); background: var(--bg); }
     .shot figcaption { margin-top: 0.4rem; font-family: var(--mono); font-size: 12px; color: var(--faint); }
-    .panel > p { color: var(--muted); max-width: 54rem; font-size: 16px; line-height: 1.6; }
+    .panel > p { color: var(--muted); max-width: 54rem; font-size: 16px; line-height: 1.55; }
     .panel > p strong { color: var(--text); font-weight: 500; }
     .facts { display: flex; flex-wrap: wrap; gap: 0.75rem 3rem; }
     .fact { display: flex; flex-direction: column; }
@@ -595,27 +595,27 @@
               <h3>Synthetic dataset generation and SmolVLA fine-tuning for surgical instrument handover on a dual-arm Franka FR3 system</h3>
               <figure class="shot">
                 <img src="assets/vla-frames.jpg" width="896" height="224" loading="lazy" alt="Four simulated frames of two Franka arms above an operating table with surgical instruments and a tray, from near-target and drop-recovery start states">
-                <figcaption>What the model sees: near-target and drop-recovery starts</figcaption>
               </figure>
               <p>
-                Given a spoken request such as <em>"hand me the trocar"</em>, a <strong>bimanual Franka FR3</strong> picks the named instrument with the nearer arm and places it on the tray.
-                I built a simulation pipeline that generates expert demonstrations, publishes them as versioned <strong>LeRobot datasets</strong> and fine-tunes the <strong>SmolVLA</strong> vision-language-action model on a laptop GPU.
-                Closed-loop evaluation of v1 guided the v2 dataset, which adds near-target and drop-recovery start states for more robust grasping.
+                On a request such as <em>"hand me the trocar"</em>, a <strong>bimanual Franka FR3</strong> should pick the named instrument and place it on the tray.
+                I built the pipeline that generates simulated demonstrations, publishes <strong>LeRobot datasets</strong> and fine-tunes <strong>SmolVLA</strong> on a laptop GPU.
+                The final v2.5 model chose the correct arm every time but placed the instrument in only 2 of 48 trials: it learned <em>when</em> to close the gripper, not <em>where</em>.
+                It closes on the expert's timing a median 9 cm from the instrument, likely because its frozen vision encoder gets little from ~25 px instruments while joint angles alone predict the timing.
               </p>
               <div class="facts">
-                <div class="fact"><b>1,024</b><span>episodes published</span></div>
-                <div class="fact"><b>100%</b><span>scripted expert success</span></div>
-                <div class="fact"><b>60 / 60</b><span>CPU vs GPU physics parity</span></div>
+                <div class="fact"><b>48 / 48</b><span>correct arm chosen</span></div>
+                <div class="fact"><b>2 / 48</b><span>instruments placed</span></div>
+                <div class="fact"><b>~9 cm</b><span>median miss at grasp</span></div>
               </div>
               <div class="panel-bottom">
                 <div class="pipeline">IK expert<i>→</i>Newton GPU worlds<i>→</i>LeRobot dataset<i>→</i>SmolVLA<i>→</i>held-out eval</div>
                 <div class="panel-row">
                   <p class="stack"><span>MuJoCo</span><span>NVIDIA Newton</span><span>LeRobot</span><span>SmolVLA</span><span>PyTorch</span><span>Hugging Face</span></p>
                   <div class="card-links">
-                    <a href="https://claude.ai/artifact/T5nVVDQNVYTYDtq3doN8aE" target="_blank" rel="noopener">Write-up ↗</a>
+                    <a href="https://github.com/aravinds1610/mujoco_cathlab_vla/blob/main/docs/V2_RESULTS.md" target="_blank" rel="noopener">Results ↗</a>
+                    <a href="https://huggingface.co/datasets/aravindsuresh16/cathlab_fr3_instruments_v2_5" target="_blank" rel="noopener">Dataset v2.5 ↗</a>
                     <a href="https://huggingface.co/datasets/aravindsuresh16/cathlab_fr3_instruments_v1" target="_blank" rel="noopener">Dataset v2 ↗</a>
-                    <a href="https://huggingface.co/datasets/aravindsuresh16/cathlab_fr3_newton_v1" target="_blank" rel="noopener">Dataset v1 ↗</a>
-                    <a href="https://huggingface.co/aravindsuresh16/smolvla_cathlab_fr3_newton_v1" target="_blank" rel="noopener">Model ↗</a>
+                    <a href="https://huggingface.co/aravindsuresh16/smolvla_cathlab_fr3_instruments_v2_5" target="_blank" rel="noopener">Model v2.5 ↗</a>
                   </div>
                 </div>
               </div>
