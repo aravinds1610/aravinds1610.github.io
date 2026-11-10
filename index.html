@@ -72,8 +72,8 @@
       --on-text: #f3ece0;
     }
 
-    /* One section per screen: the page snaps to each section and never stops between two */
-    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    /* Full-screen sections with plain, continuous scrolling; nav links glide to a section */
+    html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
@@ -147,7 +147,6 @@
     /* ── Screens ────────────────────────────── */
     .screen {
       min-height: 100vh; min-height: 100svh;
-      scroll-snap-align: start; scroll-snap-stop: always;
       display: flex; flex-direction: column;
       padding: var(--head) calc(var(--pad) + 96px) 0 var(--pad);
     }
@@ -381,8 +380,7 @@
     }
 
     @media (max-width: 900px) {
-      html { scroll-snap-type: y proximity; }
-      .screen { padding-right: var(--pad); scroll-snap-stop: normal; }
+      .screen { padding-right: var(--pad); }
       .screen-foot { margin-right: 0; }
       .pager { display: none; }
       .hero { grid-template-columns: 1fr; }
@@ -836,60 +834,6 @@
       });
     }, { threshold: [0.15, 0.5] });
     screens.forEach((s) => io.observe(s));
-
-    // One section per scroll: a wheel notch or trackpad swipe moves exactly one section.
-    // A section taller than the window scrolls normally until its edge, then moves on.
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const paged = window.matchMedia('(min-width: 901px) and (min-height: 560px)');
-    const sectionAt = () => {
-      const y = window.scrollY + 2;
-      let i = 0;
-      screens.forEach((s, k) => { if (s.offsetTop <= y) i = k; });
-      return i;
-    };
-    const go = (i) => {
-      const t = screens[Math.max(0, Math.min(screens.length - 1, i))];
-      window.scrollTo({ top: t.offsetTop, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
-    };
-    let lock = 0; let sum = 0;
-    window.addEventListener('wheel', (e) => {
-      if (!paged.matches || e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
-      const dy = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaMode === 2 ? e.deltaY * innerHeight : e.deltaY;
-      const dir = Math.sign(dy);
-      if (!dir) return;
-      const i = sectionAt();
-      const s = screens[i];
-      const y = window.scrollY;
-      const now = performance.now();
-      if (now >= lock) {
-        if (dir > 0 && y + innerHeight < s.offsetTop + s.offsetHeight - 2) return;
-        if (dir < 0 && y > s.offsetTop + 2) return;
-      }
-      e.preventDefault();
-      if (now < lock) { lock = Math.max(lock, now + 160); return; }
-      if (Math.sign(sum) !== dir) sum = 0;
-      sum += dy;
-      if (Math.abs(sum) < 30) return;
-      sum = 0;
-      if (!screens[i + dir]) return;
-      lock = now + 800;
-      go(i + dir);
-    }, { passive: false });
-
-    window.addEventListener('keydown', (e) => {
-      if (!paged.matches || e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
-      if (e.target.closest('input, textarea, select, [role="tab"]')) return;
-      const dir = { PageDown: 1, ArrowDown: 1, ' ': e.shiftKey ? -1 : 1, PageUp: -1, ArrowUp: -1 }[e.key];
-      if (!dir) return;
-      const i = sectionAt();
-      const s = screens[i];
-      const y = window.scrollY;
-      if (dir > 0 && y + innerHeight < s.offsetTop + s.offsetHeight - 2) return;
-      if (dir < 0 && y > s.offsetTop + 2) return;
-      if (!screens[i + dir]) return;
-      e.preventDefault();
-      go(i + dir);
-    });
 
     // Work: project tabs (click, or arrow keys inside the list)
     const tabs = [...document.querySelectorAll('.tab')];
